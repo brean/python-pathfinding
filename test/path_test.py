@@ -11,13 +11,13 @@ BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 # test scenarios from Pathfinding.JS
 scenarios = os.path.join(BASE_PATH, 'path_test_scenarios.json')
 data = json.load(open(scenarios, 'r'))
+finders = [AStarFinder, DijkstraFinder]
 
 
 def test_path():
     """
     test scenarios defined in json file
     """
-    finders = [AStarFinder, DijkstraFinder]
     for scenario in data:
         for find in finders:
             grid = Grid(matrix=scenario['matrix'])
@@ -30,5 +30,20 @@ def test_path():
             assert len(path) == scenario['expectedLength']
     
 
+def test_path_diagonal():
+    # test diagonal movement
+    for scenario in data:
+        for find in finders:
+            grid = Grid(matrix=scenario['matrix'])
+            start = grid.node(scenario['startX'], scenario['startY'])
+            end = grid.node(scenario['endX'], scenario['endY'])
+            finder = find()
+            path, runs = finder.find_path(start, end, grid)
+            print(find.__name__)
+            print(grid.grid_str(path=path, start=start, end=end))
+            assert len(path) == scenario['expectedLength']
+
+
 if __name__ == '__main__':
     test_path()
+    test_path_diagonal()

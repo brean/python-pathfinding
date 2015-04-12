@@ -10,3 +10,4 @@ def backtrace(node):
         path.append((node.x, node.y))
     path.reverse()
     return path
+

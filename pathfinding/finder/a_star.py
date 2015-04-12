@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import heapq
 import logging
-from pathfinding.core.heuristic import manhatten
+from pathfinding.core.heuristic import manhatten, octile
 from pathfinding.core.util import backtrace
+from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
 # max. amount of tries until we abort the search
@@ -13,17 +14,27 @@ SQRT2 = 2 ** 0.5
 
 
 class AStarFinder(object):
-    def __init__(self, heuristic=None, weight=1):
+    def __init__(self, heuristic=None, weight=1,
+                 diagonal_movement=DiagonalMovement.never):
         """
         find shortest path using A* algorithm
         :param heuristic: heuristic used to calculate distance of 2 points
+            (defaults to manhatten)
         :param weight: weight for the edges
+        :param diagonal_movement: if diagonal movement is allowed 
+            (see enum in diagonal_movement)
         :return:
         """
-        if not heuristic:
-            heuristic = manhatten
-        self.heuristic = heuristic
+        self.diagonal_movement = diagonal_movement
         self.weight = weight
+
+        if not heuristic:
+            if diagonal_movement == DiagonalMovement.never:
+                self.heuristic = manhatten
+            else:
+                # When diagonal movement is allowed the manhattan heuristic is
+                # not admissible it should be octile instead
+                self.heuristic = octile
 
     def find_path(self, start, end, grid, max_runs=MAX_RUNS):
         """
@@ -63,7 +74,7 @@ class AStarFinder(object):
                 return backtrace(end), runs
 
             # get neighbors of the current node
-            neighbors = grid.neighbors(node)
+            neighbors = grid.neighbors(node, self.diagonal_movement)
             for neighbor in neighbors:
                 if neighbor.closed:
                     continue

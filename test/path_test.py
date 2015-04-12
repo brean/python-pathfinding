@@ -4,6 +4,7 @@ import json
 from pathfinding.finder.a_star import AStarFinder
 from pathfinding.finder.dijkstra import DijkstraFinder
 from pathfinding.core.grid import Grid
+from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
@@ -37,11 +38,11 @@ def test_path_diagonal():
             grid = Grid(matrix=scenario['matrix'])
             start = grid.node(scenario['startX'], scenario['startY'])
             end = grid.node(scenario['endX'], scenario['endY'])
-            finder = find()
+            finder = find(diagonal_movement=DiagonalMovement.always)
             path, runs = finder.find_path(start, end, grid)
-            print(find.__name__)
+            print(find.__name__, runs, len(path))
             print(grid.grid_str(path=path, start=start, end=end))
-            assert len(path) == scenario['expectedLength']
+            assert len(path) == scenario['expectedDiagonalLength']
 
 
 if __name__ == '__main__':

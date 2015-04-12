@@ -6,7 +6,8 @@
         "endY": 1,
         "matrix": [[0, 0],
                   [1, 0]],
-        "expectedLength": 3
+        "expectedLength": 3,
+        "expectedDiagonalLength": 2
     },
     {
         "startX": 1,
@@ -19,7 +20,8 @@
                   [0, 1, 0, 0, 0],
                   [1, 0, 1, 1, 0],
                   [0, 0, 1, 0, 0]],
-        "expectedLength": 9
+        "expectedLength": 9,
+        "expectedDiagonalLength": 5
     },
     {
         "startX": 0,
@@ -32,7 +34,8 @@
                   [0, 0, 1, 0, 0],
                   [1, 0, 1, 1, 0],
                   [0, 0, 0, 0, 0]],
-        "expectedLength": 10
+        "expectedLength": 10,
+        "expectedDiagonalLength": 6
     },
     {
         "startX": 4,
@@ -59,6 +62,7 @@
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
-        "expectedLength": 31
+        "expectedLength": 31,
+        "expectedDiagonalLength": 16
     }
 ]

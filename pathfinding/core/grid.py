@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from .node import Node
+from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
 def build_nodes(width, height, matrix=None):
@@ -61,7 +62,7 @@ class Grid(object):
         """
         return self.inside(x, y) and self.nodes[y][x].walkable
 
-    def neighbors(self, node):
+    def neighbors(self, node, diagonal_movement=DiagonalMovement.never):
         """
         get all neighbors of one node
         :param node: node
@@ -69,18 +70,57 @@ class Grid(object):
         x = node.x
         y = node.y
         neighbors = []
+        s0 = d0 = s1 = d1 = s2 = d2 = s3 = d3 = False
+
         # ↑
         if self.walkable(x, y - 1):
             neighbors.append(self.nodes[y - 1][x])
+            s0 = True
         # →
         if self.walkable(x + 1, y):
             neighbors.append(self.nodes[y][x + 1])
+            s1 = True
         # ↓
         if self.walkable(x, y + 1):
             neighbors.append(self.nodes[y + 1][x])
+            s2 = True
         # ←
         if self.walkable(x - 1, y):
             neighbors.append(self.nodes[y][x - 1])
+            s3 = True
+
+        if diagonal_movement == DiagonalMovement.never:
+            return neighbors
+
+        if diagonal_movement == DiagonalMovement.only_when_no_obstacle:
+            d0 = s3 and s0
+            d1 = s0 and s1
+            d2 = s1 and s2
+            d3 = s2 and s3
+        elif diagonal_movement == DiagonalMovement.if_at_most_one_obstacle:
+            d0 = s3 or s0
+            d1 = s0 or s1
+            d2 = s1 or s2
+            d3 = s2 or s3
+        elif diagonal_movement == DiagonalMovement.always:
+            d0 = d1 = d2 = d3 = True
+
+        # ↖
+        if d0 and self.walkable(x - 1, y - 1):
+            neighbors.append(self.nodes[y - 1][x - 1])
+
+        # ↗
+        if d1 and self.walkable(x + 1, y - 1):
+            neighbors.append(self.nodes[y - 1][x + 1])
+
+        # ↘
+        if d2 and self.walkable(x + 1, y + 1):
+            neighbors.append(self.nodes[y + 1][x + 1])
+
+        # ↙
+        if d3 and self.walkable(x - 1, y + 1):
+            neighbors.append(self.nodes[y + 1][x - 1])
+
         return neighbors
 
     def grid_str(self, path=None, start=None, end=None,

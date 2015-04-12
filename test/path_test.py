@@ -2,6 +2,7 @@
 import os
 import json
 from pathfinding.finder.a_star import AStarFinder
+from pathfinding.finder.dijkstra import DijkstraFinder
 from pathfinding.core.grid import Grid
 
 
@@ -16,13 +17,17 @@ def test_path():
     """
     test scenarios defined in json file
     """
+    finders = [AStarFinder, DijkstraFinder]
     for scenario in data:
-        grid = Grid(matrix=scenario['matrix'])
-        start = grid.node(scenario['startX'], scenario['startY'])
-        end = grid.node(scenario['endX'], scenario['endY'])
-        finder = AStarFinder()
-        path, runs = finder.find_path(start, end, grid)
-        assert len(path) == scenario['expectedLength']
+        for find in finders:
+            grid = Grid(matrix=scenario['matrix'])
+            start = grid.node(scenario['startX'], scenario['startY'])
+            end = grid.node(scenario['endX'], scenario['endY'])
+            finder = find()
+            path, runs = finder.find_path(start, end, grid)
+            print(find.__name__)
+            print(grid.grid_str(path=path, start=start, end=end))
+            assert len(path) == scenario['expectedLength']
     
 
 if __name__ == '__main__':

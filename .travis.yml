@@ -4,6 +4,10 @@ env:
   - TOX_ENV=py34
   - TOX_ENV=py27
 install:
-  - pip install tox
+  - pip install tox coveralls
+script:
+  coverage run --source=pathfinding setup.py test
 script:
   - tox -e $TOX_ENV
+after_success:
+  coveralls

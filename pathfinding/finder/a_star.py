@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import heapq
+import heapq # used for the so colled "open list" that stores known nodes
 import logging
 from pathfinding.core.heuristic import manhatten, octile
 from pathfinding.core.util import backtrace
@@ -77,6 +77,7 @@ class AStarFinder(object):
             neighbors = grid.neighbors(node, self.diagonal_movement)
             for neighbor in neighbors:
                 if neighbor.closed:
+                    # already visited last minimum f value
                     continue
 
                 x = neighbor.x

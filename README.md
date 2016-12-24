@@ -23,21 +23,26 @@ A simple usage example to find a path using A*.
       [0, 0, 0]
     ]
     ```
+
 1. we create a new grid from this map representation. This will create Node instances for every element of our map. It will also set the size of the map. We assume that your map is a square, so the size height is defined by the length of the outer list and the width by the length of the first list inside it.
+
     ```python
     grid = Grid(matrix=matrix)
     ```
 1. we get the start (top-left) and endpoint (bottom-right) from the map:
+
     ```python
     start = grid.node(0, 0)
     end = grid.node(2, 2)
     ```
 1. create a new instance of our finder and let it do its work. We allow diagonal movement. The `find_path` function does not only return you the path from the start to the end point it also returns the number of times the algorithm needed to be called until a way was found.
+
     ```python
     finder = AStarFinder(diagonal_movement=DiagonalMovement.always)
     path, runs = finder.find_path(start, end, grid)
     ```
 1. thats it. We found a way. Now we can print the result (or do something else with it). Note that the start and end points are part of the path.
+
     ```python
     print('operations:', runs, 'path length:', len(path))
     print(grid.grid_str(path=path, start=start, end=end))

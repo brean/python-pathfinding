@@ -9,8 +9,8 @@ class DijkstraFinder(AStarFinder):
             # distance cost (node.f) is calculated only from 
             # start to current point (node.g)
             return 0
-        
+
         super(DijkstraFinder, self).__init__(
             weight=weight, diagonal_movement=diagonal_movement)
-        
+
         self.heuristic = heuristic

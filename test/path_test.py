@@ -29,7 +29,7 @@ def test_path():
             print(find.__name__)
             print(grid.grid_str(path=path, start=start, end=end))
             assert len(path) == scenario['expectedLength']
-    
+
 
 def test_path_diagonal():
     # test diagonal movement

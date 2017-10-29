@@ -21,7 +21,7 @@ class AStarFinder(object):
         :param heuristic: heuristic used to calculate distance of 2 points
             (defaults to manhatten)
         :param weight: weight for the edges
-        :param diagonal_movement: if diagonal movement is allowed 
+        :param diagonal_movement: if diagonal movement is allowed
             (see enum in diagonal_movement)
         :return:
         """
@@ -51,11 +51,11 @@ class AStarFinder(object):
         open_list = []
         start.g = 0
         start.f = 0
-        
+
         # push the start node into the open list
         heapq.heappush(open_list, start)
         runs = 0
-        
+
         # while the open list is not empty
         while len(open_list) > 0:
             runs += 1
@@ -63,12 +63,12 @@ class AStarFinder(object):
                 logging.error('A* run into barrier of {} iterations without '
                               'finding the destination'.format(max_runs))
                 break
-            
+
             # pop node with minimum 'f' value
             node = heapq.nsmallest(1, open_list)[0]
             open_list.remove(node)
             node.closed = True
-            
+
             # if reached the end position, construct the path and return it
             if node == end:
                 return backtrace(end), runs
@@ -91,7 +91,7 @@ class AStarFinder(object):
                 else:
                     # not a direct neighbor - diagonal movement
                     ng += SQRT2
-                    
+
                 # check if the neighbor has not been inspected yet, or
                 # can be reached with smaller cost from the current node
                 if not neighbor.opened or ng < neighbor.g:

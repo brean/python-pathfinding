@@ -18,8 +18,8 @@ A simple usage example to find a path using A*.
 1. Create a map using a 2D-list. 1, True or any value describes an obstacle. 0, False or None descibes a field that can be walked on. In this example we like the algorithm to create a path from the upper left to the bottom right. To make it not to easy for the algorithm we added an obstacle in the middle, so it can not use the direct way. Feel free to create a more complex map
     ```python
     matrix = [
-      [0, 0, 0], 
-      [0, 1, 0], 
+      [0, 0, 0],
+      [0, 1, 0],
       [0, 0, 0]
     ]
     ```
@@ -50,7 +50,7 @@ A simple usage example to find a path using A*.
     The result should look like this:
     ```
     ('operations:', 5, 'path length:', 4)
-    
+
     +---+
     |sx |
     | #x|
@@ -67,8 +67,8 @@ from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
 
 matrix = [
-  [0, 0, 0], 
-  [0, 1, 0], 
+  [0, 0, 0],
+  [0, 1, 0],
   [0, 0, 0]
 ]
 grid = Grid(matrix=matrix)

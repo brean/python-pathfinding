@@ -57,7 +57,7 @@ A simple usage example to find a path using A*.
     |  e|
     +---+
     ```
-    You can ignore the +, - and | characters, they just show the border around your map, the blank space is a free field, 's' marks the start, 'e' the end and '#' our obstacle in the middle. You see the path from start to end marked by 'x' characters. We allow horizontal movement, so it is not using the upper-right corner.
+    You can ignore the +, - and | characters, they just show the border around your map, the blank space is a free field, 's' marks the start, 'e' the end and '#' our obstacle in the middle. You see the path from start to end marked by 'x' characters. We allow horizontal movement, so it is not using the upper-right corner. You can access `print(path)` to get the specific list of coordinates.
 
 Here The whole example if you just want to copy-and-paste the code and play with it:
 

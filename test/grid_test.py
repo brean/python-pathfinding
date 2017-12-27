@@ -48,6 +48,18 @@ def test_str():
     path = [(0, 1)]
     assert grid.grid_str(path, start, end) == WALKED_GRID[1:-1]
 
+def test_empty():
+    """
+    special test for empty values (should fail)
+    """
+    matrix = ()
+    grid = Grid(matrix=matrix)
+    assert grid.grid_str() == '++\n||\n++'
+
+    matrix = np.array(matrix)
+    grid = Grid(matrix=matrix)
+    assert grid.grid_str() == '++\n||\n++'
+
 def test_numpy():
     """
     test grid from numpy array

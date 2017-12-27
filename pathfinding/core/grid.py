@@ -15,15 +15,10 @@ def build_nodes(width, height, matrix=None):
     :rtype : list
     """
     nodes = [None] * height
-    use_matrix = False
-    if USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.any():
-        use_matrix = True
-        assert matrix.shape[0] == height
-        assert matrix.shape[1] == width
-    elif matrix:
-        use_matrix = True
-        assert len(matrix) == height
-        assert len(matrix[0]) == width
+    use_matrix = (isinstance(matrix, (tuple, list))) or \
+        (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.any())
+
+    # and the
     for y in range(height):
         nodes[y] = [None] * width
         for x in range(width):
@@ -37,17 +32,20 @@ def build_nodes(width, height, matrix=None):
 
 
 class Grid(object):
-    def __init__(self, width=None, height=None, matrix=None):
+    def __init__(self, width=0, height=0, matrix=None):
         """
         a grid represents the map (as 2d-list of nodes).
         """
-        if width or height:
-            self.width = width
-            self.height = height
-        else:
-            self.width = len(matrix[0])
+        self.width = width
+        self.height = height
+        if isinstance(matrix, (tuple, list)) or \
+            (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.any()):
             self.height = len(matrix)
-        self.nodes = build_nodes(self.width, self.height, matrix)
+            self.width = self.width = len(matrix[0]) if self.height > 0 else 0
+        if self.width > 0 and self.height > 0:
+            self.nodes = build_nodes(self.width, self.height, matrix)
+        else:
+            self.nodes = [[]]
 
     def node(self, x, y):
         """

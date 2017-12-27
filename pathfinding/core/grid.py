@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 from .node import Node
+try:
+    import numpy as np
+    USE_NUMPY = True
+except ImportError:
+    USE_NUMPY = False
 from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
@@ -10,7 +15,13 @@ def build_nodes(width, height, matrix=None):
     :rtype : list
     """
     nodes = [None] * height
-    if matrix:
+    use_matrix = False
+    if USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.any():
+        use_matrix = True
+        assert matrix.shape[0] == height
+        assert matrix.shape[1] == width
+    elif matrix:
+        use_matrix = True
         assert len(matrix) == height
         assert len(matrix[0]) == width
     for y in range(height):
@@ -19,7 +30,7 @@ def build_nodes(width, height, matrix=None):
             walkable = True
             # 0, False, None will be walkable
             # while others will be un-walkable
-            if matrix and matrix[y][x]:
+            if use_matrix and matrix[y][x]:
                 walkable = False
             nodes[y][x] = Node(x, y, walkable)
     return nodes

@@ -11,7 +11,7 @@ setup(
     license="MIT",
     author="Andreas Bresser",
     packages=find_packages(),
+    tests_require=["numpy"]
     include_package_data=True,
     install_requires=[],
 )
-

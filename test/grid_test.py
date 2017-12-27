@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid
+from pathfinding.finder.a_star import AStarFinder
+import numpy as np
 
 BORDERLESS_GRID = """
 xxx
@@ -18,6 +21,19 @@ WALKED_GRID = """
 +---+
 """
 
+SIMPLE_MATRIX = [
+  [0, 0, 0],
+  [0, 1, 0],
+  [0, 0, 0]
+]
+
+SIMPLE_WALKED = """
++---+
+|sx |
+| #x|
+|  e|
++---+
+"""
 
 def test_str():
     """
@@ -31,6 +47,21 @@ def test_str():
     end = grid.nodes[1][1]
     path = [(0, 1)]
     assert grid.grid_str(path, start, end) == WALKED_GRID[1:-1]
+
+def test_numpy():
+    """
+    test grid from numpy array
+    """
+    matrix = np.array(SIMPLE_MATRIX)
+    grid = Grid(matrix=matrix)
+
+    start = grid.node(0, 0)
+    end = grid.node(2, 2)
+
+    finder = AStarFinder(diagonal_movement=DiagonalMovement.always)
+    path, runs = finder.find_path(start, end, grid)
+
+    assert grid.grid_str(path, start, end) == SIMPLE_WALKED[1:-1]
 
 if __name__ == '__main__':
     test_str()

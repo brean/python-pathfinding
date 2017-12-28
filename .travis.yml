@@ -14,6 +14,6 @@ python:
 install: pip install tox-travis coveralls
 language: python
 install: pip install tox coveralls
-script: tox
-script: coverage run --source=pathfinding setup.py test
-after_success: coveralls
+script:
+- tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/') -- --with-coverage
+after_success: coveralls --verbose

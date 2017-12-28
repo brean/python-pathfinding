@@ -8,7 +8,7 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
 # max. amount of tries until we abort the search
-MAX_RUNS = math.inf
+MAX_RUNS = float('inf')
 
 # square root of 2
 SQRT2 = math.sqrt(2)

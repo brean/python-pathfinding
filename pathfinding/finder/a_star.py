@@ -11,7 +11,7 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 MAX_RUNS = math.inf
 
 # square root of 2
-SQRT2 = 2 ** 0.5
+SQRT2 = math.sqrt(2)
 
 # used for backtrace of bi-directional A*
 BY_START = 1

@@ -18,7 +18,6 @@ def build_nodes(width, height, matrix=None):
     use_matrix = (isinstance(matrix, (tuple, list))) or \
         (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.any())
 
-    # and the
     for y in range(height):
         nodes[y] = [None] * width
         for x in range(width):

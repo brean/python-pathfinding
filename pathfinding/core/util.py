@@ -11,3 +11,14 @@ def backtrace(node):
     path.reverse()
     return path
 
+
+def bi_backtrace(node_a, node_b):
+    """
+    Backtrace from start and end node, returns the path for bi-directional A*
+    (including both start and end nodes)
+    """
+    path_a = backtrace(node_a)
+    path_b = backtrace(node_b)
+    path_b.reverse()
+    print(path_a + path_b)
+    return path_a + path_b

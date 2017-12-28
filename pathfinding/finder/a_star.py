@@ -41,6 +41,29 @@ class AStarFinder(object):
                 # not admissible it should be octile instead
                 self.heuristic = octile
 
+
+    def calc_cost(self, node_a, node_b):
+        """
+        get the distance between current node and the neighbor (cost)
+        """
+        ng = node_a.g
+        if node_b.x - node_a.x == 0 or node_b.y - node_a.y == 0:
+            # direct neighbor - distance is 1
+            ng += 1
+        else:
+            # not a direct neighbor - diagonal movement
+            ng += SQRT2
+        return ng
+
+
+    def apply_heuristic(self, node_a, node_b):
+        """
+        helper function to calculate heuristic
+        """
+        return self.weight * \
+            self.heuristic(abs(node_a.x - node_b.x), abs(node_a.y - node_b.y))
+
+
     def check_neighbors(self, start, end, grid, open_list,
             open_value=True, backtrace_by=None):
         """
@@ -71,24 +94,13 @@ class AStarFinder(object):
                 else:
                     return bi_backtrace(neighbor, node)
 
-            x = neighbor.x
-            y = neighbor.y
-
-            # get the distance between current node and the neighbor
-            ng = node.g
-            if x - node.x == 0 or y - node.y == 0:
-                # direct neighbor - distance is 1
-                ng += 1
-            else:
-                # not a direct neighbor - diagonal movement
-                ng += SQRT2
+            ng = self.calc_cost(node, neighbor)
 
             # check if the neighbor has not been inspected yet, or
             # can be reached with smaller cost from the current node
             if not neighbor.opened or ng < neighbor.g:
                 neighbor.g = ng
-                neighbor.h = neighbor.h or self.weight * \
-                    self.heuristic(abs(x - end.x), abs(y - end.y))
+                neighbor.h = neighbor.h or self.apply_heuristic(neighbor, end)
                 # f is the estimated total cost from start to goal
                 neighbor.f = neighbor.g + neighbor.h
                 neighbor.parent = node

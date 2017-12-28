@@ -48,7 +48,7 @@ class BiAStarFinder(AStarFinder):
             if path:
                 return path, runs
 
-            path = self.check_neighbors(start, end, grid, end_open_list,
+            path = self.check_neighbors(end, start, grid, end_open_list,
                 open_value=BY_END, backtrace_by=BY_START)
             if path:
                 return path, runs

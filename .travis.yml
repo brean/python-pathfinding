@@ -16,6 +16,6 @@ install:
 script:
   coverage run --source=pathfinding setup.py test
 script:
-  - tox -e $TOX_ENV
+  - tox
 after_success:
   coveralls

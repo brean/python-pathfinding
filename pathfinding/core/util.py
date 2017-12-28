@@ -20,5 +20,4 @@ def bi_backtrace(node_a, node_b):
     path_a = backtrace(node_a)
     path_b = backtrace(node_b)
     path_b.reverse()
-    print(path_a + path_b)
     return path_a + path_b

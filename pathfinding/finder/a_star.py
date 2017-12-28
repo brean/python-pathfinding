@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import math
 import heapq # used for the so colled "open list" that stores known nodes
 import logging
 from pathfinding.core.heuristic import manhatten, octile
@@ -7,7 +8,7 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
 # max. amount of tries until we abort the search
-MAX_RUNS = 0
+MAX_RUNS = math.inf
 
 # square root of 2
 SQRT2 = 2 ** 0.5
@@ -43,7 +44,8 @@ class AStarFinder(object):
     def check_neighbors(self, start, end, grid, open_list,
             open_value=True, backtrace_by=None):
         """
-        find next path based on given node (or return path if we found the end)
+        find next path segment based on given node
+        (or return path if we found the end)
         """
         # pop node with minimum 'f' value
         node = heapq.nsmallest(1, open_list)[0]
@@ -125,7 +127,7 @@ class AStarFinder(object):
         runs = 0 # count number of iterations
         while len(open_list) > 0:
             runs += 1
-            if 0 < max_runs <= runs:
+            if max_runs <= runs:
                 logging.error('A* run into barrier of {} iterations without '
                               'finding the destination'.format(max_runs))
                 break

@@ -16,16 +16,14 @@ def build_nodes(width, height, matrix=None):
     """
     nodes = [None] * height
     use_matrix = (isinstance(matrix, (tuple, list))) or \
-        (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.any())
+        (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.size > 0)
 
     for y in range(height):
         nodes[y] = [None] * width
         for x in range(width):
-            walkable = True
-            # 0, False, None will be walkable
-            # while others will be un-walkable
-            if use_matrix and matrix[y][x]:
-                walkable = False
+            # 0, '0', False, None will be walkable
+            # while others will be obstacles
+            walkable = not use_matrix or matrix[y][x] in [0, '0', False, None]
             nodes[y][x] = Node(x, y, walkable)
     return nodes
 
@@ -38,7 +36,7 @@ class Grid(object):
         self.width = width
         self.height = height
         if isinstance(matrix, (tuple, list)) or \
-            (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.any()):
+            (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.size > 0):
             self.height = len(matrix)
             self.width = self.width = len(matrix[0]) if self.height > 0 else 0
         if self.width > 0 and self.height > 0:

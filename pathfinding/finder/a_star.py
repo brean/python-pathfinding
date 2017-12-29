@@ -2,13 +2,16 @@
 import math
 import heapq # used for the so colled "open list" that stores known nodes
 import logging
+import time # for time limitation
 from pathfinding.core.heuristic import manhatten, octile
 from pathfinding.core.util import backtrace, bi_backtrace
 from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
-# max. amount of tries until we abort the search
+# max. amount of tries we iterate until we abort the search
 MAX_RUNS = float('inf')
+# max. time after we until we abort the search (in seconds)
+TIME_LIMIT = float('inf')
 
 # square root of 2
 SQRT2 = math.sqrt(2)
@@ -20,7 +23,9 @@ BY_END = 2
 
 class AStarFinder(object):
     def __init__(self, heuristic=None, weight=1,
-                 diagonal_movement=DiagonalMovement.never):
+                 diagonal_movement=DiagonalMovement.never,
+                 time_limit=TIME_LIMIT,
+                 max_runs=MAX_RUNS):
         """
         find shortest path using A* algorithm
         :param heuristic: heuristic used to calculate distance of 2 points
@@ -28,8 +33,15 @@ class AStarFinder(object):
         :param weight: weight for the edges
         :param diagonal_movement: if diagonal movement is allowed
             (see enum in diagonal_movement)
-        :return:
+        :param time_limit: max. runtime in seconds
+        :param max_runs: max. amount of tries until we abort the search
+            (optional, only if we enter huge grids and have time constrains)
+            <=0 means there are no constrains and the code might run on any
+            large map.
         """
+        self.time_limit = time_limit
+        self.max_runs = max_runs
+
         self.diagonal_movement = diagonal_movement
         self.weight = weight
 
@@ -60,8 +72,9 @@ class AStarFinder(object):
         """
         helper function to calculate heuristic
         """
-        return self.weight * \
-            self.heuristic(abs(node_a.x - node_b.x), abs(node_a.y - node_b.y))
+        return self.heuristic(
+            abs(node_a.x - node_b.x),
+            abs(node_a.y - node_b.y))
 
 
     def check_neighbors(self, start, end, grid, open_list,
@@ -100,7 +113,8 @@ class AStarFinder(object):
             # can be reached with smaller cost from the current node
             if not neighbor.opened or ng < neighbor.g:
                 neighbor.g = ng
-                neighbor.h = neighbor.h or self.apply_heuristic(neighbor, end)
+                neighbor.h = neighbor.h or \
+                    self.apply_heuristic(neighbor, end) *  self.weight
                 # f is the estimated total cost from start to goal
                 neighbor.f = neighbor.g + neighbor.h
                 neighbor.parent = node
@@ -118,35 +132,47 @@ class AStarFinder(object):
         # the end has not been reached (yet) keep the find_path loop running
         return None
 
+    def keep_running(self):
+        """
+        check, if we run into time or iteration constrains.
+        """
+        if self.runs >= self.max_runs:
+            logging.error('{} run into barrier of {} iterations without '
+                          'finding the destination'.format(
+                            self.__name__, self.max_runs))
+            return False
+        if time.time() - self.start_time >= self.time_limit:
+            logging.error('{} took longer than {} '
+                          'seconds, aborting!'.format(
+                            self.__name__, self.time_limit))
+            return False
+        return True
 
-    def find_path(self, start, end, grid, max_runs=MAX_RUNS):
+
+    def find_path(self, start, end, grid):
         """
         find a path from start to end node on grid using the A* algorithm
         :param start: start node
         :param end: end node
         :param grid: grid that stores all possible steps/tiles as 2D-list
-        :param max_runs: max. amount of tries until we abort the search
-            (optional, only if we enter huge grids and have time constrains)
-            <=0 means there are no constrains and the code might run on any
-            large map.
         :return:
         """
+        self.start_time = time.time() # execution time limitation
+        self.runs = 0 # count number of iterations
+
         open_list = []
         start.g = 0
         start.f = 0
         heapq.heappush(open_list, start)
 
-        runs = 0 # count number of iterations
         while len(open_list) > 0:
-            runs += 1
-            if max_runs <= runs:
-                logging.error('A* run into barrier of {} iterations without '
-                              'finding the destination'.format(max_runs))
+            self.runs += 1
+            if not self.keep_running():
                 break
 
             path = self.check_neighbors(start, end, grid, open_list)
             if path:
-                return path, runs
+                return path, self.runs
 
         # failed to find path
-        return [], runs
+        return [], self.runs

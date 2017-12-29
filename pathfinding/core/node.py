@@ -29,6 +29,10 @@ class Node(object):
         # used for backtracking to the start point
         self.parent = None
 
+        # used for recurion tracking of IDA*
+        self.retain_count = 0
+        self.tested = False
+
     def __lt__(self, other):
         """
         nodes are sorted by f value (see a_star.py)

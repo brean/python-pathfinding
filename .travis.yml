@@ -7,7 +7,6 @@ python:
   - "3.6"
 install: pip install tox-travis coveralls
 language: python
-install: pip install tox coveralls
 script:
 - tox -e $(echo py$TRAVIS_PYTHON_VERSION | tr -d . | sed -e 's/pypypy/pypy/') -- --with-coverage
 after_success: coveralls --verbose

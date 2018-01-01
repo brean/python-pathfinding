@@ -157,7 +157,7 @@ class Grid(object):
                     line += start_chr
                 elif node == end:
                     line += end_chr
-                elif path and (node.x, node.y) in path:
+                elif path and ((node.x, node.y) in path or node in path):
                     line += path_chr
                 elif node.walkable:
                     line += empty_chr  # empty field

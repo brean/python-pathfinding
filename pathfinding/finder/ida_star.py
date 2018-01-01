@@ -1,7 +1,10 @@
-from .a_star import *
+import time
+from pathfinding.core.heuristic import manhatten, octile
+from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.node import Node
+from .finder import Finder, TIME_LIMIT, MAX_RUNS
 
-class IDAStarFinder(AStarFinder):
+class IDAStarFinder(Finder):
     """
     Iterative Deeping A Star (IDA*) path-finder.
 
@@ -25,6 +28,13 @@ class IDAStarFinder(AStarFinder):
             time_limit=time_limit,
             max_runs=max_runs)
         self.track_recursion = track_recursion
+        if not heuristic:
+            if diagonal_movement == DiagonalMovement.never:
+                self.heuristic = manhatten
+            else:
+                # When diagonal movement is allowed the manhattan heuristic is
+                # not admissible it should be octile instead
+                self.heuristic = octile
 
     def search(self, node, g, cutoff, path, depth, end, grid):
         self.nodes_visited += 1
@@ -45,7 +55,7 @@ class IDAStarFinder(AStarFinder):
             path[depth] = node
             return node
 
-        neighbors = grid.neighbors(node, self.diagonal_movement)
+        neighbors = self.find_neighbors(grid, node)
 
         # Sort the neighbors, gives nicer paths. But, this deviates
         # from the original algorithm - so I left it out
@@ -90,8 +100,6 @@ class IDAStarFinder(AStarFinder):
 
         self.nodes_visited = 0 # for statistics
 
-        self.runs = 0 # count number of iterations
-
         # initial search depth, given the typical heuristic contraints,
         # there should be no cheaper route possible.
         cutoff = self.apply_heuristic(start, end)
@@ -107,7 +115,7 @@ class IDAStarFinder(AStarFinder):
             # If t is a node, it's also the end node. Route is now
             # populated with a valid path to the end node.
             if isinstance(t, Node):
-                return path, self.runs
+                return [(node.x, node.y) for node in path], self.runs
 
             # Try again, this time with a deeper cut-off. The t score
             # is the closest we got to the end node.

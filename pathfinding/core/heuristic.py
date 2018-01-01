@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import math
-
+from .util import SQRT2
 
 def manhatten(dx, dy):
     """manhatten heuristics"""
@@ -18,7 +18,7 @@ def chebyshev(dx, dy):
 
 
 def octile(dx, dy):
-    f = (2 ** 0.5) - 1
+    f = SQRT2 - 1
     if dx < dy:
         return f * dx + dy
     else:

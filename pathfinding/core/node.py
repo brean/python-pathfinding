@@ -31,6 +31,7 @@ class Node(object):
 
         # used for recurion tracking of IDA*
         self.retain_count = 0
+        # used for IDA* and Jump-Point-Search
         self.tested = False
 
     def __lt__(self, other):

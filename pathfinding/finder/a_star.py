@@ -6,22 +6,9 @@ import time # for time limitation
 from pathfinding.core.heuristic import manhatten, octile
 from pathfinding.core.util import backtrace, bi_backtrace
 from pathfinding.core.diagonal_movement import DiagonalMovement
+from .finder import Finder, TIME_LIMIT, MAX_RUNS, BY_START, BY_END
 
-
-# max. amount of tries we iterate until we abort the search
-MAX_RUNS = float('inf')
-# max. time after we until we abort the search (in seconds)
-TIME_LIMIT = float('inf')
-
-# square root of 2
-SQRT2 = math.sqrt(2)
-
-# used for backtrace of bi-directional A*
-BY_START = 1
-BY_END = 2
-
-
-class AStarFinder(object):
+class AStarFinder(Finder):
     def __init__(self, heuristic=None, weight=1,
                  diagonal_movement=DiagonalMovement.never,
                  time_limit=TIME_LIMIT,
@@ -39,11 +26,12 @@ class AStarFinder(object):
             <=0 means there are no constrains and the code might run on any
             large map.
         """
-        self.time_limit = time_limit
-        self.max_runs = max_runs
-
-        self.diagonal_movement = diagonal_movement
-        self.weight = weight
+        super(AStarFinder, self).__init__(
+            heuristic=heuristic,
+            weight=weight,
+            diagonal_movement=diagonal_movement,
+            time_limit=time_limit,
+            max_runs=max_runs)
 
         if not heuristic:
             if diagonal_movement == DiagonalMovement.never:
@@ -52,29 +40,6 @@ class AStarFinder(object):
                 # When diagonal movement is allowed the manhattan heuristic is
                 # not admissible it should be octile instead
                 self.heuristic = octile
-
-
-    def calc_cost(self, node_a, node_b):
-        """
-        get the distance between current node and the neighbor (cost)
-        """
-        ng = node_a.g
-        if node_b.x - node_a.x == 0 or node_b.y - node_a.y == 0:
-            # direct neighbor - distance is 1
-            ng += 1
-        else:
-            # not a direct neighbor - diagonal movement
-            ng += SQRT2
-        return ng
-
-
-    def apply_heuristic(self, node_a, node_b):
-        """
-        helper function to calculate heuristic
-        """
-        return self.heuristic(
-            abs(node_a.x - node_b.x),
-            abs(node_a.y - node_b.y))
 
 
     def check_neighbors(self, start, end, grid, open_list,
@@ -95,7 +60,7 @@ class AStarFinder(object):
             return backtrace(end)
 
         # get neighbors of the current node
-        neighbors = grid.neighbors(node, self.diagonal_movement)
+        neighbors = self.find_neighbors(grid, node)
         for neighbor in neighbors:
             if neighbor.closed:
                 # already visited last minimum f value
@@ -107,46 +72,12 @@ class AStarFinder(object):
                 else:
                     return bi_backtrace(neighbor, node)
 
-            ng = self.calc_cost(node, neighbor)
-
             # check if the neighbor has not been inspected yet, or
             # can be reached with smaller cost from the current node
-            if not neighbor.opened or ng < neighbor.g:
-                neighbor.g = ng
-                neighbor.h = neighbor.h or \
-                    self.apply_heuristic(neighbor, end) *  self.weight
-                # f is the estimated total cost from start to goal
-                neighbor.f = neighbor.g + neighbor.h
-                neighbor.parent = node
-
-                if not neighbor.opened:
-                    heapq.heappush(open_list, neighbor)
-                    neighbor.opened = open_value
-                else:
-                    # the neighbor can be reached with smaller cost.
-                    # Since its f value has been updated, we have to
-                    # update its position in the open list
-                    open_list.remove(neighbor)
-                    heapq.heappush(open_list, neighbor)
+            self.process_node(neighbor, node, end, open_list, open_value)
 
         # the end has not been reached (yet) keep the find_path loop running
         return None
-
-    def keep_running(self):
-        """
-        check, if we run into time or iteration constrains.
-        """
-        if self.runs >= self.max_runs:
-            logging.error('{} run into barrier of {} iterations without '
-                          'finding the destination'.format(
-                            self.__name__, self.max_runs))
-            return False
-        if time.time() - self.start_time >= self.time_limit:
-            logging.error('{} took longer than {} '
-                          'seconds, aborting!'.format(
-                            self.__name__, self.time_limit))
-            return False
-        return True
 
 
     def find_path(self, start, end, grid):
@@ -157,22 +88,6 @@ class AStarFinder(object):
         :param grid: grid that stores all possible steps/tiles as 2D-list
         :return:
         """
-        self.start_time = time.time() # execution time limitation
-        self.runs = 0 # count number of iterations
-
-        open_list = []
         start.g = 0
         start.f = 0
-        heapq.heappush(open_list, start)
-
-        while len(open_list) > 0:
-            self.runs += 1
-            if not self.keep_running():
-                break
-
-            path = self.check_neighbors(start, end, grid, open_list)
-            if path:
-                return path, self.runs
-
-        # failed to find path
-        return [], self.runs
+        return super(AStarFinder, self).find_path(start, end, grid)

@@ -4,7 +4,7 @@ import heapq # used for the so colled "open list" that stores known nodes
 import logging
 import time # for time limitation
 from pathfinding.core.heuristic import manhatten, octile
-from pathfinding.core.util import backtrace, bi_backtrace
+from pathfinding.core.util import SQRT2
 from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
@@ -12,9 +12,6 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 MAX_RUNS = float('inf')
 # max. time after we until we abort the search (in seconds)
 TIME_LIMIT = float('inf')
-
-# square root of 2 for diagonal distance
-SQRT2 = math.sqrt(2)
 
 # used for backtrace of bi-directional A*
 BY_START = 1
@@ -63,18 +60,30 @@ class Finder(object):
         return ng
 
 
-    def apply_heuristic(self, node_a, node_b):
+    def apply_heuristic(self, node_a, node_b, heuristic=None):
         """
-        helper function to calculate heuristic
+        helper function to apply heuristic based
         """
-        return self.heuristic(
+        if not heuristic:
+            heuristic = self.heuristic
+        return heuristic(
             abs(node_a.x - node_b.x),
             abs(node_a.y - node_b.y))
+
+
+    def find_neighbors(self, grid, node, diagonal_movement=None):
+        '''
+        find neighbor, same for Djikstra, A*, Bi-A*, IDA*
+        '''
+        if not diagonal_movement:
+            diagonal_movement = self.diagonal_movement
+        return grid.neighbors(node, diagonal_movement=diagonal_movement)
 
 
     def keep_running(self):
         """
         check, if we run into time or iteration constrains.
+        :returns: True if we keep running and False if we run into a constraint
         """
         if self.runs >= self.max_runs:
             logging.error('{} run into barrier of {} iterations without '
@@ -87,3 +96,66 @@ class Finder(object):
                             self.__name__, self.time_limit))
             return False
         return True
+
+
+    def process_node(self, node, parent, end, open_list, open_value=True):
+        '''
+        we check if the given node is path of the path by calculating its
+        cost and add or remove it from our path
+        :param node: the node we like to test
+            (the neighbor in A* or jump-node in JumpPointSearch)
+        :param parent: the parent node (the current node we like to test)
+        :param end: the end point to calculate the cost of the path
+        :param open_list: the list that keeps track of our current path
+        :param open_value: needed if we like to set the open list to something
+            else than True (used for bi-directional algorithms)
+
+        '''
+        # calculate cost from current node (parent) to the next node (neighbor)
+        ng = self.calc_cost(parent, node)
+
+        if not node.opened or ng < node.g:
+            node.g = ng
+            node.h = node.h or \
+                self.apply_heuristic(node, end) *  self.weight
+            # f is the estimated total cost from start to goal
+            node.f = node.g + node.h
+            node.parent = parent
+
+            if not node.opened:
+                heapq.heappush(open_list, node)
+                node.opened = open_value
+            else:
+                # the node can be reached with smaller cost.
+                # Since its f value has been updated, we have to
+                # update its position in the open list
+                open_list.remove(node)
+                heapq.heappush(open_list, node)
+
+
+    def find_path(self, start, end, grid):
+        """
+        find a path from start to end node on grid by iterating over
+        all neighbors of a node (see check_neighbors)
+        :param start: start node
+        :param end: end node
+        :param grid: grid that stores all possible steps/tiles as 2D-list
+        :return:
+        """
+        self.start_time = time.time() # execution time limitation
+        self.runs = 0 # count number of iterations
+        start.opened = True
+
+        open_list = [start]
+
+        while len(open_list) > 0:
+            self.runs += 1
+            if not self.keep_running():
+                break
+
+            path = self.check_neighbors(start, end, grid, open_list)
+            if path:
+                return path, self.runs
+
+        # failed to find path
+        return [], self.runs

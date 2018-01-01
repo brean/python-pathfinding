@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import heapq # used for the so colled "open list" that stores known nodes
 import logging
+import time
 from pathfinding.core.heuristic import manhatten, octile
 from pathfinding.core.diagonal_movement import DiagonalMovement
-from .a_star import *
+from .finder import Finder, BY_START, BY_END
+from .a_star import AStarFinder
 
 class BiAStarFinder(AStarFinder):
     """
@@ -21,16 +22,14 @@ class BiAStarFinder(AStarFinder):
         self.start_time = time.time() # execution time limitation
         self.runs = 0 # count number of iterations
 
-        start_open_list = []
+        start_open_list = [start]
         start.g = 0
         start.f = 0
-        heapq.heappush(start_open_list, start)
         start.opened = BY_START
 
-        end_open_list = []
+        end_open_list = [end]
         end.g = 0
         end.f = 0
-        heapq.heappush(end_open_list, end)
         end.opened = BY_END
 
         while len(start_open_list) > 0 and len(end_open_list) > 0:

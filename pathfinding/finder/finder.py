@@ -83,12 +83,12 @@ class Finder(object):
         if self.runs >= self.max_runs:
             logging.error('{} run into barrier of {} iterations without '
                           'finding the destination'.format(
-                            self.__name__, self.max_runs))
+                            self.__class__.__name__, self.max_runs))
             return False
         if time.time() - self.start_time >= self.time_limit:
             logging.error('{} took longer than {} '
                           'seconds, aborting!'.format(
-                            self.__name__, self.time_limit))
+                            self.__class__.__name__, self.time_limit))
             return False
         return True
 

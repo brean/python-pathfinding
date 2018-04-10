@@ -53,6 +53,18 @@ def test_path_diagonal():
             assert len(path) == scenario['expectedDiagonalLength']
 
 
+def test_max_runs():
+    scenario = data[1]
+    grid = Grid(matrix=scenario['matrix'])
+    start = grid.node(scenario['startX'], scenario['startY'])
+    end = grid.node(scenario['endX'], scenario['endY'])
+    finder = AStarFinder(diagonal_movement=DiagonalMovement.always,
+                         time_limit=TIME_LIMIT, max_runs=2)
+    path, runs = finder.find_path(start, end, grid)
+    assert(path == [])
+    assert(runs == 2)
+
+
 if __name__ == '__main__':
     test_path()
     test_path_diagonal()

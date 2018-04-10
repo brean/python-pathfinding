@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import math
 
+
 # square root of 2 for diagonal distance
 SQRT2 = math.sqrt(2)
+
 
 def backtrace(node):
     """

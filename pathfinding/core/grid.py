@@ -35,8 +35,9 @@ class Grid(object):
         """
         self.width = width
         self.height = height
-        if isinstance(matrix, (tuple, list)) or \
-            (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.size > 0):
+        if isinstance(matrix, (tuple, list)) or (
+                USE_NUMPY and isinstance(matrix, np.ndarray) and
+                matrix.size > 0):
             self.height = len(matrix)
             self.width = self.width = len(matrix[0]) if self.height > 0 else 0
         if self.width > 0 and self.height > 0:

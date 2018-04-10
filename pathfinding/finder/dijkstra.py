@@ -4,9 +4,9 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 
 class DijkstraFinder(AStarFinder):
     def __init__(self, weight=1,
-            diagonal_movement=DiagonalMovement.never,
-            time_limit=TIME_LIMIT,
-            max_runs=MAX_RUNS):
+                 diagonal_movement=DiagonalMovement.never,
+                 time_limit=TIME_LIMIT,
+                 max_runs=MAX_RUNS):
         self.time_limit = time_limit
         self.max_runs = max_runs
 

@@ -2,6 +2,7 @@ from .finder import Finder, TIME_LIMIT, MAX_RUNS
 from pathfinding.core.util import backtrace
 from pathfinding.core.diagonal_movement import DiagonalMovement
 
+
 class BreadthFirstFinder(Finder):
     def __init__(self, heuristic=None, weight=1,
                  diagonal_movement=DiagonalMovement.never,

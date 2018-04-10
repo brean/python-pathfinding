@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
-import logging
 import time
-from pathfinding.core.heuristic import manhatten, octile
-from pathfinding.core.diagonal_movement import DiagonalMovement
-from .finder import Finder, BY_START, BY_END
+from .finder import BY_START, BY_END
 from .a_star import AStarFinder
+
 
 class BiAStarFinder(AStarFinder):
     """
@@ -19,8 +17,8 @@ class BiAStarFinder(AStarFinder):
         :param grid: grid that stores all possible steps/tiles as 2D-list
         :return:
         """
-        self.start_time = time.time() # execution time limitation
-        self.runs = 0 # count number of iterations
+        self.start_time = time.time()  # execution time limitation
+        self.runs = 0  # count number of iterations
 
         start_open_list = [start]
         start.g = 0
@@ -38,12 +36,14 @@ class BiAStarFinder(AStarFinder):
                 break
 
             path = self.check_neighbors(start, end, grid, start_open_list,
-                open_value=BY_START, backtrace_by=BY_END)
+                                        open_value=BY_START,
+                                        backtrace_by=BY_END)
             if path:
                 return path, self.runs
 
             path = self.check_neighbors(end, start, grid, end_open_list,
-                open_value=BY_END, backtrace_by=BY_START)
+                                        open_value=BY_END,
+                                        backtrace_by=BY_START)
             if path:
                 return path, self.runs
 

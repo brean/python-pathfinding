@@ -15,10 +15,10 @@ BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 # test scenarios from Pathfinding.JS
 scenarios = os.path.join(BASE_PATH, 'path_test_scenarios.json')
 data = json.load(open(scenarios, 'r'))
-finders = [AStarFinder, BiAStarFinder, DijkstraFinder, IDAStarFinder, \
+finders = [AStarFinder, BiAStarFinder, DijkstraFinder, IDAStarFinder,
            BreadthFirstFinder]
+TIME_LIMIT = 10  # give it a 10 second limit.
 
-TIME_LIMIT = 10 # give it a 10 second limit.
 
 def test_path():
     """
@@ -45,7 +45,7 @@ def test_path_diagonal():
             start = grid.node(scenario['startX'], scenario['startY'])
             end = grid.node(scenario['endX'], scenario['endY'])
             finder = find(diagonal_movement=DiagonalMovement.always,
-                time_limit=TIME_LIMIT)
+                          time_limit=TIME_LIMIT)
             path, runs = finder.find_path(start, end, grid)
             print(find.__name__, runs, len(path))
             print(grid.grid_str(path=path, start=start, end=end))

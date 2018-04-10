@@ -4,6 +4,7 @@ from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.node import Node
 from .finder import Finder, TIME_LIMIT, MAX_RUNS
 
+
 class IDAStarFinder(Finder):
     """
     Iterative Deeping A Star (IDA*) path-finder.
@@ -14,16 +15,19 @@ class IDAStarFinder(Finder):
     Path retracing based on:
      V. Nageshwara Rao, Vipin Kumar and K. Ramesh
      "A Parallel Implementation of Iterative-Deeping-A*", January 1987.
-     ftp://ftp.cs.utexas.edu/.snapshot/hourly.1/pub/AI-Lab/tech-reports/UT-AI-TR-87-46.pdf
+     ftp://ftp.cs.utexas.edu/.snapshot/hourly.1/pub/AI-Lab/tech-reports/
+     UT-AI-TR-87-46.pdf
 
-    based on the JavaScript implementation by Gerard Meier (www.gerardmeier.com)
+    based on the JavaScript implementation by Gerard Meier
+    (www.gerardmeier.com)
     """
     def __init__(self, heuristic=None, weight=1,
                  diagonal_movement=DiagonalMovement.never,
                  time_limit=TIME_LIMIT,
                  max_runs=MAX_RUNS,
                  track_recursion=True):
-        super(IDAStarFinder, self).__init__(heuristic=heuristic, weight=weight,
+        super(IDAStarFinder, self).__init__(
+            heuristic=heuristic, weight=weight,
             diagonal_movement=diagonal_movement,
             time_limit=time_limit,
             max_runs=max_runs)
@@ -51,7 +55,7 @@ class IDAStarFinder(Finder):
 
         if node == end:
             if len(path) < depth:
-                path += [None] * (depth - len(path)  + 1)
+                path += [None] * (depth - len(path) + 1)
             path[depth] = node
             return node
 
@@ -65,20 +69,19 @@ class IDAStarFinder(Finder):
         #            self.apply_heuristic(b, end)
         #    sorted(neighbors, sort_neighbors)
         min_t = float('inf')
-        k = 0
         for neighbor in neighbors:
             if self.track_recursion:
                 # Retain a copy for visualisation. Due to recursion, this
                 # node may be part of other paths too.
-                neighbor.retain_count += 1;
+                neighbor.retain_count += 1
                 neighbor.tested = True
 
             t = self.search(neighbor, g + self.calc_cost(node, neighbor),
-                cutoff, path, depth + 1, end, grid)
+                            cutoff, path, depth + 1, end, grid)
 
             if isinstance(t, Node):
                 if len(path) < depth:
-                    path += [None] * (depth - len(path)  + 1)
+                    path += [None] * (depth - len(path) + 1)
                 path[depth] = node
                 return t
 
@@ -93,12 +96,11 @@ class IDAStarFinder(Finder):
 
         return min_t
 
-
     def find_path(self, start, end, grid):
-        self.start_time = time.time() # execution time limitation
-        self.runs = 0 # count number of iterations
+        self.start_time = time.time()  # execution time limitation
+        self.runs = 0  # count number of iterations
 
-        self.nodes_visited = 0 # for statistics
+        self.nodes_visited = 0  # for statistics
 
         # initial search depth, given the typical heuristic contraints,
         # there should be no cheaper route possible.

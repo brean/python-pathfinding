@@ -8,12 +8,14 @@ BORDERLESS_GRID = """
 xxx
 xxx
 """
+
 BORDER_GRID = """
 +---+
 |   |
 |   |
 +---+
 """
+
 WALKED_GRID = """
 +---+
 |s# |
@@ -35,6 +37,7 @@ SIMPLE_WALKED = """
 +---+
 """
 
+
 def test_str():
     """
     test printing the grid
@@ -48,6 +51,7 @@ def test_str():
     path = [(0, 1)]
     assert grid.grid_str(path, start, end) == WALKED_GRID[1:-1]
 
+
 def test_empty():
     """
     special test for empty values (should fail)
@@ -59,6 +63,7 @@ def test_empty():
     matrix = np.array(matrix)
     grid = Grid(matrix=matrix)
     assert grid.grid_str() == '++\n||\n++'
+
 
 def test_numpy():
     """
@@ -74,6 +79,7 @@ def test_numpy():
     path, runs = finder.find_path(start, end, grid)
 
     assert grid.grid_str(path, start, end) == SIMPLE_WALKED[1:-1]
+
 
 if __name__ == '__main__':
     test_str()

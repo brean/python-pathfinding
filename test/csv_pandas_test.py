@@ -9,6 +9,7 @@ from pathfinding.finder.a_star import AStarFinder
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 CSV_FILE = os.path.join(BASE_PATH, 'csv_file.csv')
 
+
 def _find(matrix):
     grid = Grid(matrix=matrix)
     print(matrix)
@@ -25,11 +26,13 @@ def _find(matrix):
     assert path == [(0, 0), (0, 1), (1, 1), (1, 2), (1, 3), (1, 4), (2, 4)]
     assert len(path) == 7
 
+
 def test_csv_pandas_str():
     """
     test to load a csv file using pandas (as string).
     """
     _find(np.array(pandas.io.parsers.read_csv(CSV_FILE)).astype("str"))
+
 
 def test_csv_pandas_int():
     """

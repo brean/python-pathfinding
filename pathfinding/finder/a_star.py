@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-import math
-import heapq # used for the so colled "open list" that stores known nodes
-import logging
-import time # for time limitation
+import heapq  # used for the so colled "open list" that stores known nodes
 from pathfinding.core.heuristic import manhatten, octile
 from pathfinding.core.util import backtrace, bi_backtrace
 from pathfinding.core.diagonal_movement import DiagonalMovement
-from .finder import Finder, TIME_LIMIT, MAX_RUNS, BY_START, BY_END
+from .finder import Finder, TIME_LIMIT, MAX_RUNS, BY_END
+
 
 class AStarFinder(Finder):
     def __init__(self, heuristic=None, weight=1,
@@ -41,9 +39,8 @@ class AStarFinder(Finder):
                 # not admissible it should be octile instead
                 self.heuristic = octile
 
-
     def check_neighbors(self, start, end, grid, open_list,
-            open_value=True, backtrace_by=None):
+                        open_value=True, backtrace_by=None):
         """
         find next path segment based on given node
         (or return path if we found the end)
@@ -78,7 +75,6 @@ class AStarFinder(Finder):
 
         # the end has not been reached (yet) keep the find_path loop running
         return None
-
 
     def find_path(self, start, end, grid):
         """

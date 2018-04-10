@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
-import math
-import heapq # used for the so colled "open list" that stores known nodes
+import heapq  # used for the so colled "open list" that stores known nodes
 import logging
-import time # for time limitation
-from pathfinding.core.heuristic import manhatten, octile
+import time  # for time limitation
 from pathfinding.core.util import SQRT2
 from pathfinding.core.diagonal_movement import DiagonalMovement
 
@@ -19,6 +17,7 @@ BY_END = 2
 '''
 the default finder
 '''
+
 
 class Finder(object):
     def __init__(self, heuristic=None, weight=1,
@@ -45,7 +44,6 @@ class Finder(object):
         self.weight = weight
         self.heuristic = heuristic
 
-
     def calc_cost(self, node_a, node_b):
         """
         get the distance between current node and the neighbor (cost)
@@ -59,17 +57,15 @@ class Finder(object):
             ng += SQRT2
         return ng
 
-
     def apply_heuristic(self, node_a, node_b, heuristic=None):
         """
-        helper function to apply heuristic based
+        helper function to apply heuristic
         """
         if not heuristic:
             heuristic = self.heuristic
         return heuristic(
             abs(node_a.x - node_b.x),
             abs(node_a.y - node_b.y))
-
 
     def find_neighbors(self, grid, node, diagonal_movement=None):
         '''
@@ -78,7 +74,6 @@ class Finder(object):
         if not diagonal_movement:
             diagonal_movement = self.diagonal_movement
         return grid.neighbors(node, diagonal_movement=diagonal_movement)
-
 
     def keep_running(self):
         """
@@ -97,7 +92,6 @@ class Finder(object):
             return False
         return True
 
-
     def process_node(self, node, parent, end, open_list, open_value=True):
         '''
         we check if the given node is path of the path by calculating its
@@ -114,10 +108,12 @@ class Finder(object):
         # calculate cost from current node (parent) to the next node (neighbor)
         ng = self.calc_cost(parent, node)
 
+        # TODO: multiply ng with weight!
+
         if not node.opened or ng < node.g:
             node.g = ng
             node.h = node.h or \
-                self.apply_heuristic(node, end) *  self.weight
+                self.apply_heuristic(node, end) * self.weight
             # f is the estimated total cost from start to goal
             node.f = node.g + node.h
             node.parent = parent
@@ -132,7 +128,6 @@ class Finder(object):
                 open_list.remove(node)
                 heapq.heappush(open_list, node)
 
-
     def find_path(self, start, end, grid):
         """
         find a path from start to end node on grid by iterating over
@@ -142,8 +137,8 @@ class Finder(object):
         :param grid: grid that stores all possible steps/tiles as 2D-list
         :return:
         """
-        self.start_time = time.time() # execution time limitation
-        self.runs = 0 # count number of iterations
+        self.start_time = time.time()  # execution time limitation
+        self.runs = 0  # count number of iterations
         start.opened = True
 
         open_list = [start]

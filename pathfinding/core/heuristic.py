@@ -2,6 +2,7 @@
 import math
 from .util import SQRT2
 
+
 def manhatten(dx, dy):
     """manhatten heuristics"""
     return dx + dy

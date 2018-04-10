@@ -20,15 +20,20 @@ finders = [AStarFinder, BiAStarFinder, DijkstraFinder, IDAStarFinder,
 TIME_LIMIT = 10  # give it a 10 second limit.
 
 
+def grid_from_scenario(scenario):
+    grid = Grid(matrix=scenario['matrix'])
+    start = grid.node(scenario['startX'], scenario['startY'])
+    end = grid.node(scenario['endX'], scenario['endY'])
+    return grid, start, end
+
+
 def test_path():
     """
     test scenarios defined in json file
     """
     for scenario in data:
         for find in finders:
-            grid = Grid(matrix=scenario['matrix'])
-            start = grid.node(scenario['startX'], scenario['startY'])
-            end = grid.node(scenario['endX'], scenario['endY'])
+            grid, start, end = grid_from_scenario(scenario)
             finder = find(time_limit=TIME_LIMIT)
             path, runs = finder.find_path(start, end, grid)
             print(find.__name__)
@@ -41,9 +46,7 @@ def test_path_diagonal():
     # test diagonal movement
     for scenario in data:
         for find in finders:
-            grid = Grid(matrix=scenario['matrix'])
-            start = grid.node(scenario['startX'], scenario['startY'])
-            end = grid.node(scenario['endX'], scenario['endY'])
+            grid, start, end = grid_from_scenario(scenario)
             finder = find(diagonal_movement=DiagonalMovement.always,
                           time_limit=TIME_LIMIT)
             path, runs = finder.find_path(start, end, grid)
@@ -54,15 +57,21 @@ def test_path_diagonal():
 
 
 def test_max_runs():
-    scenario = data[1]
-    grid = Grid(matrix=scenario['matrix'])
-    start = grid.node(scenario['startX'], scenario['startY'])
-    end = grid.node(scenario['endX'], scenario['endY'])
+    grid, start, end = grid_from_scenario(data[1])
     finder = AStarFinder(diagonal_movement=DiagonalMovement.always,
                          time_limit=TIME_LIMIT, max_runs=2)
     path, runs = finder.find_path(start, end, grid)
     assert(path == [])
     assert(runs == 2)
+
+
+def test_time():
+    grid, start, end = grid_from_scenario(data[1])
+    finder = AStarFinder(diagonal_movement=DiagonalMovement.always,
+                         time_limit=-.1)
+    path, runs = finder.find_path(start, end, grid)
+    assert(path == [])
+    assert(runs == 1)
 
 
 if __name__ == '__main__':

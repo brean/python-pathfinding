@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 import os
 import json
+import pytest
 from pathfinding.finder.a_star import AStarFinder
 from pathfinding.finder.dijkstra import DijkstraFinder
 from pathfinding.finder.bi_a_star import BiAStarFinder
 from pathfinding.finder.ida_star import IDAStarFinder
 from pathfinding.finder.breadth_first import BreadthFirstFinder
+from pathfinding.finder.finder import ExecutionRunsException
+from pathfinding.finder.finder import ExecutionTimeException
 from pathfinding.core.grid import Grid
 from pathfinding.core.diagonal_movement import DiagonalMovement
 
@@ -57,21 +60,30 @@ def test_path_diagonal():
 
 
 def test_max_runs():
-    grid, start, end = grid_from_scenario(data[1])
-    finder = AStarFinder(diagonal_movement=DiagonalMovement.always,
-                         time_limit=TIME_LIMIT, max_runs=2)
-    path, runs = finder.find_path(start, end, grid)
-    assert(path == [])
-    assert(runs == 2)
+    for find in finders:
+        grid, start, end = grid_from_scenario(data[1])
+        finder = find(diagonal_movement=DiagonalMovement.always,
+                      time_limit=TIME_LIMIT, max_runs=3)
+        with pytest.raises(ExecutionRunsException):
+            path, runs = finder.find_path(start, end, grid)
+            print('{} finishes after {} runs without exception'.format(
+                find.__name__, finder.runs))
+        msg = '{} needed to much iterations'.format(
+            finder.__class__.__name__)
+        assert(finder.runs <= 3), msg
 
 
 def test_time():
     grid, start, end = grid_from_scenario(data[1])
-    finder = AStarFinder(diagonal_movement=DiagonalMovement.always,
-                         time_limit=-.1)
-    path, runs = finder.find_path(start, end, grid)
-    assert(path == [])
-    assert(runs == 1)
+    for find in finders:
+        finder = find(diagonal_movement=DiagonalMovement.always,
+                      time_limit=-.1)
+        with pytest.raises(ExecutionTimeException):
+            path, runs = finder.find_path(start, end, grid)
+            print('{} finishes after {} runs without exception'.format(
+                find.__name__, finder.runs))
+        msg = '{} took to long'.format(finder.__class__.__name__)
+        assert(finder.runs == 1), msg
 
 
 if __name__ == '__main__':

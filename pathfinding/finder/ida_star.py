@@ -41,11 +41,9 @@ class IDAStarFinder(Finder):
                 self.heuristic = octile
 
     def search(self, node, g, cutoff, path, depth, end, grid):
+        self.runs += 1
         self.nodes_visited += 1
-
-        if not self.keep_running():
-            # time or iteration limit
-            return
+        self.keep_running()
 
         f = g + self.apply_heuristic(node, end) * self.weight
 
@@ -107,12 +105,14 @@ class IDAStarFinder(Finder):
         cutoff = self.apply_heuristic(start, end)
 
         while True:
-            self.runs += 1
-
             path = []
 
             # search till cut-off depth:
             t = self.search(start, 0, cutoff, path, 0, end, grid)
+
+            if isinstance(t, bool) and not t:
+                # only when an error occured we return "False"
+                break
 
             # If t is a node, it's also the end node. Route is now
             # populated with a valid path to the end node.

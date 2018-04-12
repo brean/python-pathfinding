@@ -32,15 +32,15 @@ class BiAStarFinder(AStarFinder):
 
         while len(start_open_list) > 0 and len(end_open_list) > 0:
             self.runs += 1
-            if not self.keep_running():
-                break
-
+            self.keep_running()
             path = self.check_neighbors(start, end, grid, start_open_list,
                                         open_value=BY_START,
                                         backtrace_by=BY_END)
             if path:
                 return path, self.runs
 
+            self.runs += 1
+            self.keep_running()
             path = self.check_neighbors(end, start, grid, end_open_list,
                                         open_value=BY_END,
                                         backtrace_by=BY_START)

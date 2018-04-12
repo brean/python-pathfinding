@@ -3,6 +3,16 @@ import math
 from .util import SQRT2
 
 
+def null(dx, dy):
+    """
+    special heuristic for Dijkstra
+    return 0, so node.h will always be calculated as 0,
+    distance cost (node.f) is calculated only from
+    start to current point (node.g)
+    """
+    return 0
+
+
 def manhatten(dx, dy):
     """manhatten heuristics"""
     return dx + dy

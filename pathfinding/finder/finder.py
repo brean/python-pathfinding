@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import heapq  # used for the so colled "open list" that stores known nodes
-import logging
 import time  # for time limitation
 from pathfinding.core.util import SQRT2
 from pathfinding.core.diagonal_movement import DiagonalMovement
@@ -17,6 +16,16 @@ BY_END = 2
 '''
 the default finder
 '''
+
+
+class ExecutionTimeException(Exception):
+    def __init__(self, message):
+        super(ExecutionTimeException, self).__init__(message)
+
+
+class ExecutionRunsException(Exception):
+    def __init__(self, message):
+        super(ExecutionRunsException, self).__init__(message)
 
 
 class Finder(object):
@@ -81,16 +90,15 @@ class Finder(object):
         :returns: True if we keep running and False if we run into a constraint
         """
         if self.runs >= self.max_runs:
-            logging.error('{} run into barrier of {} iterations without '
-                          'finding the destination'.format(
-                            self.__class__.__name__, self.max_runs))
+            raise ExecutionRunsException(
+                '{} run into barrier of {} iterations without '
+                'finding the destination'.format(
+                    self.__class__.__name__, self.max_runs))
             return False
         if time.time() - self.start_time >= self.time_limit:
-            logging.error('{} took longer than {} '
-                          'seconds, aborting!'.format(
-                            self.__class__.__name__, self.time_limit))
-            return False
-        return True
+            raise ExecutionTimeException(
+                '{} took longer than {} seconds, aborting!'.format(
+                    self.__class__.__name__, self.time_limit))
 
     def process_node(self, node, parent, end, open_list, open_value=True):
         '''
@@ -145,8 +153,7 @@ class Finder(object):
 
         while len(open_list) > 0:
             self.runs += 1
-            if not self.keep_running():
-                break
+            self.keep_running()
 
             path = self.check_neighbors(start, end, grid, open_list)
             if path:

@@ -116,7 +116,8 @@ class Finder(object):
         # calculate cost from current node (parent) to the next node (neighbor)
         ng = self.calc_cost(parent, node)
 
-        # TODO: multiply ng with weight!
+        # weight for weighted algorithms
+        ng *= node.weight
 
         if not node.opened or ng < node.g:
             node.g = ng

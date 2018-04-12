@@ -24,7 +24,8 @@ def build_nodes(width, height, matrix=None):
             # 0, '0', False, None will be walkable
             # while others will be obstacles
             walkable = not use_matrix or matrix[y][x] in [0, '0', False, None]
-            nodes[y][x] = Node(x, y, walkable)
+            weight = int(matrix[y][x]) if use_matrix and walkable else 1
+            nodes[y][x] = Node(x=x, y=y, walkable=walkable, weight=weight)
     return nodes
 
 

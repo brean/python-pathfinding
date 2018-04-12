@@ -94,7 +94,7 @@ class Finder(object):
                 '{} run into barrier of {} iterations without '
                 'finding the destination'.format(
                     self.__class__.__name__, self.max_runs))
-            return False
+
         if time.time() - self.start_time >= self.time_limit:
             raise ExecutionTimeException(
                 '{} took longer than {} seconds, aborting!'.format(

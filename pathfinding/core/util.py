@@ -54,10 +54,7 @@ def raytrace(coords_a, coords_b):
         1 if dx >= 0 else -1, \
         1 if dy >= 0 else -1
 
-    i = 0
     while t <= 1:
-        i+=1
-        print (grid_pos)
         line.append(grid_pos.copy())
         index = 0 if t_for_next_border[0] <= t_for_next_border[1] else 1
         t = t_for_next_border[index]

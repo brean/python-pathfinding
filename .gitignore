@@ -1,6 +1,7 @@
 .tox
 .idea
 .coverage
+.pypirc
 
 
 # Byte-compiled / optimized / DLL files

@@ -30,6 +30,42 @@ def bi_backtrace(node_a, node_b):
     return path_a + path_b
 
 
+def raytrace(coords_a, coords_b):
+    line = []
+    x0, y0 = coords_a
+    x1, y1 = coords_b
+
+    dx = x1 - x0
+    dy = y1 - y0
+
+    t = 0
+    grid_pos = [x0, y0]
+    t_for_one = \
+        abs(1.0 / dx) if dx > 0 else 10000, \
+        abs(1.0 / dy) if dy > 0 else 10000
+
+    frac_start_pos = (x0 + .5) - x0, (y0 + .5) - y0
+    t_for_next_border = [
+      (1 - frac_start_pos[0] if dx < 0 else frac_start_pos[0]) * t_for_one[0],
+      (1 - frac_start_pos[1] if dx < 0 else frac_start_pos[1]) * t_for_one[1]
+    ]
+
+    step = \
+        1 if dx >= 0 else -1, \
+        1 if dy >= 0 else -1
+
+    i = 0
+    while t <= 1:
+        i+=1
+        print (grid_pos)
+        line.append(grid_pos.copy())
+        index = 0 if t_for_next_border[0] <= t_for_next_border[1] else 1
+        t = t_for_next_border[index]
+        t_for_next_border[index] += t_for_one[index]
+        grid_pos[index] += step[index]
+    return line
+
+
 def bresenham(coords_a, coords_b):
     '''
     Given the start and end coordinates, return all the coordinates lying

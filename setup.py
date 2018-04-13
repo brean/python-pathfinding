@@ -7,7 +7,7 @@ setup(
     name="pathfinding",
     description="Pathfinding algorithms (based on Pathfinding.JS)",
     url="https://github.com/brean/python-pathfinding",
-    version="0.0.1",
+    version="0.0.2",
     license="MIT",
     author="Andreas Bresser",
     packages=find_packages(),

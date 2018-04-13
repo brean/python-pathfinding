@@ -106,3 +106,27 @@ def expand_path(path):
         expanded += bresenham(path[i], path[i + 1])
     expanded += [path[:-1]]
     return expanded
+
+
+def smoothen_path(grid, path, use_raytrace=False):
+    x0, y0 = path[0]
+
+    sx, sy = path[0]
+    new_path = [[sx, sy]]
+
+    interpolate = raytrace if use_raytrace else bresenham
+    last_valid = path[1]
+    for coord in path[2:-1]:
+        line = interpolate([sx, sy], coord)
+        blocked = False
+        for test_coord in line[1:]:
+            if not grid.walkable(test_coord[0], test_coord[1]):
+                blocked = True
+                break
+        if not blocked:
+            new_path.append(last_valid)
+            sx, sy = last_valid
+        last_valid = coord
+
+    new_path.append(path[-1])
+    return new_path

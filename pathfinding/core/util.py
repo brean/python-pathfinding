@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import math
+import copy
 
 
 # square root of 2 for diagonal distance
@@ -55,7 +56,7 @@ def raytrace(coords_a, coords_b):
         1 if dy >= 0 else -1
 
     while t <= 1:
-        line.append(grid_pos.copy())
+        line.append(copy.copy(grid_pos))
         index = 0 if t_for_next_border[0] <= t_for_next_border[1] else 1
         t = t_for_next_border[index]
         t_for_next_border[index] += t_for_one[index]

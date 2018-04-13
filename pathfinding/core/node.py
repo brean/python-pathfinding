@@ -16,7 +16,21 @@ class Node(object):
         self.weight = weight
 
         # values used in the finder
+        self.cleanup()
 
+    def __lt__(self, other):
+        """
+        nodes are sorted by f value (see a_star.py)
+
+        :param other: compare Node
+        :return:
+        """
+        return self.f < other.f
+
+    def cleanup(self):
+        """
+        reset all calculated values, fresh start for pathfinding
+        """
         # cost from this node to the goal
         self.h = 0.0
 
@@ -36,12 +50,3 @@ class Node(object):
         self.retain_count = 0
         # used for IDA* and Jump-Point-Search
         self.tested = False
-
-    def __lt__(self, other):
-        """
-        nodes are sorted by f value (see a_star.py)
-
-        :param other: compare Node
-        :return:
-        """
-        return self.f < other.f

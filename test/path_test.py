@@ -37,8 +37,9 @@ def test_path():
     test scenarios defined in json file
     """
     for scenario in data:
+        grid, start, end = grid_from_scenario(scenario)
         for find in finders:
-            grid, start, end = grid_from_scenario(scenario)
+            grid.cleanup()
             finder = find(time_limit=TIME_LIMIT)
             weighted = False
             if 'weighted' in scenario:
@@ -56,8 +57,9 @@ def test_path():
 def test_path_diagonal():
     # test diagonal movement
     for scenario in data:
+        grid, start, end = grid_from_scenario(scenario)
         for find in finders:
-            grid, start, end = grid_from_scenario(scenario)
+            grid.cleanup()
             finder = find(diagonal_movement=DiagonalMovement.always,
                           time_limit=TIME_LIMIT)
             weighted = False
@@ -76,8 +78,9 @@ def test_path_diagonal():
 
 
 def test_max_runs():
+    grid, start, end = grid_from_scenario(data[1])
     for find in finders:
-        grid, start, end = grid_from_scenario(data[1])
+        grid.cleanup()
         finder = find(diagonal_movement=DiagonalMovement.always,
                       time_limit=TIME_LIMIT, max_runs=3)
         with pytest.raises(ExecutionRunsException):
@@ -92,6 +95,7 @@ def test_max_runs():
 def test_time():
     grid, start, end = grid_from_scenario(data[1])
     for find in finders:
+        grid.cleanup()
         finder = find(diagonal_movement=DiagonalMovement.always,
                       time_limit=-.1)
         with pytest.raises(ExecutionTimeException):

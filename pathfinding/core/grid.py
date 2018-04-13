@@ -134,6 +134,11 @@ class Grid(object):
 
         return neighbors
 
+    def cleanup(self):
+        for y_nodes in self.nodes:
+            for node in y_nodes:
+                node.cleanup()
+
     def grid_str(self, path=None, start=None, end=None,
                  border=True, start_chr='s', end_chr='e',
                  path_chr='x', empty_chr=' ', block_chr='#',

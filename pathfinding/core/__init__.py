@@ -1,1 +1,1 @@
-__all__ = ['grid', 'heuristic', 'node', 'util']
+__all__ = ['diagonal_movement', 'grid', 'heuristic', 'node', 'util']

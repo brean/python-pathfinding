@@ -12,7 +12,7 @@ Currently there are 6 path-finders bundled in this library, namely:
 Dijkstra and A* take the weight of the fields on the map into account.
 
 [![Build Status](https://travis-ci.org/brean/python-pathfinding.svg?branch=master)](https://travis-ci.org/brean/python-pathfinding)
-[![Coverage Status](https://coveralls.io/repos/brean/python-pathfinding/badge.svg?branch=master)](https://coveralls.io/r/brean/python-pathfinding?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/brean/python-pathfinding/badge.svg?branch=master)](https://coveralls.io/github/brean/python-pathfinding?branch=master)
 
 usage example
 -------------

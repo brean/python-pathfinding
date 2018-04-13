@@ -1,5 +1,14 @@
 # python-pathfinding
-Pathfinding algorithms based on [Pathfinding.JS](https://github.com/qiao/PathFinding.js) for python 2 and 3 (just A* and dijkstra for now)
+Pathfinding algorithms based on [Pathfinding.JS](https://github.com/qiao/PathFinding.js) for python 2 and 3.
+
+Currently there are 5 path-finders bundled in this library, namely:
+ - A*
+ - Dijkstra
+ - Bi-directional A*
+ - Breadth First Search (BFS)
+ - Iterative Deeping A* (IDA*)
+
+Dijkstra and A* take the weight of the fields on the map into account.
 
 [![Build Status](https://travis-ci.org/brean/python-pathfinding.svg?branch=master)](https://travis-ci.org/brean/python-pathfinding)
 [![Coverage Status](https://coveralls.io/repos/brean/python-pathfinding/badge.svg?branch=master)](https://coveralls.io/r/brean/python-pathfinding?branch=master)

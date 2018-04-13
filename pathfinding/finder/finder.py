@@ -13,9 +13,6 @@ TIME_LIMIT = float('inf')
 # used for backtrace of bi-directional A*
 BY_START = 1
 BY_END = 2
-'''
-the default finder
-'''
 
 
 class ExecutionTimeException(Exception):
@@ -31,6 +28,7 @@ class ExecutionRunsException(Exception):
 class Finder(object):
     def __init__(self, heuristic=None, weight=1,
                  diagonal_movement=DiagonalMovement.never,
+                 weighted=True,
                  time_limit=TIME_LIMIT,
                  max_runs=MAX_RUNS):
         """
@@ -40,6 +38,8 @@ class Finder(object):
         :param weight: weight for the edges
         :param diagonal_movement: if diagonal movement is allowed
             (see enum in diagonal_movement)
+        :param weighted: the algorithm supports weighted nodes
+            (should be True for A* and Dijkstra)
         :param time_limit: max. runtime in seconds
         :param max_runs: max. amount of tries until we abort the search
             (optional, only if we enter huge grids and have time constrains)
@@ -48,6 +48,7 @@ class Finder(object):
         """
         self.time_limit = time_limit
         self.max_runs = max_runs
+        self.weighted = weighted
 
         self.diagonal_movement = diagonal_movement
         self.weight = weight
@@ -64,6 +65,11 @@ class Finder(object):
         else:
             # not a direct neighbor - diagonal movement
             ng += SQRT2
+
+        # weight for weighted algorithms
+        if self.weighted:
+            ng *= node_b.weight
+
         return ng
 
     def apply_heuristic(self, node_a, node_b, heuristic=None):
@@ -115,9 +121,6 @@ class Finder(object):
         '''
         # calculate cost from current node (parent) to the next node (neighbor)
         ng = self.calc_cost(parent, node)
-
-        # weight for weighted algorithms
-        ng *= node.weight
 
         if not node.opened or ng < node.g:
             node.g = ng

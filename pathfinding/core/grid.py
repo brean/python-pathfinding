@@ -136,7 +136,8 @@ class Grid(object):
 
     def grid_str(self, path=None, start=None, end=None,
                  border=True, start_chr='s', end_chr='e',
-                 path_chr='x', empty_chr=' ', block_chr='#'):
+                 path_chr='x', empty_chr=' ', block_chr='#',
+                 show_weight=False):
         """
         create a printable string from the grid using ASCII characters
 
@@ -149,6 +150,8 @@ class Grid(object):
         :param path_chr: character to show the path (default "x")
         :param empty_chr: character for empty fields (default " ")
         :param block_chr: character for blocking elements (default "#")
+        :param show_weight: instead of empty_chr show the cost of each empty
+                            field (shows a + if the value of weight is > 10)
         :return:
         """
         data = ''
@@ -165,7 +168,9 @@ class Grid(object):
                 elif path and ((node.x, node.y) in path or node in path):
                     line += path_chr
                 elif node.walkable:
-                    line += empty_chr  # empty field
+                    # empty field
+                    weight = str(node.weight) if node.weight < 10 else '+'
+                    line += weight if show_weight else empty_chr
                 else:
                     line += block_chr  # blocked field
             if border:

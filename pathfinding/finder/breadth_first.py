@@ -11,6 +11,7 @@ class BreadthFirstFinder(Finder):
         super(BreadthFirstFinder, self).__init__(
             heuristic=heuristic,
             weight=weight,
+            weighted=False,
             diagonal_movement=diagonal_movement,
             time_limit=time_limit,
             max_runs=max_runs)

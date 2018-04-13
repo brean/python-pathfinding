@@ -24,7 +24,8 @@ TIME_LIMIT = 10  # give it a 10 second limit.
 
 
 def grid_from_scenario(scenario):
-    grid = Grid(matrix=scenario['matrix'], inverse=True)
+    inverse = scenario['inverse'] if 'inverse' in scenario else True
+    grid = Grid(matrix=scenario['matrix'], inverse=inverse)
     start = grid.node(scenario['startX'], scenario['startY'])
     end = grid.node(scenario['endX'], scenario['endY'])
     return grid, start, end
@@ -38,9 +39,15 @@ def test_path():
         for find in finders:
             grid, start, end = grid_from_scenario(scenario)
             finder = find(time_limit=TIME_LIMIT)
+            weighted = False
+            if 'weighted' in scenario:
+                weighted = scenario['weighted']
+            if weighted and not finder.weighted:
+                continue
             path, runs = finder.find_path(start, end, grid)
             print(find.__name__)
-            print(grid.grid_str(path=path, start=start, end=end))
+            print(grid.grid_str(path=path, start=start, end=end,
+                                show_weight=weighted))
             print('path: {}'.format(path))
             assert len(path) == scenario['expectedLength']
 
@@ -52,9 +59,17 @@ def test_path_diagonal():
             grid, start, end = grid_from_scenario(scenario)
             finder = find(diagonal_movement=DiagonalMovement.always,
                           time_limit=TIME_LIMIT)
+            weighted = False
+            if 'weighted' in scenario:
+                weighted = scenario['weighted']
+            print(dir(find))
+            if weighted and not finder.weighted:
+                continue
+
             path, runs = finder.find_path(start, end, grid)
             print(find.__name__, runs, len(path))
-            print(grid.grid_str(path=path, start=start, end=end))
+            print(grid.grid_str(path=path, start=start, end=end,
+                                show_weight=weighted))
             print('path: {}'.format(path))
             assert len(path) == scenario['expectedDiagonalLength']
 

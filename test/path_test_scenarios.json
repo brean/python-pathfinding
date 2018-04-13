@@ -64,5 +64,21 @@
                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]],
         "expectedLength": 31,
         "expectedDiagonalLength": 16
+    },
+    {
+        "startX": 0,
+        "startY": 0,
+        "endX": 4,
+        "endY": 0,
+        "matrix": [[1, 2, 99, 9, 1],
+                  [1, 2, 0, 0, 1],
+                  [1, 1, 0, 1, 1],
+                  [4, 3, 0, 1, 1],
+                  [1, 1, 0, 0, 1],
+                  [1, 1, 1, 1, 1]],
+        "expectedLength": 15,
+        "expectedDiagonalLength": 12,
+        "inverse": false,
+        "weighted": true
     }
 ]

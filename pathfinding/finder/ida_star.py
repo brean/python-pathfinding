@@ -29,6 +29,7 @@ class IDAStarFinder(Finder):
         super(IDAStarFinder, self).__init__(
             heuristic=heuristic, weight=weight,
             diagonal_movement=diagonal_movement,
+            weighted=False,
             time_limit=time_limit,
             max_runs=max_runs)
         self.track_recursion = track_recursion
@@ -42,8 +43,9 @@ class IDAStarFinder(Finder):
 
     def search(self, node, g, cutoff, path, depth, end, grid):
         self.runs += 1
-        self.nodes_visited += 1
         self.keep_running()
+
+        self.nodes_visited += 1
 
         f = g + self.apply_heuristic(node, end) * self.weight
 

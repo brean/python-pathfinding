@@ -30,7 +30,7 @@ def bi_backtrace(node_a, node_b):
     return path_a + path_b
 
 
-def interpolate(coords_a, coords_b):
+def bresenham(coords_a, coords_b):
     '''
     Given the start and end coordinates, return all the coordinates lying
     on the line formed by these coordinates, based on Bresenham's algorithm.
@@ -46,8 +46,8 @@ def interpolate(coords_a, coords_b):
     err = dx - dy
 
     while True:
-        line += [(x0, y0)]
-        if coords_a.x == coords_b.x and coords_a.y == coords_b.y:
+        line += [[x0, y0]]
+        if x0 == x1 and y0 == y1:
             break
         e2 = err * 2
         if e2 > -dy:
@@ -69,6 +69,6 @@ def expand_path(path):
     if len(path) < 2:
         return expanded
     for i in range(len(path)-1):
-        expanded += interpolate(path[i], path[i + 1])
+        expanded += bresenham(path[i], path[i + 1])
     expanded += [path[:-1]]
     return expanded

@@ -54,7 +54,7 @@ def test_str():
 
 def test_empty():
     """
-    special test for empty values (should fail)
+    special test for empty values
     """
     matrix = ()
     grid = Grid(matrix=matrix)

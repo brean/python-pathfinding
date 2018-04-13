@@ -1,9 +1,10 @@
 # python-pathfinding
 Pathfinding algorithms based on [Pathfinding.JS](https://github.com/qiao/PathFinding.js) for python 2 and 3.
 
-Currently there are 5 path-finders bundled in this library, namely:
+Currently there are 6 path-finders bundled in this library, namely:
  - A*
  - Dijkstra
+ - Best-First
  - Bi-directional A*
  - Breadth First Search (BFS)
  - Iterative Deeping A* (IDA*)

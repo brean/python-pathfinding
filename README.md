@@ -15,14 +15,16 @@ A simple usage example to find a path using A*.
     from pathfinding.finder.a_star import AStarFinder
     ```
 
-1. Create a map using a 2D-list. 1, True or any value describes an obstacle. 0, False or None descibes a field that can be walked on. In this example we like the algorithm to create a path from the upper left to the bottom right. To make it not to easy for the algorithm we added an obstacle in the middle, so it can not use the direct way. Feel free to create a more complex map
+1. Create a map using a 2D-list. Any value smaller or equal to 0 describes an obstacle. Any number bigger than 0 describes the weight of a field that can be walked on. The bigger the number the higher the cost to walk that field. In this example we like the algorithm to create a path from the upper left to the bottom right. To make it not to easy for the algorithm we added an obstacle in the middle, so it can not use the direct way. We ignore the weight for now, all fields have the same cost. Feel free to create a more complex map
     ```python
     matrix = [
-      [0, 0, 0],
-      [0, 1, 0],
-      [0, 0, 0]
+      [1, 1, 1],
+      [1, 0, 1],
+      [1, 1, 1]
     ]
     ```
+
+	Note: you can use negative values to describe different types of obstacles. It does not make a difference for the path finding algorithm but it might be useful for your later map evaluation.
 
 1. we create a new grid from this map representation. This will create Node instances for every element of our map. It will also set the size of the map. We assume that your map is a square, so the size height is defined by the length of the outer list and the width by the length of the first list inside it.
 
@@ -67,9 +69,9 @@ from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
 
 matrix = [
-  [0, 0, 0],
-  [0, 1, 0],
-  [0, 0, 0]
+  [1, 1, 1],
+  [1, 0, 1],
+  [1, 1, 1]
 ]
 grid = Grid(matrix=matrix)
 

@@ -8,29 +8,32 @@ except ImportError:
 from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
-def build_nodes(width, height, matrix=None):
+def build_nodes(width, height, matrix=None, inverse=False):
     """
     create nodes according to grid size. If a matrix is given it
-    will be used to determine what nodes are walkable
+    will be used to determine what nodes are walkable.
     :rtype : list
     """
-    nodes = [None] * height
+    nodes = []
     use_matrix = (isinstance(matrix, (tuple, list))) or \
         (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.size > 0)
 
     for y in range(height):
-        nodes[y] = [None] * width
+        nodes.append([])
         for x in range(width):
-            # 0, '0', False, None will be walkable
+            # 1, '1', True will be walkable
             # while others will be obstacles
-            walkable = not use_matrix or matrix[y][x] in [0, '0', False, None]
-            weight = int(matrix[y][x]) if use_matrix and walkable else 1
-            nodes[y][x] = Node(x=x, y=y, walkable=walkable, weight=weight)
+            # if inverse is False, otherwise
+            # it changes
+            weight = int(matrix[y][x]) if use_matrix else 1
+            walkable = weight <= 0 if inverse else weight >= 1
+
+            nodes[y].append(Node(x=x, y=y, walkable=walkable, weight=weight))
     return nodes
 
 
 class Grid(object):
-    def __init__(self, width=0, height=0, matrix=None):
+    def __init__(self, width=0, height=0, matrix=None, inverse=False):
         """
         a grid represents the map (as 2d-list of nodes).
         """
@@ -42,7 +45,7 @@ class Grid(object):
             self.height = len(matrix)
             self.width = self.width = len(matrix[0]) if self.height > 0 else 0
         if self.width > 0 and self.height > 0:
-            self.nodes = build_nodes(self.width, self.height, matrix)
+            self.nodes = build_nodes(self.width, self.height, matrix, inverse)
         else:
             self.nodes = [[]]
 

@@ -24,7 +24,7 @@ TIME_LIMIT = 10  # give it a 10 second limit.
 
 
 def grid_from_scenario(scenario):
-    grid = Grid(matrix=scenario['matrix'])
+    grid = Grid(matrix=scenario['matrix'], inverse=True)
     start = grid.node(scenario['startX'], scenario['startY'])
     end = grid.node(scenario['endX'], scenario['endY'])
     return grid, start, end

@@ -25,7 +25,7 @@ A simple usage example to find a path using A*.
     from pathfinding.finder.a_star import AStarFinder
     ```
 
-1. Create a map using a 2D-list. Any value smaller or equal to 0 describes an obstacle. Any number bigger than 0 describes the weight of a field that can be walked on. The bigger the number the higher the cost to walk that field. In this example we like the algorithm to create a path from the upper left to the bottom right. To make it not to easy for the algorithm we added an obstacle in the middle, so it can not use the direct way. We ignore the weight for now, all fields have the same cost. Feel free to create a more complex map
+1. Create a map using a 2D-list. Any value smaller or equal to 0 describes an obstacle. Any number bigger than 0 describes the weight of a field that can be walked on. The bigger the number the higher the cost to walk that field. In this example we like the algorithm to create a path from the upper left to the bottom right. To make it not to easy for the algorithm we added an obstacle in the middle, so it can not use the direct way. We ignore the weight for now, all fields have the same cost of 1. Feel free to create a more complex map or use some sensor data as input for it.
     ```python
     matrix = [
       [1, 1, 1],
@@ -41,6 +41,7 @@ A simple usage example to find a path using A*.
     ```python
     grid = Grid(matrix=matrix)
     ```
+    
 1. we get the start (top-left) and endpoint (bottom-right) from the map:
 
     ```python

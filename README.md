@@ -1,3 +1,4 @@
+
 # python-pathfinding
 Pathfinding algorithms based on [Pathfinding.JS](https://github.com/qiao/PathFinding.js) for python 2 and 3.
 
@@ -41,7 +42,6 @@ A simple usage example to find a path using A*.
     ```python
     grid = Grid(matrix=matrix)
     ```
-    
 1. we get the start (top-left) and endpoint (bottom-right) from the map:
 
     ```python
@@ -96,4 +96,30 @@ print('operations:', runs, 'path length:', len(path))
 print(grid.grid_str(path=path, start=start, end=end))
 ```
 
+While running the pathfinding algorithm it might set values on the nodes. Depending on your path finding algorithm things like calculated distances or visited flags might be stored on them. So if you want to run the algorithm again you need to clean the grid first (see `Grid.cleanup`). Please note that because cleanup looks at all nodes of the grid it might be an operation that can take a bit of time!
+
 Take a look at the _`test/`_ folder for more examples.
+
+implementation details
+----------------------
+All pathfinding algorithms in this library are inheriting the Finder class. It has some common functionality that can be overwritten by the implementation of a path finding algorithm.
+
+The normal process works like this:
+1. You call `find_path` on one of your finder implementations
+1. `init_find` instantiates open-list and resets all values and counters.
+1. The main loop starts on the open-list. This list gets filled with all nodes that will be processed next (e.g. all nodes that are walkable and not the end in the). For this you need to implement `check_neighbors` in your own finder implementation.
+1. For example in A*s implementation of `check_neighbors` you first want to get the next node closest from the current starting point from the open list. the `next_node` method in Finder does this by giving you the node with a minimum `f`-value from the open list, it closes it and removes it from the open list.
+1. if this node is not the end node we go on and get the neighbors of the node we just picked from the grid by calling `find_neighbors`. This just calls `grid.neighbors`.
+1. If none of the neighbors are the end node we want to process the neighbors to calculate their distances in `process_node`
+1. `process_node` calculates the cost `f` from the start to the current node using the `calc_cost` method and the cost after calculating `h` from `apply_heuristic`.
+1. finally `process_node` updates the open list so `find_path` can run `check_neighbors` on it in the next node in the next iteration of the main loop.
+
+flow:
+```
+  find_path
+    init_find  # (re)set global values and open list
+    check_neighbors  # for every node in open list
+      next_node  # closest node to start in open list
+      find_neighbors  # get neighbors
+      process_node  # calculate new cost for neighboring node
+```

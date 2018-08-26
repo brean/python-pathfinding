@@ -96,9 +96,11 @@ print('operations:', runs, 'path length:', len(path))
 print(grid.grid_str(path=path, start=start, end=end))
 ```
 
-While running the pathfinding algorithm it might set values on the nodes. Depending on your path finding algorithm things like calculated distances or visited flags might be stored on them. So if you want to run the algorithm again you need to clean the grid first (see `Grid.cleanup`). Please note that because cleanup looks at all nodes of the grid it might be an operation that can take a bit of time!
-
 Take a look at the _`test/`_ folder for more examples.
+
+Rerun the algorithm
+--------------------
+While running the pathfinding algorithm it might set values on the nodes. Depending on your path finding algorithm things like calculated distances or visited flags might be stored on them. So if you want to run the algorithm again you need to clean the grid first (see `Grid.cleanup`). Please note that because cleanup looks at all nodes of the grid it might be an operation that can take a bit of time!
 
 implementation details
 ----------------------

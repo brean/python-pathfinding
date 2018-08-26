@@ -108,10 +108,10 @@ All pathfinding algorithms in this library are inheriting the Finder class. It h
 
 The normal process works like this:
 1. You call `find_path` on one of your finder implementations
-1. `init_find` instantiates open-list and resets all values and counters.
-1. The main loop starts on the open-list. This list gets filled with all nodes that will be processed next (e.g. all nodes that are walkable and not the end in the). For this you need to implement `check_neighbors` in your own finder implementation.
-1. For example in A*s implementation of `check_neighbors` you first want to get the next node closest from the current starting point from the open list. the `next_node` method in Finder does this by giving you the node with a minimum `f`-value from the open list, it closes it and removes it from the open list.
-1. if this node is not the end node we go on and get the neighbors of the node we just picked from the grid by calling `find_neighbors`. This just calls `grid.neighbors`.
+1. `init_find` instantiates `open_list` and resets all values and counters.
+1. The main loop starts on the `open_list`. This list gets filled with all nodes that will be processed next (e.g. all neighbors that are walkable). For this you need to implement `check_neighbors` in your own finder implementation.
+1. For example in A*s implementation of `check_neighbors` you first want to get the next node closest from the current starting point from the open list. the `next_node` method in Finder does this by giving you the node with a minimum `f`-value from the open list, it closes it and removes it from the `open_list`.
+1. if this node is not the end node we go on and get its neighbors by calling `find_neighbors`. This just calls `grid.neighbors` for most algorithms.
 1. If none of the neighbors are the end node we want to process the neighbors to calculate their distances in `process_node`
 1. `process_node` calculates the cost `f` from the start to the current node using the `calc_cost` method and the cost after calculating `h` from `apply_heuristic`.
 1. finally `process_node` updates the open list so `find_path` can run `check_neighbors` on it in the next node in the next iteration of the main loop.

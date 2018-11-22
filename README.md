@@ -15,6 +15,15 @@ Dijkstra and A* take the weight of the fields on the map into account.
 [![Build Status](https://travis-ci.org/brean/python-pathfinding.svg?branch=master)](https://travis-ci.org/brean/python-pathfinding)
 [![Coverage Status](https://coveralls.io/repos/github/brean/python-pathfinding/badge.svg?branch=master)](https://coveralls.io/github/brean/python-pathfinding?branch=master)
 
+Installation
+------------
+This library is provided by pypi, so you can just install the current stable version using pip:
+```
+pip install pathfinding
+```
+
+see https://pypi.org/project/pathfinding/
+
 usage example
 -------------
 A simple usage example to find a path using A*.

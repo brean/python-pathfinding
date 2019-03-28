@@ -58,19 +58,18 @@ class Finder(object):
         """
         get the distance between current node and the neighbor (cost)
         """
-        ng = node_a.g
         if node_b.x - node_a.x == 0 or node_b.y - node_a.y == 0:
             # direct neighbor - distance is 1
-            ng += 1
+            ng = 1
         else:
             # not a direct neighbor - diagonal movement
-            ng += SQRT2
+            ng = SQRT2
 
         # weight for weighted algorithms
         if self.weighted:
             ng *= node_b.weight
 
-        return ng
+        return node_a.g + ng
 
     def apply_heuristic(self, node_a, node_b, heuristic=None):
         """

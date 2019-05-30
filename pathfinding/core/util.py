@@ -123,7 +123,7 @@ def smoothen_path(grid, path, use_raytrace=False):
             if not grid.walkable(test_coord[0], test_coord[1]):
                 blocked = True
                 break
-        if not blocked:
+        if blocked:
             new_path.append(last_valid)
             sx, sy = last_valid
         last_valid = coord

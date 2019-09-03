@@ -15,6 +15,7 @@ Dijkstra and A* take the weight of the fields on the map into account.
 [![Build Status](https://travis-ci.org/brean/python-pathfinding.svg?branch=master)](https://travis-ci.org/brean/python-pathfinding)
 [![Coverage Status](https://coveralls.io/repos/github/brean/python-pathfinding/badge.svg?branch=master)](https://coveralls.io/github/brean/python-pathfinding?branch=master)
 ![MIT License](https://img.shields.io/github/license/brean/python-pathfinding)
+![PyPI](https://img.shields.io/pypi/v/pathfinding)
 
 Installation
 ------------

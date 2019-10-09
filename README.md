@@ -1,4 +1,3 @@
-
 # python-pathfinding
 Pathfinding algorithms based on [Pathfinding.JS](https://github.com/qiao/PathFinding.js) for python 2 and 3.
 
@@ -16,6 +15,7 @@ Dijkstra and A* take the weight of the fields on the map into account.
 [![Coverage Status](https://coveralls.io/repos/github/brean/python-pathfinding/badge.svg?branch=master)](https://coveralls.io/github/brean/python-pathfinding?branch=master)
 ![MIT License](https://img.shields.io/github/license/brean/python-pathfinding)
 ![PyPI](https://img.shields.io/pypi/v/pathfinding)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbrean%2Fpython-pathfinding.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbrean%2Fpython-pathfinding?ref=badge_shield)
 
 Installation
 ------------
@@ -136,3 +136,7 @@ flow:
       find_neighbors  # get neighbors
       process_node  # calculate new cost for neighboring node
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbrean%2Fpython-pathfinding.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbrean%2Fpython-pathfinding?ref=badge_large)

@@ -33,14 +33,14 @@ def build_nodes(width, height, matrix=None, inverse=False):
 
 
 class Grid(object):
-    def __init__(self, width=0, height=0, matrix=None, inverse=False, passable_left_right_border=False, passable_up_down_border=False):
+    def __init__(self, width=0, height=0, matrix=None, inverse=False):
         """
         a grid represents the map (as 2d-list of nodes).
         """
         self.width = width
         self.height = height
-        self.passable_left_right_border = passable_left_right_border
-        self.passable_up_down_border = passable_up_down_border
+        self.passable_left_right_border = False
+        self.passable_up_down_border = False
         if isinstance(matrix, (tuple, list)) or (
                 USE_NUMPY and isinstance(matrix, np.ndarray) and
                 matrix.size > 0):
@@ -50,7 +50,13 @@ class Grid(object):
             self.nodes = build_nodes(self.width, self.height, matrix, inverse)
         else:
             self.nodes = [[]]
-
+    
+    def set_passable_left_right_border(self):
+        self.passable_left_right_border=True
+        
+    def set_passable_up_down_border(self):
+        self.passable_up_down_border=True
+    
     def node(self, x, y):
         """
         get node at position
@@ -95,7 +101,7 @@ class Grid(object):
                 neighbors.append(self.nodes[y - 1][x])
                 s0 = True
         # →
-        if x == self.width and self.passable_left_right_border:
+        if x == self.width - 1 and self.passable_left_right_border:
             if self.walkable(0, y):
                 neighbors.append(self.nodes[y][0])
                 s1 = True
@@ -104,7 +110,7 @@ class Grid(object):
                 neighbors.append(self.nodes[y][x + 1])
                 s1 = True
         # ↓
-        if y == self.height and self.passable_up_down_border:
+        if y == self.height - 1 and self.passable_up_down_border:
             if self.walkable(x, 0):
                 neighbors.append(self.nodes[0][x])
                 s2 = True

@@ -33,12 +33,14 @@ def build_nodes(width, height, matrix=None, inverse=False):
 
 
 class Grid(object):
-    def __init__(self, width=0, height=0, matrix=None, inverse=False):
+    def __init__(self, width=0, height=0, matrix=None, inverse=False, passable_left_right_border=False, passable_up_down_border=False):
         """
         a grid represents the map (as 2d-list of nodes).
         """
         self.width = width
         self.height = height
+        self.passable_left_right_border = passable_left_right_border
+        self.passable_up_down_border = passable_up_down_border
         if isinstance(matrix, (tuple, list)) or (
                 USE_NUMPY and isinstance(matrix, np.ndarray) and
                 matrix.size > 0):
@@ -84,21 +86,41 @@ class Grid(object):
         s0 = d0 = s1 = d1 = s2 = d2 = s3 = d3 = False
 
         # ↑
-        if self.walkable(x, y - 1):
-            neighbors.append(self.nodes[y - 1][x])
-            s0 = True
+        if y == 0 and self.passable_up_down_border:
+            if self.walkable(x, self.height - 1):
+                neighbors.append(self.nodes[self.height - 1][x])
+                s0 = True
+        else:
+            if self.walkable(x, y - 1):
+                neighbors.append(self.nodes[y - 1][x])
+                s0 = True
         # →
-        if self.walkable(x + 1, y):
-            neighbors.append(self.nodes[y][x + 1])
-            s1 = True
+        if x == self.width and self.passable_left_right_border:
+            if self.walkable(0, y):
+                neighbors.append(self.nodes[y][0])
+                s1 = True
+        else:
+            if self.walkable(x + 1, y):
+                neighbors.append(self.nodes[y][x + 1])
+                s1 = True
         # ↓
-        if self.walkable(x, y + 1):
-            neighbors.append(self.nodes[y + 1][x])
-            s2 = True
+        if y == self.height and self.passable_up_down_border:
+            if self.walkable(x, 0):
+                neighbors.append(self.nodes[0][x])
+                s2 = True
+        else:
+            if self.walkable(x, y + 1):
+                neighbors.append(self.nodes[y + 1][x])
+                s2 = True
         # ←
-        if self.walkable(x - 1, y):
-            neighbors.append(self.nodes[y][x - 1])
-            s3 = True
+        if x == 0 and self.passable_left_right_border:
+            if self.walkable(self.width - 1, y):
+                neighbors.append(self.nodes[y][self.width - 1])
+                s3 = True
+        else:
+            if self.walkable(x - 1, y):
+                neighbors.append(self.nodes[y][x - 1])
+                s3 = True
 
         if diagonal_movement == DiagonalMovement.never:
             return neighbors

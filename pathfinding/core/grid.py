@@ -50,13 +50,13 @@ class Grid(object):
             self.nodes = build_nodes(self.width, self.height, matrix, inverse)
         else:
             self.nodes = [[]]
-    
+
     def set_passable_left_right_border(self):
-        self.passable_left_right_border=True
-        
+        self.passable_left_right_border = True
+
     def set_passable_up_down_border(self):
-        self.passable_up_down_border=True
-    
+        self.passable_up_down_border = True
+
     def node(self, x, y):
         """
         get node at position

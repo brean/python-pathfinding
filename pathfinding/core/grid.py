@@ -25,8 +25,8 @@ def build_nodes(width, height, matrix=None, inverse=False):
             # while others will be obstacles
             # if inverse is False, otherwise
             # it changes
-            weight = int(matrix[y][x]) if use_matrix else 1
-            walkable = weight <= 0 if inverse else weight >= 1
+            weight = float(matrix[y][x]) if use_matrix else 1
+            walkable = weight <= 0 if inverse else weight != 0
 
             nodes[y].append(Node(x=x, y=y, walkable=walkable, weight=weight))
     return nodes
@@ -42,8 +42,8 @@ class Grid(object):
         self.passable_left_right_border = False
         self.passable_up_down_border = False
         if isinstance(matrix, (tuple, list)) or (
-                USE_NUMPY and isinstance(matrix, np.ndarray) and
-                matrix.size > 0):
+                USE_NUMPY and isinstance(matrix, np.ndarray)
+                and matrix.size > 0):
             self.height = len(matrix)
             self.width = self.width = len(matrix[0]) if self.height > 0 else 0
         if self.width > 0 and self.height > 0:
@@ -58,8 +58,8 @@ class Grid(object):
         self.passable_up_down_border = True
 
     def node(self, x, y):
-        """
-        get node at position
+        """Get node at position.
+
         :param x: x pos
         :param y: y pos
         :return:
@@ -67,8 +67,8 @@ class Grid(object):
         return self.nodes[y][x]
 
     def inside(self, x, y):
-        """
-        check, if field position is inside map
+        """Check, if field position is inside map.
+
         :param x: x pos
         :param y: y pos
         :return:
@@ -82,9 +82,9 @@ class Grid(object):
         return self.inside(x, y) and self.nodes[y][x].walkable
 
     def neighbors(self, node, diagonal_movement=DiagonalMovement.never):
-        """
-        get all neighbors of one node
-        :param node: node
+        """Get all neighbors of one node.
+
+        :param node: current node that we like to get the neighbors of.
         """
         x = node.x
         y = node.y
@@ -171,8 +171,7 @@ class Grid(object):
                  border=True, start_chr='s', end_chr='e',
                  path_chr='x', empty_chr=' ', block_chr='#',
                  show_weight=False):
-        """
-        create a printable string from the grid using ASCII characters
+        """Create a printable string from the grid using ASCII characters.
 
         :param path: list of nodes that show the path
         :param start: start node
@@ -202,7 +201,12 @@ class Grid(object):
                     line += path_chr
                 elif node.walkable:
                     # empty field
-                    weight = str(node.weight) if node.weight < 10 else '+'
+                    if node.weight > 10:
+                        weight = '+'  # weight bigger than 10
+                    elif node.weight < 1 and node.weight > 0:
+                        weight = '-'  # weight between 0 and 1
+                    else:
+                        weight = str(int(node.weight))
                     line += weight if show_weight else empty_chr
                 else:
                     line += block_chr  # blocked field

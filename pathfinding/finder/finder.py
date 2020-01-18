@@ -60,7 +60,7 @@ class Finder(object):
         """
         if node_b.x - node_a.x == 0 or node_b.y - node_a.y == 0:
             # direct neighbor - distance is 1
-            ng = 1
+            ng = 1.0
         else:
             # not a direct neighbor - diagonal movement
             ng = SQRT2
@@ -120,6 +120,7 @@ class Finder(object):
         '''
         # calculate cost from current node (parent) to the next node (neighbor)
         ng = self.calc_cost(parent, node)
+        print(node.x, node.y, ng, node.g)
 
         if not node.opened or ng < node.g:
             node.g = ng

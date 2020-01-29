@@ -1,5 +1,5 @@
 import time
-from pathfinding.core.heuristic import manhatten, octile
+from pathfinding.core.heuristic import manhattan, octile
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.node import Node
 from .finder import Finder, TIME_LIMIT, MAX_RUNS
@@ -35,7 +35,7 @@ class IDAStarFinder(Finder):
         self.track_recursion = track_recursion
         if not heuristic:
             if diagonal_movement == DiagonalMovement.never:
-                self.heuristic = manhatten
+                self.heuristic = manhattan
             else:
                 # When diagonal movement is allowed the manhattan heuristic is
                 # not admissible it should be octile instead

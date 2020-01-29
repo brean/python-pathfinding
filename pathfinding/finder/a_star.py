@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import heapq  # used for the so colled "open list" that stores known nodes
-from pathfinding.core.heuristic import manhatten, octile
+from pathfinding.core.heuristic import manhattan, octile
 from pathfinding.core.util import backtrace, bi_backtrace
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from .finder import Finder, TIME_LIMIT, MAX_RUNS, BY_END
@@ -14,7 +14,7 @@ class AStarFinder(Finder):
         """
         find shortest path using A* algorithm
         :param heuristic: heuristic used to calculate distance of 2 points
-            (defaults to manhatten)
+            (defaults to manhattan)
         :param weight: weight for the edges
         :param diagonal_movement: if diagonal movement is allowed
             (see enum in diagonal_movement)
@@ -33,7 +33,7 @@ class AStarFinder(Finder):
 
         if not heuristic:
             if diagonal_movement == DiagonalMovement.never:
-                self.heuristic = manhatten
+                self.heuristic = manhattan
             else:
                 # When diagonal movement is allowed the manhattan heuristic is
                 # not admissible it should be octile instead

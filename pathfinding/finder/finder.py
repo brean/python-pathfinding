@@ -34,7 +34,7 @@ class Finder(object):
         """
         find shortest path
         :param heuristic: heuristic used to calculate distance of 2 points
-            (defaults to manhatten)
+            (defaults to manhattan)
         :param weight: weight for the edges
         :param diagonal_movement: if diagonal movement is allowed
             (see enum in diagonal_movement)

@@ -13,8 +13,8 @@ def null(dx, dy):
     return 0
 
 
-def manhatten(dx, dy):
-    """manhatten heuristics"""
+def manhattan(dx, dy):
+    """manhattan heuristics"""
     return dx + dy
 
 

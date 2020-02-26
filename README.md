@@ -1,6 +1,6 @@
 
 # python-pathfinding
-Pathfinding algorithms based on [Pathfinding.JS](https://github.com/qiao/PathFinding.js) for python 2 and 3.
+Pathfinding algorithms for python 2 and 3.
 
 Currently there are 6 path-finders bundled in this library, namely:
  - A*
@@ -16,6 +16,8 @@ Dijkstra and A* take the weight of the fields on the map into account.
 [![Coverage Status](https://coveralls.io/repos/github/brean/python-pathfinding/badge.svg?branch=master)](https://coveralls.io/github/brean/python-pathfinding?branch=master)
 ![MIT License](https://img.shields.io/github/license/brean/python-pathfinding)
 ![PyPI](https://img.shields.io/pypi/v/pathfinding)
+
+Inspired by [Pathfinding.JS](https://github.com/qiao/PathFinding.js) 
 
 Installation
 ------------
@@ -111,7 +113,7 @@ Take a look at the _`test/`_ folder for more examples.
 
 Rerun the algorithm
 --------------------
-While running the pathfinding algorithm it might set values on the nodes. Depending on your path finding algorithm things like calculated distances or visited flags might be stored on them. So if you want to run the algorithm again you need to clean the grid first (see `Grid.cleanup`). Please note that because cleanup looks at all nodes of the grid it might be an operation that can take a bit of time!
+While running the pathfinding algorithm it might set values on the nodes. Depending on your path finding algorithm things like calculated distances or visited flags might be stored on them. So if you want to run the algorithm in a loop you need to clean the grid first (see `Grid.cleanup`). Please note that because cleanup looks at all nodes of the grid it might be an operation that can take a bit of time!
 
 implementation details
 ----------------------

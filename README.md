@@ -2,7 +2,7 @@
 
 Pathfinding algorithms for python 2 and 3.
 
-Currently there are 6 path-finders bundled in this library, namely:
+Currently there are 7 path-finders bundled in this library, namely:
 
 - A*
 - Dijkstra
@@ -10,6 +10,7 @@ Currently there are 6 path-finders bundled in this library, namely:
 - Bi-directional A*
 - Breadth First Search (BFS)
 - Iterative Deeping A\* (IDA*)
+- Minimum Spanning Tree (MSP)
 
 Dijkstra and A* take the weight of the fields on the map into account.
 

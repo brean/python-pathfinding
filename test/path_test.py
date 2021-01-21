@@ -10,6 +10,7 @@ from pathfinding.finder.ida_star import IDAStarFinder
 from pathfinding.finder.breadth_first import BreadthFirstFinder
 from pathfinding.finder.finder import ExecutionRunsException
 from pathfinding.finder.finder import ExecutionTimeException
+from pathfinding.finder.msp import MinimumSpanningTree
 from pathfinding.core.grid import Grid
 from pathfinding.core.diagonal_movement import DiagonalMovement
 
@@ -20,7 +21,7 @@ BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 scenarios = os.path.join(BASE_PATH, 'path_test_scenarios.json')
 data = json.load(open(scenarios, 'r'))
 finders = [AStarFinder, BestFirst, BiAStarFinder, DijkstraFinder,
-           IDAStarFinder, BreadthFirstFinder]
+           IDAStarFinder, BreadthFirstFinder, MinimumSpanningTree]
 TIME_LIMIT = 10  # give it a 10 second limit.
 
 
@@ -46,7 +47,7 @@ def test_path():
                 weighted = scenario['weighted']
             if weighted and not finder.weighted:
                 continue
-            path, runs = finder.find_path(start, end, grid)
+            path, _ = finder.find_path(start, end, grid)
             print(find.__name__)
             print(grid.grid_str(path=path, start=start, end=end,
                                 show_weight=weighted))
@@ -86,7 +87,8 @@ def test_max_runs():
         with pytest.raises(ExecutionRunsException):
             path, runs = finder.find_path(start, end, grid)
             print('{} finishes after {} runs without exception'.format(
-                find.__name__, finder.runs))
+                find.__name__, runs))
+            print('path: {}'.format(path))
         msg = '{} needed to much iterations'.format(
             finder.__class__.__name__)
         assert(finder.runs <= 3), msg
@@ -101,7 +103,8 @@ def test_time():
         with pytest.raises(ExecutionTimeException):
             path, runs = finder.find_path(start, end, grid)
             print('{} finishes after {} runs without exception'.format(
-                find.__name__, finder.runs))
+                find.__name__, runs))
+            print('path: {}'.format(path))
         msg = '{} took to long'.format(finder.__class__.__name__)
         assert(finder.runs == 1), msg
 

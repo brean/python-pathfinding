@@ -11,6 +11,3 @@ pathfinding = {path = "."}
 
 [packages]
 pathfinding = {path = "."}
-
-[requires]
-python_version = "3.7"

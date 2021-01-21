@@ -15,7 +15,7 @@ class MinimumSpanningTree(Finder):
     https://en.wikipedia.org/wiki/Minimum_spanning_tree
     """
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        super(MinimumSpanningTree, self).__init__(*args, **kwargs)
         self.heuristic = heuristic.null
 
     def tree(self, grid, start):

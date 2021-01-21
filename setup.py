@@ -12,7 +12,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/brean/python-pathfinding",
-    version="0.0.4",
+    version="1.0",
     license="MIT",
     author="Andreas Bresser",
     packages=find_packages(),

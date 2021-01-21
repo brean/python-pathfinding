@@ -139,6 +139,20 @@ class Finder(object):
                 open_list.remove(node)
                 heapq.heappush(open_list, node)
 
+    def check_neighbors(self, start, end, grid, open_list,
+                        open_value=True, backtrace_by=None):
+        """
+        find next path segment based on given node
+        (or return path if we found the end)
+
+        :param start: start node
+        :param end: end node
+        :param grid: grid that stores all possible steps/tiles as 2D-list
+        :param open_list: stores nodes that will be processed next
+        """
+        raise NotImplementedError(
+            'Please implement check_neighbors in your finder')
+
     def find_path(self, start, end, grid):
         """
         find a path from start to end node on grid by iterating over

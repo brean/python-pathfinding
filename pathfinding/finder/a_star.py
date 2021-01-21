@@ -44,6 +44,11 @@ class AStarFinder(Finder):
         """
         find next path segment based on given node
         (or return path if we found the end)
+
+        :param start: start node
+        :param end: end node
+        :param grid: grid that stores all possible steps/tiles as 2D-list
+        :param open_list: stores nodes that will be processed next
         """
         # pop node with minimum 'f' value
         node = heapq.nsmallest(1, open_list)[0]

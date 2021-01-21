@@ -16,7 +16,7 @@
     "default": {
         "pathfinding": {
             "path": ".",
-            "version": "==0.0.5"
+            "version": "==1.0"
         }
     },
     "develop": {
@@ -108,7 +108,7 @@
         },
         "pathfinding": {
             "path": ".",
-            "version": "==0.0.5"
+            "version": "==1.0"
         },
         "pluggy": {
             "hashes": [

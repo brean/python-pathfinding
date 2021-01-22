@@ -23,10 +23,11 @@ class MinimumSpanningTree(Finder):
 
     def itertree(self, grid, start):
 
-        # Finder.process_node requires an end node, which we don't have. The following
-        # value tricks the call to Finder.apply_heuristic. Though maybe we want to generate
-        # a limited spanning tree that trends in a certain direction? In which case we'd
-        # want a more nuanced solution.
+        # Finder.process_node requires an end node, which we don't have.
+        # The following value tricks the call to Finder.apply_heuristic.
+        # Though maybe we want to generate a limited spanning tree that
+        # trends in a certain direction? In which case we'd want a more
+        # nuanced solution.
         end = namedtuple("FakeNode", ["x", "y"])(-1, -1)
 
         start.opened = True
@@ -45,7 +46,8 @@ class MinimumSpanningTree(Finder):
             neighbors = self.find_neighbors(grid, node)
             for neighbor in neighbors:
                 if not neighbor.closed:
-                    self.process_node(neighbor, node, end, open_list, open_value=True)
+                    self.process_node(
+                        neighbor, node, end, open_list, open_value=True)
 
     def find_path(self, start, end, grid):
         self.start_time = time.time()  # execution time limitation

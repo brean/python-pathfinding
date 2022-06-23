@@ -31,10 +31,11 @@ class Node(object):
         """
         reset all calculated values, fresh start for pathfinding
         """
-        # cost from this node to the goal
+        # cost from this node to the goal (for A* including the heuristic)
         self.h = 0.0
 
-        # cost from the start node to this node
+        # cost from the start node to this node 
+        # (calculated by distance function, e.g. including diagonal movement)
         self.g = 0.0
 
         # overall cost for a path using this node (f = g + h )

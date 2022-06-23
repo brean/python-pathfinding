@@ -132,9 +132,9 @@ All pathfinding algorithms in this library are inheriting the Finder class. It h
 
 The normal process works like this:
 
-1. You call `find_path` on one of your finder implementations
-1. `init_find` instantiates `open_list` and resets all values and counters.
-1. The main loop starts on the `open_list`. This list gets filled with all nodes that will be processed next (e.g. all neighbors that are walkable). For this you need to implement `check_neighbors` in your own finder implementation.
+1. You call `find_path` on one of your finder implementations.
+1. `init_find` instantiates the `open_list` and resets all values and counters.
+1. The main loop starts on the `open_list`. This list gets filled with all nodes that will be processed next (e.g. all current neighbors that are walkable). For this you need to implement `check_neighbors` in your own finder implementation.
 1. For example in A*s implementation of `check_neighbors` you first want to get the next node closest from the current starting point from the open list. the `next_node` method in Finder does this by giving you the node with a minimum `f`-value from the open list, it closes it and removes it from the `open_list`.
 1. if this node is not the end node we go on and get its neighbors by calling `find_neighbors`. This just calls `grid.neighbors` for most algorithms.
 1. If none of the neighbors are the end node we want to process the neighbors to calculate their distances in `process_node`

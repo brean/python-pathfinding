@@ -37,7 +37,7 @@ class Node(object):
         # cost from the start node to this node
         self.g = 0.0
 
-        # distance from start to this point (f = g + h )
+        # overall cost for a path using this node (f = g + h )
         self.f = 0.0
 
         self.opened = 0

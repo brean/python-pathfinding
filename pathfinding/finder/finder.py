@@ -136,8 +136,9 @@ class Finder(object):
                 # the node can be reached with smaller cost.
                 # Since its f value has been updated, we have to
                 # update its position in the open list
-                open_list.remove(node)
-                heapq.heappush(open_list, node)
+                if node in open_list:
+                    open_list.remove(node)
+                    heapq.heappush(open_list, node)
 
     def check_neighbors(self, start, end, grid, open_list,
                         open_value=True, backtrace_by=None):

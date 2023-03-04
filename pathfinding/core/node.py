@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 class Node(object):
     """
     basic node, saves X and Y coordinates on some grid and determine if
     it is walkable.
     """
-    def __init__(self, x=0, y=0, walkable=True, weight=1):
+
+    def __init__(self, x=0, y=0, walkable=True, weight=1, border=0b11111111):
         # Coordinates
         self.x = x
         self.y = y
@@ -14,6 +14,11 @@ class Node(object):
 
         # used for weighted algorithms
         self.weight = weight
+
+        # binary representation of open borders, if a border is closed
+        # it is set to 1, starts north and goes clockwise so 0b1 means
+        # the top is walkable, 0b10 means west is walkable
+        self.border = border
 
         # values used in the finder
         self.cleanup()

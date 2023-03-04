@@ -8,7 +8,31 @@ except ImportError:
     USE_NUMPY = False
 
 
-def build_nodes(width, height, matrix=None, inverse=False):
+# clockwise rotation around current node
+NORTH = 0b1
+WEST = 0b10
+SOUTH = 0b100
+EAST = 0b1000
+# ...and for diagonal movement
+NORTH_WEST = 0b10000
+SOUTH_WEST = 0b100000
+SOUTH_EAST = 0b1000000
+NORTH_EAST = 0b10000000
+# all neighbors are walkable
+AROUND = 0b11111111
+OPPOSITE = {
+    NORTH: SOUTH,
+    WEST: EAST,
+    SOUTH: NORTH,
+    EAST: WEST,
+    NORTH_WEST: SOUTH_EAST,
+    SOUTH_WEST: NORTH_EAST,
+    SOUTH_EAST: NORTH_WEST,
+    NORTH_EAST: SOUTH_WEST,
+}
+
+
+def build_nodes(width, height, matrix=None, inverse=False, border=None):
     """
     create nodes according to grid size. If a matrix is given it
     will be used to determine what nodes are walkable.
@@ -29,15 +53,27 @@ def build_nodes(width, height, matrix=None, inverse=False):
             #  free cells)
             weight = int(matrix[y][x]) if use_matrix else 1
             walkable = weight <= 0 if inverse else weight >= 1
+            _border = border[y][x] if border else AROUND
 
-            nodes[y].append(Node(x=x, y=y, walkable=walkable, weight=weight))
+            nodes[y].append(Node(
+                x=x, y=y, walkable=walkable, weight=weight, border=_border))
     return nodes
 
 
 class Grid(object):
-    def __init__(self, width=0, height=0, matrix=None, inverse=False):
+    def __init__(
+            self, width=0, height=0, matrix=None, inverse=False,
+            border=None):
         """
         a grid represents the map (as 2d-list of nodes).
+
+        :param width: width of the grid. Calculated if a matrix is given.
+        :param height: height of the grid. Calculated if a matrix is given.
+        :param matrix: 2d-tuple or 2d-list of numbers representing cost
+        :param inverse: positive values in the matrix are walkable
+          if it is false (default), otherwise negative alues are walkable
+        :param borders: a 2d-tuple or 2d-list with the same size as the matrix
+          but the values represent the borders in binary
         """
         self.width = width
         self.height = height
@@ -49,7 +85,8 @@ class Grid(object):
             self.height = len(matrix)
             self.width = self.width = len(matrix[0]) if self.height > 0 else 0
         if self.width > 0 and self.height > 0:
-            self.nodes = build_nodes(self.width, self.height, matrix, inverse)
+            self.nodes = build_nodes(
+                self.width, self.height, matrix, inverse, border=border)
         else:
             self.nodes = [[]]
 
@@ -77,11 +114,25 @@ class Grid(object):
         """
         return 0 <= x < self.width and 0 <= y < self.height
 
-    def walkable(self, x, y):
+    def walkable(self, x, y, from_x=None, from_y=None, direction=AROUND):
         """
         check, if the tile is inside grid and if it is set as walkable
         """
-        return self.inside(x, y) and self.nodes[y][x].walkable
+        if not self.inside(x, y):
+            return False
+
+        to_node = self.node(x, y)
+        # check if move from node at xy to this position is possible
+        # according to border-grid stored in the node.
+        if from_x and from_y and not\
+                self.node(from_x, from_y).border & direction:
+            return False
+        # also check the other direction
+        if direction != AROUND:
+            if not to_node.border & OPPOSITE[direction]:
+                return False
+
+        return to_node.walkable
 
     def neighbors(self, node, diagonal_movement=DiagonalMovement.never):
         """
@@ -91,75 +142,76 @@ class Grid(object):
         x = node.x
         y = node.y
         neighbors = []
-        s0 = d0 = s1 = d1 = s2 = d2 = s3 = d3 = False
+        straight_north = straight_east = straight_south = straight_west =\
+            diag_nw = diag_ne = diag_se = diag_sw = False
 
         # ↑
         if y == 0 and self.passable_up_down_border:
             if self.walkable(x, self.height - 1):
                 neighbors.append(self.nodes[self.height - 1][x])
-                s0 = True
+                straight_north = True
         else:
-            if self.walkable(x, y - 1):
+            if self.walkable(x, y - 1, x, y, NORTH):
                 neighbors.append(self.nodes[y - 1][x])
-                s0 = True
+                straight_north = True
         # →
         if x == self.width - 1 and self.passable_left_right_border:
             if self.walkable(0, y):
                 neighbors.append(self.nodes[y][0])
-                s1 = True
+                straight_east = True
         else:
-            if self.walkable(x + 1, y):
+            if self.walkable(x + 1, y, WEST):
                 neighbors.append(self.nodes[y][x + 1])
-                s1 = True
+                straight_east = True
         # ↓
         if y == self.height - 1 and self.passable_up_down_border:
             if self.walkable(x, 0):
                 neighbors.append(self.nodes[0][x])
-                s2 = True
+                straight_south = True
         else:
-            if self.walkable(x, y + 1):
+            if self.walkable(x, y + 1, x, y, SOUTH):
                 neighbors.append(self.nodes[y + 1][x])
-                s2 = True
+                straight_south = True
         # ←
         if x == 0 and self.passable_left_right_border:
             if self.walkable(self.width - 1, y):
                 neighbors.append(self.nodes[y][self.width - 1])
-                s3 = True
+                straight_west = True
         else:
-            if self.walkable(x - 1, y):
+            if self.walkable(x - 1, y, x, y, EAST):
                 neighbors.append(self.nodes[y][x - 1])
-                s3 = True
+                straight_west = True
 
         if diagonal_movement == DiagonalMovement.never:
             return neighbors
 
         if diagonal_movement == DiagonalMovement.only_when_no_obstacle:
-            d0 = s3 and s0
-            d1 = s0 and s1
-            d2 = s1 and s2
-            d3 = s2 and s3
+            diag_nw = straight_west and straight_north
+            diag_ne = straight_north and straight_east
+            diag_se = straight_east and straight_south
+            diag_sw = straight_south and straight_west
         elif diagonal_movement == DiagonalMovement.if_at_most_one_obstacle:
-            d0 = s3 or s0
-            d1 = s0 or s1
-            d2 = s1 or s2
-            d3 = s2 or s3
+            diag_nw = straight_west or straight_north
+            diag_ne = straight_north or straight_east
+            diag_se = straight_east or straight_south
+            diag_sw = straight_south or straight_west
         elif diagonal_movement == DiagonalMovement.always:
-            d0 = d1 = d2 = d3 = True
+            diag_nw = diag_ne = diag_se = diag_sw = True
 
         # ↖
-        if d0 and self.walkable(x - 1, y - 1):
+        if diag_nw and self.walkable(x - 1, y - 1, x, y, NORTH_WEST):
             neighbors.append(self.nodes[y - 1][x - 1])
 
         # ↗
-        if d1 and self.walkable(x + 1, y - 1):
+        if diag_ne and self.walkable(x + 1, y - 1, x, y, NORTH_EAST):
             neighbors.append(self.nodes[y - 1][x + 1])
 
         # ↘
-        if d2 and self.walkable(x + 1, y + 1):
+        if diag_se and self.walkable(x + 1, y + 1, x, y, SOUTH_EAST):
             neighbors.append(self.nodes[y + 1][x + 1])
 
         # ↙
-        if d3 and self.walkable(x - 1, y + 1):
+        if diag_sw and self.walkable(x - 1, y + 1, x, y, SOUTH_WEST):
             neighbors.append(self.nodes[y + 1][x - 1])
 
         return neighbors

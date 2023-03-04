@@ -21,10 +21,12 @@ def build_nodes(width, height, matrix=None, inverse=False):
     for y in range(height):
         nodes.append([])
         for x in range(width):
-            # 1, '1', True will be walkable
-            # while others will be obstacles
-            # if inverse is False, otherwise
-            # it changes
+            # 0, '0', False will be obstacles
+            # all other values mark walkable cells.
+            # you can use values bigger then 1 to assign a weight.
+            # If inverse is False it changes
+            # (1 and up becomes obstacle and 0 or everything negative marks a
+            #  free cells)
             weight = int(matrix[y][x]) if use_matrix else 1
             walkable = weight <= 0 if inverse else weight >= 1
 

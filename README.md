@@ -1,6 +1,6 @@
 # python-pathfinding
 
-Pathfinding algorithms for python 3.
+Pathfinding algorithms for python 2 and 3.
 
 Currently there are 7 path-finders bundled in this library, namely:
 
@@ -18,8 +18,6 @@ Dijkstra and A* take the weight of the fields on the map into account.
 [![Coverage Status](https://coveralls.io/repos/github/brean/python-pathfinding/badge.svg?branch=main)](https://coveralls.io/github/brean/python-pathfinding?branch=main)
 ![MIT License](https://img.shields.io/github/license/brean/python-pathfinding)
 ![PyPI](https://img.shields.io/pypi/v/pathfinding)
-
-*If you are still using python 2 take a look at the [python2-branch](https://github.com/brean/python-pathfinding/tree/python2).*
 
 ## Installation
 

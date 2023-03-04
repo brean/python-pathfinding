@@ -1,6 +1,6 @@
-from .finder import Finder, TIME_LIMIT, MAX_RUNS
-from pathfinding.core.util import backtrace
-from pathfinding.core.diagonal_movement import DiagonalMovement
+from .finder import Finder, MAX_RUNS, TIME_LIMIT
+from ..core.diagonal_movement import DiagonalMovement
+from ..core.util import backtrace
 
 
 class BreadthFirstFinder(Finder):

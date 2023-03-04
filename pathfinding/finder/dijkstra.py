@@ -1,6 +1,6 @@
 from .a_star import AStarFinder, MAX_RUNS, TIME_LIMIT
-from pathfinding.core.diagonal_movement import DiagonalMovement
-from pathfinding.core.heuristic import null
+from ..core.diagonal_movement import DiagonalMovement
+from ..core.heuristic import null
 
 
 class DijkstraFinder(AStarFinder):

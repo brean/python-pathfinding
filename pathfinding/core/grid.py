@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
+from .diagonal_movement import DiagonalMovement
 from .node import Node
 try:
     import numpy as np
     USE_NUMPY = True
 except ImportError:
     USE_NUMPY = False
-from pathfinding.core.diagonal_movement import DiagonalMovement
 
 
 def build_nodes(width, height, matrix=None, inverse=False):
@@ -189,7 +189,7 @@ class Grid(object):
         """
         data = ''
         if border:
-            data = '+{}+'.format('-'*len(self.nodes[0]))
+            data = '+{}+'.format('-' * len(self.nodes[0]))
         for y in range(len(self.nodes)):
             line = ''
             for x in range(len(self.nodes[y])):
@@ -207,10 +207,10 @@ class Grid(object):
                 else:
                     line += block_chr  # blocked field
             if border:
-                line = '|'+line+'|'
+                line = '|' + line + '|'
             if data:
                 data += '\n'
             data += line
         if border:
-            data += '\n+{}+'.format('-'*len(self.nodes[0]))
+            data += '\n+{}+'.format('-' * len(self.nodes[0]))
         return data

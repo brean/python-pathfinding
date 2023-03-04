@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from collections import deque, namedtuple
-from pathfinding.core import heuristic
-from pathfinding.finder.finder import Finder
 import heapq
 import time
+from collections import deque, namedtuple
+from ..core import heuristic
+from ..finder.finder import Finder
 
 
 class MinimumSpanningTree(Finder):

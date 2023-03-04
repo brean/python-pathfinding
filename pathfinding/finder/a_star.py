@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import heapq  # used for the so colled "open list" that stores known nodes
-from pathfinding.core.heuristic import manhattan, octile
-from pathfinding.core.util import backtrace, bi_backtrace
-from pathfinding.core.diagonal_movement import DiagonalMovement
-from .finder import Finder, TIME_LIMIT, MAX_RUNS, BY_END
+from .finder import BY_END, Finder, MAX_RUNS, TIME_LIMIT
+from ..core.diagonal_movement import DiagonalMovement
+from ..core.heuristic import manhattan, octile
+from ..core.util import backtrace, bi_backtrace
 
 
 class AStarFinder(Finder):

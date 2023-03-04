@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import heapq  # used for the so colled "open list" that stores known nodes
 import time  # for time limitation
-from pathfinding.core.util import SQRT2
-from pathfinding.core.diagonal_movement import DiagonalMovement
+from ..core.diagonal_movement import DiagonalMovement
+from ..core.util import SQRT2
 
 
 # max. amount of tries we iterate until we abort the search

@@ -34,7 +34,7 @@ class Node(object):
         # cost from this node to the goal (for A* including the heuristic)
         self.h = 0.0
 
-        # cost from the start node to this node 
+        # cost from the start node to this node
         # (calculated by distance function, e.g. including diagonal movement)
         self.g = 0.0
 

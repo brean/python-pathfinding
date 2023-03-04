@@ -1,5 +1,5 @@
 from .a_star import AStarFinder, MAX_RUNS, TIME_LIMIT
-from pathfinding.core.diagonal_movement import DiagonalMovement
+from ..core.diagonal_movement import DiagonalMovement
 
 
 class BestFirst(AStarFinder):

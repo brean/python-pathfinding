@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import math
 import copy
+import math
 
 
 # square root of 2 for diagonal distance
@@ -102,7 +102,7 @@ def expand_path(path):
     expanded = []
     if len(path) < 2:
         return expanded
-    for i in range(len(path)-1):
+    for i in range(len(path) - 1):
         expanded += bresenham(path[i], path[i + 1])
     expanded += [path[:-1]]
     return expanded

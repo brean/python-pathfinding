@@ -1,8 +1,8 @@
 import time
-from pathfinding.core.heuristic import manhattan, octile
-from pathfinding.core.diagonal_movement import DiagonalMovement
-from pathfinding.core.node import Node
-from .finder import Finder, TIME_LIMIT, MAX_RUNS
+from .finder import Finder, MAX_RUNS, TIME_LIMIT
+from ..core.diagonal_movement import DiagonalMovement
+from ..core.heuristic import manhattan, octile
+from ..core.node import Node
 
 
 class IDAStarFinder(Finder):

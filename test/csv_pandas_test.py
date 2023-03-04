@@ -1,6 +1,6 @@
 import os
-import pandas
 import numpy as np
+import pandas
 
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid

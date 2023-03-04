@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
-import os
 import json
-import pytest
+import os
+
+from pathfinding.core.diagonal_movement import DiagonalMovement
+from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
 from pathfinding.finder.best_first import BestFirst
-from pathfinding.finder.dijkstra import DijkstraFinder
 from pathfinding.finder.bi_a_star import BiAStarFinder
-from pathfinding.finder.ida_star import IDAStarFinder
 from pathfinding.finder.breadth_first import BreadthFirstFinder
+from pathfinding.finder.dijkstra import DijkstraFinder
 from pathfinding.finder.finder import ExecutionRunsException
 from pathfinding.finder.finder import ExecutionTimeException
+from pathfinding.finder.ida_star import IDAStarFinder
 from pathfinding.finder.msp import MinimumSpanningTree
-from pathfinding.core.grid import Grid
-from pathfinding.core.diagonal_movement import DiagonalMovement
+
+import pytest
 
 
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
@@ -91,7 +93,7 @@ def test_max_runs():
             print('path: {}'.format(path))
         msg = '{} needed to much iterations'.format(
             finder.__class__.__name__)
-        assert(finder.runs <= 3), msg
+        assert finder.runs <= 3, msg
 
 
 def test_time():
@@ -106,7 +108,7 @@ def test_time():
                 find.__name__, runs))
             print('path: {}'.format(path))
         msg = '{} took to long'.format(finder.__class__.__name__)
-        assert(finder.runs == 1), msg
+        assert finder.runs == 1, msg
 
 
 if __name__ == '__main__':

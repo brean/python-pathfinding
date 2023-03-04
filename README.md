@@ -159,11 +159,11 @@ You can run the tests locally using pytest. Take a look at the `test`-folder
 
 ## Contributing
 
-Please use the [issue tracker](https://github.com/knowledge4retail/k4r-data-provider/issues) to submit bug reports and feature requests. Please use merge requests as described [here](/CONTRIBUTING.md) to add/adapt functionality. 
+Please use the [issue tracker](https://github.com/brean/python-pathfinding/issues) to submit bug reports and feature requests. Please use merge requests as described [here](/CONTRIBUTING.md) to add/adapt functionality. 
 
 ## License
 
-K4R-data-provider is distributed under the [MIT license](https://opensource.org/licenses/MIT).
+python-pathfinding is distributed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## Maintainer
 

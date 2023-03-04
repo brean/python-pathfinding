@@ -1,6 +1,6 @@
 # python-pathfinding
 
-Pathfinding algorithms for python 2 and 3.
+Pathfinding algorithms for python 3.
 
 Currently there are 7 path-finders bundled in this library, namely:
 
@@ -19,7 +19,7 @@ Dijkstra and A* take the weight of the fields on the map into account.
 ![MIT License](https://img.shields.io/github/license/brean/python-pathfinding)
 ![PyPI](https://img.shields.io/pypi/v/pathfinding)
 
-Inspired by [Pathfinding.JS](https://github.com/qiao/PathFinding.js)
+*If you are still using python 2 take a look at the [python2-branch](https://github.com/brean/python-pathfinding/tree/python2).*
 
 ## Installation
 
@@ -32,6 +32,7 @@ pip install pathfinding
 see [pathfinding on pypi](https://pypi.org/project/pathfinding/)
 
 ## Usage example
+### Base usage
 
 A simple usage example to find a path using A*.
 
@@ -96,7 +97,7 @@ A simple usage example to find a path using A*.
 
     You can ignore the +, - and | characters, they just show the border around your map, the blank space is a free field, 's' marks the start, 'e' the end and '#' our obstacle in the middle. You see the path from start to end marked by 'x' characters. We allow horizontal movement, so it is not using the upper-right corner. You can access `print(path)` to get the specific list of coordinates.
 
-Here The whole example if you just want to copy-and-paste the code and play with it:
+Here is the whole example if you just want to copy-and-paste the code and play with it:
 
 ```python
 from pathfinding.core.diagonal_movement import DiagonalMovement
@@ -120,7 +121,8 @@ print('operations:', runs, 'path length:', len(path))
 print(grid.grid_str(path=path, start=start, end=end))
 ```
 
-Take a look at the _`test/`_ folder for more examples.
+### Tests as usage examples
+Take a look at the _`test/`_ folder for more examples, e.g. how to use pandas
 
 ## Rerun the algorithm
 
@@ -151,3 +153,23 @@ flow:
       find_neighbors  # get neighbors
       process_node  # calculate new cost for neighboring node
 ```
+
+## Testing
+You can run the tests locally using pytest. Take a look at the `test`-folder
+
+## Contributing
+
+Please use the [issue tracker](https://github.com/knowledge4retail/k4r-data-provider/issues) to submit bug reports and feature requests. Please use merge requests as described [here](/CONTRIBUTING.md) to add/adapt functionality. 
+
+## License
+
+K4R-data-provider is distributed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Maintainer
+
+Andreas Bresser, self@andreasbresser.de
+
+## Authors / Contributers
+Authors and contributers are [listed on github](https://github.com/brean/python-pathfinding/graphs/contributors).
+
+Inspired by [Pathfinding.JS](https://github.com/qiao/PathFinding.js)

@@ -23,7 +23,8 @@ def _find(matrix):
     print('operations:', runs, 'path length:', len(path))
     print(grid.grid_str(path=path, start=start, end=end))
 
-    assert path == [(0, 0), (0, 1), (1, 1), (1, 2), (1, 3), (1, 4), (2, 4)]
+    assert [tuple(p) for p in path] ==\
+        [(0, 0), (0, 1), (1, 1), (1, 2), (1, 3), (1, 4), (2, 4)]
 
 
 def test_csv_pandas_str():

@@ -43,7 +43,7 @@ Summary: maintainer can push minor changes directly, pull request + 1 reviewer f
 
 * Usually it is not possible to push directly to the `main` branch of *python-pathfinding* for anyone. Only tiny changes, urgent bugfixes, and maintenance commits can be pushed directly to the `main` branch by the maintainer without a review. "Tiny" means backwards compatibility is mandatory and all tests must succeed. No new feature must be added.
 
-* Developers shouls submit pull requests. Those will ideally be reviewed by at least one other developer and merged by the maintainer. New features must be documented and tested. Breaking changes must be discussed and announced in advance with deprecation warnings.
+* Developers should submit pull requests. Those will ideally be reviewed by at least one other developer and merged by the maintainer. New features must be documented and tested. Breaking changes must be discussed and announced in advance with deprecation warnings.
 
 ## Project Roadmap
 

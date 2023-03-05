@@ -32,7 +32,7 @@ pip install pathfinding
 see [pathfinding on pypi](https://pypi.org/project/pathfinding/)
 
 ## Usage examples
-For usage examples with detailed descriptions take a look at the [docs](docs/) folder, also take a look at the _`test/`_ folder for more examples, e.g. how to use pandas
+For usage examples with detailed descriptions take a look at the [docs](docs/) folder, also take a look at the [test/](test/) folder for more examples, e.g. how to use pandas
 
 ## Rerun the algorithm
 

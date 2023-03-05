@@ -160,6 +160,7 @@ class Finder(object):
         :param start: start node
         :param end: end node
         :param grid: grid that stores all possible steps/tiles as 2D-list
+        (can be a list of grids)
         :return:
         """
         self.start_time = time.time()  # execution time limitation

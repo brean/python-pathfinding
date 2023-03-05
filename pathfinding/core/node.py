@@ -1,22 +1,43 @@
-# -*- coding: utf-8 -*-
-class Node(object):
+import dataclasses
+
+
+@dataclasses.dataclass
+class Node:
     """
     basic node, saves X and Y coordinates on some grid and determine if
     it is walkable.
     """
-    def __init__(self, x=0, y=0, walkable=True, weight=1):
-        # Coordinates
-        self.x = x
-        self.y = y
 
-        # Whether this node can be walked through.
-        self.walkable = walkable
+    # Coordinates
+    x: int = 0
+    y: int = 0
 
-        # used for weighted algorithms
-        self.weight = weight
+    # Wether this node can be walked through.
+    walkable: bool = True
 
+    # used for weighted algorithms
+    weight: float = 1
+
+    # grid_id is used if we have more than one grid
+    grid_id: int | str = None
+
+    connections: list = None
+
+    def __post_init__(self):
         # values used in the finder
         self.cleanup()
+
+    def __iter__(self):
+        yield self.x
+        yield self.y
+        if self.grid_id is not None:
+            yield self.grid_id
+
+    def connect(self, other_node):
+        if not self.connections:
+            self.connections = [other_node]
+        else:
+            self.connections.append(other_node)
 
     def __lt__(self, other):
         """

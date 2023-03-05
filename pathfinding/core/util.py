@@ -12,10 +12,10 @@ def backtrace(node):
     Backtrace according to the parent records and return the path.
     (including both start and end nodes)
     """
-    path = [(node.x, node.y)]
+    path = [node]
     while node.parent:
         node = node.parent
-        path.append((node.x, node.y))
+        path.append(node)
     path.reverse()
     return path
 

@@ -8,11 +8,10 @@ except ImportError:
     USE_NUMPY = False
 
 
-def build_nodes(width, height, matrix=None, inverse=False):
+def build_nodes(width, height, matrix=None, inverse=False, grid_id=None):
     """
     create nodes according to grid size. If a matrix is given it
     will be used to determine what nodes are walkable.
-    :rtype : list
     """
     nodes = []
     use_matrix = (isinstance(matrix, (tuple, list))) or \
@@ -30,12 +29,15 @@ def build_nodes(width, height, matrix=None, inverse=False):
             weight = int(matrix[y][x]) if use_matrix else 1
             walkable = weight <= 0 if inverse else weight >= 1
 
-            nodes[y].append(Node(x=x, y=y, walkable=walkable, weight=weight))
+            nodes[y].append(Node(
+                x=x, y=y, walkable=walkable, weight=weight, grid_id=grid_id))
     return nodes
 
 
 class Grid(object):
-    def __init__(self, width=0, height=0, matrix=None, inverse=False):
+    def __init__(
+            self, width=0, height=0, matrix=None, grid_id=None,
+            inverse=False):
         """
         a grid represents the map (as 2d-list of nodes).
         """
@@ -44,12 +46,13 @@ class Grid(object):
         self.passable_left_right_border = False
         self.passable_up_down_border = False
         if isinstance(matrix, (tuple, list)) or (
-                USE_NUMPY and isinstance(matrix, np.ndarray) and
-                matrix.size > 0):
+                USE_NUMPY and isinstance(matrix, np.ndarray) and (
+                matrix.size > 0)):
             self.height = len(matrix)
             self.width = self.width = len(matrix[0]) if self.height > 0 else 0
         if self.width > 0 and self.height > 0:
-            self.nodes = build_nodes(self.width, self.height, matrix, inverse)
+            self.nodes = build_nodes(
+                self.width, self.height, matrix, inverse, grid_id)
         else:
             self.nodes = [[]]
 
@@ -129,6 +132,10 @@ class Grid(object):
             if self.walkable(x - 1, y):
                 neighbors.append(self.nodes[y][x - 1])
                 s3 = True
+
+        # check for connections to other grids
+        if node.connections:
+            neighbors += node.connections
 
         if diagonal_movement == DiagonalMovement.never:
             return neighbors

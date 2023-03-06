@@ -18,8 +18,11 @@ class Node:
     # used for weighted algorithms
     weight: float = 1
 
-    # grid_id is used if we have more than one grid
-    grid_id: int | str = None
+    # grid_id is used if we have more than one grid,
+    # normally we just count our grids by number
+    # but you can also use a string here.
+    # Set it to None if you only have one grid.
+    grid_id: int = None
 
     connections: list = None
 

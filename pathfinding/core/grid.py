@@ -135,7 +135,7 @@ class Grid(object):
 
         # check for connections to other grids
         if node.connections:
-            neighbors += node.connections
+            neighbors.extend(node.connections)
 
         if diagonal_movement == DiagonalMovement.never:
             return neighbors

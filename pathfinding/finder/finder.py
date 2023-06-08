@@ -107,7 +107,7 @@ class Finder(object):
 
     def process_node(self, node, parent, end, open_list, open_value=True):
         '''
-        we check if the given node is path of the path by calculating its
+        we check if the given node is part of the path by calculating its
         cost and add or remove it from our path
         :param node: the node we like to test
             (the neighbor in A* or jump-node in JumpPointSearch)

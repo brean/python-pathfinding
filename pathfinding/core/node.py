@@ -75,3 +75,9 @@ class Node:
         self.retain_count = 0
         # used for IDA* and Jump-Point-Search
         self.tested = False
+
+    def __repr__(self):
+        """
+        return a human readable representation
+        """
+        return f"< {self.__class__.__name__} x={self.x} y={self.y} >"

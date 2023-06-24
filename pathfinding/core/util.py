@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 import copy
 import math
+from typing import List, Tuple
 
+from .node import Node
+from .grid import Grid
 
 # square root of 2 for diagonal distance
 SQRT2 = math.sqrt(2)
 
+Coords = Tuple[float, float]
 
-def backtrace(node):
+def backtrace(node: Node) -> List[Node]:
     """
     Backtrace according to the parent records and return the path.
     (including both start and end nodes)
@@ -20,7 +24,7 @@ def backtrace(node):
     return path
 
 
-def bi_backtrace(node_a, node_b):
+def bi_backtrace(node_a: Node, node_b: Node) -> List[Node]:
     """
     Backtrace from start and end node, returns the path for bi-directional A*
     (including both start and end nodes)
@@ -31,7 +35,7 @@ def bi_backtrace(node_a, node_b):
     return path_a + path_b
 
 
-def raytrace(coords_a, coords_b):
+def raytrace(coords_a: Coords, coords_b: Coords) -> List[Coords]:
     line = []
     x0, y0 = coords_a
     x1, y1 = coords_b
@@ -64,7 +68,7 @@ def raytrace(coords_a, coords_b):
     return line
 
 
-def bresenham(coords_a, coords_b):
+def bresenham(coords_a: Coords, coords_b: Coords) -> List[Coords]:
     '''
     Given the start and end coordinates, return all the coordinates lying
     on the line formed by these coordinates, based on Bresenham's algorithm.
@@ -94,7 +98,7 @@ def bresenham(coords_a, coords_b):
     return line
 
 
-def expand_path(path):
+def expand_path(path: List[Coords]) -> List[Coords]:
     '''
     Given a compressed path, return a new path that has all the segments
     in it interpolated.
@@ -108,7 +112,7 @@ def expand_path(path):
     return expanded
 
 
-def smoothen_path(grid, path, use_raytrace=False):
+def smoothen_path(grid: Grid, path: List[Coords], use_raytrace=False) -> List[Coords]:
     x0, y0 = path[0]
 
     sx, sy = path[0]

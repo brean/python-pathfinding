@@ -224,3 +224,9 @@ class Grid(object):
         if border:
             data += '\n+{}+'.format('-' * len(self.nodes[0]))
         return data
+    
+    def __repr__(self):
+        """
+        return a human readable representation
+        """
+        return f"< {self.__class__.__name__} width={self.width} height={self.height} >"

@@ -179,3 +179,9 @@ class Finder(object):
 
         # failed to find path
         return [], self.runs
+    
+    def __repr__(self):
+        """
+        return a human readable representation
+        """
+        return f"< {self.__class__.__name__} diagonal_movement={self.diagonal_movement} >"

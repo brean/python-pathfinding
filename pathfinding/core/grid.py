@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from typing import List
 from .diagonal_movement import DiagonalMovement
 from .node import Node
 try:
@@ -8,7 +9,7 @@ except ImportError:
     USE_NUMPY = False
 
 
-def build_nodes(width, height, matrix=None, inverse=False, grid_id=None):
+def build_nodes(width, height, matrix=None, inverse=False, grid_id=None) -> List[List[Node]]:
     """
     create nodes according to grid size. If a matrix is given it
     will be used to determine what nodes are walkable.
@@ -62,7 +63,7 @@ class Grid(object):
     def set_passable_up_down_border(self):
         self.passable_up_down_border = True
 
-    def node(self, x, y):
+    def node(self, x, y) -> Node:
         """
         get node at position
         :param x: x pos
@@ -71,7 +72,7 @@ class Grid(object):
         """
         return self.nodes[y][x]
 
-    def inside(self, x, y):
+    def inside(self, x, y) -> bool:
         """
         check, if field position is inside map
         :param x: x pos
@@ -80,13 +81,13 @@ class Grid(object):
         """
         return 0 <= x < self.width and 0 <= y < self.height
 
-    def walkable(self, x, y):
+    def walkable(self, x, y) -> bool:
         """
         check, if the tile is inside grid and if it is set as walkable
         """
         return self.inside(x, y) and self.nodes[y][x].walkable
 
-    def neighbors(self, node, diagonal_movement=DiagonalMovement.never):
+    def neighbors(self, node: Node, diagonal_movement: DiagonalMovement = DiagonalMovement.never) -> List[Node]:
         """
         get all neighbors of one node
         :param node: node
@@ -179,7 +180,7 @@ class Grid(object):
     def grid_str(self, path=None, start=None, end=None,
                  border=True, start_chr='s', end_chr='e',
                  path_chr='x', empty_chr=' ', block_chr='#',
-                 show_weight=False):
+                 show_weight=False) -> str:
         """
         create a printable string from the grid using ASCII characters
 

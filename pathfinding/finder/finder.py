@@ -178,7 +178,7 @@ class Finder(object):
 
         # failed to find path
         return [], self.runs
-    
+
     def __repr__(self):
         """
         return a human readable representation

@@ -1,3 +1,10 @@
+# 1.0.3
+## New features
+- Support for generic graphs that are not grids.
+
+## General
+- Minor PEP 8 fixes, (import order, remove empty lines, remove utf-8 force because it's the default in Python3)
+
 # 1.0.2
 ## New features
 - portals/elevators/steps (see [docs/02_connecting_grids.md](docs/02_connecting_grids.md))

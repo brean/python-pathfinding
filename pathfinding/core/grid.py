@@ -1,6 +1,7 @@
 from typing import List
 from .diagonal_movement import DiagonalMovement
-from .node import Node
+from .node import GridNode
+from ..core.util import SQRT2
 try:
     import numpy as np
     USE_NUMPY = True
@@ -10,7 +11,7 @@ except ImportError:
 
 def build_nodes(
         width, height, matrix=None, inverse=False,
-        grid_id=None) -> List[List[Node]]:
+        grid_id=None) -> List[List[GridNode]]:
     """
     create nodes according to grid size. If a matrix is given it
     will be used to determine what nodes are walkable.
@@ -31,12 +32,12 @@ def build_nodes(
             weight = int(matrix[y][x]) if use_matrix else 1
             walkable = weight <= 0 if inverse else weight >= 1
 
-            nodes[y].append(Node(
+            nodes[y].append(GridNode(
                 x=x, y=y, walkable=walkable, weight=weight, grid_id=grid_id))
     return nodes
 
 
-class Grid(object):
+class Grid:
     def __init__(
             self, width=0, height=0, matrix=None, grid_id=None,
             inverse=False):
@@ -64,7 +65,7 @@ class Grid(object):
     def set_passable_up_down_border(self):
         self.passable_up_down_border = True
 
-    def node(self, x, y) -> Node:
+    def node(self, x, y) -> GridNode:
         """
         get node at position
         :param x: x pos
@@ -88,10 +89,27 @@ class Grid(object):
         """
         return self.inside(x, y) and self.nodes[y][x].walkable
 
+    def calc_cost(self, node_a, node_b, weighted=False):
+        """
+        get the distance between current node and the neighbor (cost)
+        """
+        if node_b.x - node_a.x == 0 or node_b.y - node_a.y == 0:
+            # direct neighbor - distance is 1
+            ng = 1
+        else:
+            # not a direct neighbor - diagonal movement
+            ng = SQRT2
+
+        # weight for weighted algorithms
+        if weighted:
+            ng *= node_b.weight
+
+        return node_a.g + ng
+
     def neighbors(
-        self, node: Node,
+        self, node: GridNode,
         diagonal_movement: DiagonalMovement = DiagonalMovement.never
-    ) -> List[Node]:
+    ) -> List[GridNode]:
         """
         get all neighbors of one node
         :param node: node

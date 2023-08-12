@@ -46,7 +46,7 @@ class MinimumSpanningTree(Finder):
             for neighbor in neighbors:
                 if not neighbor.closed:
                     self.process_node(
-                        neighbor, node, end, open_list, open_value=True)
+                        grid, neighbor, node, end, open_list, open_value=True)
 
     def find_path(self, start, end, grid):
         self.start_time = time.time()  # execution time limitation

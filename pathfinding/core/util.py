@@ -2,7 +2,6 @@ import copy
 import math
 from typing import List, Tuple
 
-from .grid import Grid
 from .node import Node
 
 
@@ -114,7 +113,7 @@ def expand_path(path: List[Coords]) -> List[Coords]:
 
 
 def smoothen_path(
-    grid: Grid, path: List[Coords], use_raytrace=False
+    grid, path: List[Coords], use_raytrace=False
 ) -> List[Coords]:
     x0, y0 = path[0]
 

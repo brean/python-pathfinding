@@ -1,7 +1,6 @@
 import heapq  # used for the so colled "open list" that stores known nodes
 import time  # for time limitation
 from ..core.diagonal_movement import DiagonalMovement
-from ..core.util import SQRT2
 
 
 # max. amount of tries we iterate until we abort the search
@@ -24,7 +23,7 @@ class ExecutionRunsException(Exception):
         super(ExecutionRunsException, self).__init__(message)
 
 
-class Finder(object):
+class Finder:
     def __init__(self, heuristic=None, weight=1,
                  diagonal_movement=DiagonalMovement.never,
                  weighted=True,
@@ -52,23 +51,6 @@ class Finder(object):
         self.diagonal_movement = diagonal_movement
         self.weight = weight
         self.heuristic = heuristic
-
-    def calc_cost(self, node_a, node_b):
-        """
-        get the distance between current node and the neighbor (cost)
-        """
-        if node_b.x - node_a.x == 0 or node_b.y - node_a.y == 0:
-            # direct neighbor - distance is 1
-            ng = 1
-        else:
-            # not a direct neighbor - diagonal movement
-            ng = SQRT2
-
-        # weight for weighted algorithms
-        if self.weighted:
-            ng *= node_b.weight
-
-        return node_a.g + ng
 
     def apply_heuristic(self, node_a, node_b, heuristic=None):
         """
@@ -104,7 +86,8 @@ class Finder(object):
                 '{} took longer than {} seconds, aborting!'.format(
                     self.__class__.__name__, self.time_limit))
 
-    def process_node(self, node, parent, end, open_list, open_value=True):
+    def process_node(
+            self, graph, node, parent, end, open_list, open_value=True):
         '''
         we check if the given node is part of the path by calculating its
         cost and add or remove it from our path
@@ -118,7 +101,7 @@ class Finder(object):
 
         '''
         # calculate cost from current node (parent) to the next node (neighbor)
-        ng = self.calc_cost(parent, node)
+        ng = graph.calc_cost(parent, node, self.weighted)
 
         if not node.opened or ng < node.g:
             node.g = ng
@@ -138,7 +121,7 @@ class Finder(object):
                 open_list.remove(node)
                 heapq.heappush(open_list, node)
 
-    def check_neighbors(self, start, end, grid, open_list,
+    def check_neighbors(self, start, end, graph, open_list,
                         open_value=True, backtrace_by=None):
         """
         find next path segment based on given node

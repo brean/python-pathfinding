@@ -15,3 +15,9 @@ class World:
     ) -> list[Node]:
         return self.grids[node.grid_id].neighbors(
             node, diagonal_movement=diagonal_movement)
+
+    def calc_cost(self, node_a, node_b, weighted=False):
+        # TODO: if node_a.grid_id != node_b.grid_id calculate distance between
+        # grids as well, for now we ignore switching grids
+        return self.grids[node_a.grid_id].calc_cost(
+            node_a, node_b, weighted=weighted)

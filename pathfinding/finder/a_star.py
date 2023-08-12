@@ -38,7 +38,7 @@ class AStarFinder(Finder):
                 # not admissible it should be octile instead
                 self.heuristic = octile
 
-    def check_neighbors(self, start, end, grid, open_list,
+    def check_neighbors(self, start, end, graph, open_list,
                         open_value=True, backtrace_by=None):
         """
         find next path segment based on given node
@@ -61,7 +61,7 @@ class AStarFinder(Finder):
             return backtrace(end)
 
         # get neighbors of the current node
-        neighbors = self.find_neighbors(grid, node)
+        neighbors = self.find_neighbors(graph, node)
         for neighbor in neighbors:
             if neighbor.closed:
                 # already visited last minimum f value
@@ -75,19 +75,20 @@ class AStarFinder(Finder):
 
             # check if the neighbor has not been inspected yet, or
             # can be reached with smaller cost from the current node
-            self.process_node(neighbor, node, end, open_list, open_value)
+            self.process_node(
+                graph, neighbor, node, end, open_list, open_value)
 
         # the end has not been reached (yet) keep the find_path loop running
         return None
 
-    def find_path(self, start, end, grid):
+    def find_path(self, start, end, graph):
         """
         find a path from start to end node on grid using the A* algorithm
         :param start: start node
         :param end: end node
-        :param grid: grid that stores all possible steps/tiles as 2D-list
+        :param graph: graph or grid that stores all possible nodes
         :return:
         """
         start.g = 0
         start.f = 0
-        return super(AStarFinder, self).find_path(start, end, grid)
+        return super(AStarFinder, self).find_path(start, end, graph)

@@ -76,7 +76,7 @@ class IDAStarFinder(Finder):
                 neighbor.retain_count += 1
                 neighbor.tested = True
 
-            t = self.search(neighbor, g + self.calc_cost(node, neighbor),
+            t = self.search(neighbor, g + grid.calc_cost(node, neighbor),
                             cutoff, path, depth + 1, end, grid)
 
             if isinstance(t, Node):

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import time
 from .a_star import AStarFinder
 from .finder import BY_END, BY_START, MAX_RUNS, TIME_LIMIT

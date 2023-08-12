@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import heapq  # used for the so colled "open list" that stores known nodes
 import time  # for time limitation
 from ..core.diagonal_movement import DiagonalMovement
@@ -184,4 +183,5 @@ class Finder(object):
         """
         return a human readable representation
         """
-        return f"< {self.__class__.__name__} diagonal_movement={self.diagonal_movement} >"
+        return f"<{self.__class__.__name__}" \
+            f"diagonal_movement={self.diagonal_movement} >"

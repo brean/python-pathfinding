@@ -11,6 +11,7 @@
 - stricter flake8 integration
 - moved usage documentation to [docs](docs/)
 - add contributing and changelog
+- update license to 2023
 
 # 1.0.1
 ## Bugfixes

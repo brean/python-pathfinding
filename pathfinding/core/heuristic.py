@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import math
 from .util import SQRT2
 

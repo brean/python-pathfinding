@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import numpy as np
 
 from pathfinding.core.diagonal_movement import DiagonalMovement

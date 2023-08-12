@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 class DiagonalMovement:
     always = 1
     never = 2

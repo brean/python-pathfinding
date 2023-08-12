@@ -1,15 +1,16 @@
-# -*- coding: utf-8 -*-
 import copy
 import math
 from typing import List, Tuple
 
-from .node import Node
 from .grid import Grid
+from .node import Node
+
 
 # square root of 2 for diagonal distance
 SQRT2 = math.sqrt(2)
 
 Coords = Tuple[float, float]
+
 
 def backtrace(node: Node) -> List[Node]:
     """
@@ -49,10 +50,10 @@ def raytrace(coords_a: Coords, coords_b: Coords) -> List[Coords]:
         abs(1.0 / dx) if dx > 0 else 10000, \
         abs(1.0 / dy) if dy > 0 else 10000
 
-    frac_start_pos = (x0 + .5) - x0, (y0 + .5) - y0
+    frac_start = (x0 + .5) - x0, (y0 + .5) - y0
     t_for_next_border = [
-      (1 - frac_start_pos[0] if dx < 0 else frac_start_pos[0]) * t_for_one[0],
-      (1 - frac_start_pos[1] if dx < 0 else frac_start_pos[1]) * t_for_one[1]
+        (1 - frac_start[0] if dx < 0 else frac_start[0]) * t_for_one[0],
+        (1 - frac_start[1] if dx < 0 else frac_start[1]) * t_for_one[1]
     ]
 
     step = \
@@ -112,7 +113,9 @@ def expand_path(path: List[Coords]) -> List[Coords]:
     return expanded
 
 
-def smoothen_path(grid: Grid, path: List[Coords], use_raytrace=False) -> List[Coords]:
+def smoothen_path(
+    grid: Grid, path: List[Coords], use_raytrace=False
+) -> List[Coords]:
     x0, y0 = path[0]
 
     sx, sy = path[0]

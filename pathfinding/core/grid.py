@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from typing import List
 from .diagonal_movement import DiagonalMovement
 from .node import Node
@@ -9,7 +8,9 @@ except ImportError:
     USE_NUMPY = False
 
 
-def build_nodes(width, height, matrix=None, inverse=False, grid_id=None) -> List[List[Node]]:
+def build_nodes(
+        width, height, matrix=None, inverse=False,
+        grid_id=None) -> List[List[Node]]:
     """
     create nodes according to grid size. If a matrix is given it
     will be used to determine what nodes are walkable.
@@ -87,7 +88,10 @@ class Grid(object):
         """
         return self.inside(x, y) and self.nodes[y][x].walkable
 
-    def neighbors(self, node: Node, diagonal_movement: DiagonalMovement = DiagonalMovement.never) -> List[Node]:
+    def neighbors(
+        self, node: Node,
+        diagonal_movement: DiagonalMovement = DiagonalMovement.never
+    ) -> List[Node]:
         """
         get all neighbors of one node
         :param node: node
@@ -229,4 +233,5 @@ class Grid(object):
         """
         return a human readable representation
         """
-        return f"< {self.__class__.__name__} width={self.width} height={self.height} >"
+        return f"<{self.__class__.__name__} " \
+            f"width={self.width} height={self.height}>"

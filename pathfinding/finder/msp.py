@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import heapq
 import time
 from collections import deque, namedtuple

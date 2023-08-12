@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import heapq  # used for the so colled "open list" that stores known nodes
 from .finder import BY_END, Finder, MAX_RUNS, TIME_LIMIT
 from ..core.diagonal_movement import DiagonalMovement

@@ -30,7 +30,7 @@ jobs:
           pipenv install --deploy --dev
 
       - name: Run tests with pytest
-        run: pipenv run coverage run --source pathfinding -m py.test 
+        run: pipenv run coverage run --source pathfinding -m pytest 
 
       - name: Show basic test coverage report
         run: pipenv run coverage report

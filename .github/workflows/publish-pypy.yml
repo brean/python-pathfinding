@@ -1,9 +1,9 @@
-name: Publish Python 🐍 distributions 📦 to PyPI
+name: Build, test and publish Python 🐍 distributions 📦 to PyPI
 
 on: push
 jobs:
   build-and-publish:
-    name: Build and publish Python 🐍 distributions 📦 to PyPI
+    name: Build, test and publish Python 🐍 distributions 📦 to PyPI
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -30,7 +30,10 @@ jobs:
           pipenv install --deploy --dev
 
       - name: Run tests with pytest
-        run: pipenv run pytest 
+        run: pipenv run coverage run --source pathfinding -m py.test 
+
+      - name: Show basic test coverage report
+        run: pipenv run coverage report
 
       - name: Build a binary wheel and a source tarball
         run: |

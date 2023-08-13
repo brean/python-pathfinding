@@ -1,4 +1,7 @@
 # 1.0.3
+## Bugfixes
+- lookup-table/cache for the path in grid_str for faster output.
+
 ## New features
 - Support for generic graphs that are not grids.
 

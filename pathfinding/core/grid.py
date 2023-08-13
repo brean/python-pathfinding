@@ -219,9 +219,16 @@ class Grid:
                             field (shows a + if the value of weight is > 10)
         :return:
         """
+        # create a dict as lookup-table for the path by string for performance
+        path_cache = {}
+        if path:
+            for x, y in path:
+                path_cache[f'{x}_{y}'] = True
+
+        # create the output string
         data = ''
         if border:
-            data = '+{}+'.format('-' * len(self.nodes[0]))
+            data = f'+{"-" * len(self.nodes[0])}+'
         for y in range(len(self.nodes)):
             line = ''
             for x in range(len(self.nodes[y])):
@@ -230,7 +237,7 @@ class Grid:
                     line += start_chr
                 elif node == end:
                     line += end_chr
-                elif path and ((node.x, node.y) in path or node in path):
+                elif path and (f'{x}_{y}' in path_cache):
                     line += path_chr
                 elif node.walkable:
                     # empty field
@@ -239,12 +246,12 @@ class Grid:
                 else:
                     line += block_chr  # blocked field
             if border:
-                line = '|' + line + '|'
+                line = f'|{line}|'
             if data:
                 data += '\n'
             data += line
         if border:
-            data += '\n+{}+'.format('-' * len(self.nodes[0]))
+            data += f'\n+{"-" * len(self.nodes[0])}+'
         return data
 
     def __repr__(self):

@@ -222,7 +222,9 @@ class Grid:
         # create a dict as lookup-table for the path by string for performance
         path_cache = {}
         if path:
-            for x, y in path:
+            for node in path:
+                is_gn = isinstance(node, GridNode)
+                x, y = (node.x, node.y) if is_gn else node[:2]
                 path_cache[f'{x}_{y}'] = True
 
         # create the output string

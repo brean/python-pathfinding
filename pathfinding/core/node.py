@@ -47,8 +47,8 @@ class GraphNode(Node):
     """
     simple node in a graph that's not a grid.
     """
-    # id of the node in the graph
-    node_id = str | int
+    # id of the node in the graph (probably str or int but can be anything)
+    node_id = object
 
     def __init__(self, node_id):
         self.node_id = node_id

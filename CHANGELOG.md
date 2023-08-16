@@ -1,3 +1,7 @@
+# 1.0.4
+## Bugfixes
+- backward-compability with Python 3.9
+
 # 1.0.3
 ## Bugfixes
 - lookup-table/cache for the path in grid_str for faster output.

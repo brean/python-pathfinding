@@ -1,9 +1,12 @@
-name: Build, test and publish Python 🐍 distributions 📦 to PyPI
+name: Test
 
-on: push
+on:
+  push:
+    branches:
+      - main
 jobs:
   build-and-publish:
-    name: Build, test and publish Python 🐍 distributions 📦 to PyPI
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -34,12 +37,3 @@ jobs:
 
       - name: Show basic test coverage report
         run: pipenv run coverage report
-
-      - name: Build a binary wheel and a source tarball
-        run: |
-          pipenv run pip wheel --wheel-dir=./dist .
-
-      - name: Publish distribution 📦 to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1.8
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}

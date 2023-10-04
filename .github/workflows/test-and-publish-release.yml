@@ -1,0 +1,48 @@
+name: Build, test and publish Python 🐍 distributions 📦 to PyPI
+
+on:
+  push:
+    branches:
+      - release
+jobs:
+  build-and-publish:
+    name: Build, test and publish Python 🐍 distributions 📦 to PyPI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+
+      # Setup Python (faster than using Python container)
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      - name: Install pipenv
+        run: |
+          python -m pip install --upgrade pipenv wheel
+      - id: cache-pipenv
+        uses: actions/cache@v1
+        with:
+          path: ~/.local/share/virtualenvs
+          key: ${{ runner.os }}-pipenv-${{ hashFiles('**/Pipfile.lock') }}
+
+      - name: Install dependencies
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: |
+          pipenv install --deploy --dev
+
+      - name: Run tests with pytest
+        run: pipenv run coverage run --source pathfinding -m pytest 
+
+      - name: Show basic test coverage report
+        run: pipenv run coverage report
+
+      - name: Build a binary wheel and a source tarball
+        run: |
+          pipenv run pip wheel --wheel-dir=./dist .
+
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1.8
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}

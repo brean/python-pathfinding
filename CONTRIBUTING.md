@@ -7,12 +7,12 @@ what you are trying to do.
 
 ## Pull Requests
 
-The preferred way to contribute to *python-pathfinding* is to fork the main repository on Gitlab, then submit a "pull request"
+The preferred way to contribute to *python-pathfinding* is to fork the main repository on Github, then submit a "pull request"
 (PR):
 
 1. Fork the [project repository](https://github.com/brean/python-pathfinding):
    click on the 'Fork' button near the top of the page. This creates a copy of
-   the code under your account on the Gitlab server.
+   the code under your account on the Github server.
 
 3. Clone this copy to your local disk:
 
@@ -30,7 +30,7 @@ The preferred way to contribute to *python-pathfinding* is to fork the main repo
         $ git add modified_files
         $ git commit
 
-    to record your changes in Git, then push them to Gitlab with::
+    to record your changes in Git, then push them to Github with::
 
        $ git push -u origin my-feature
 

@@ -1,3 +1,7 @@
+# 1.0.5
+## Bugfixes
+- fixed a bug for graphs where node_ids were not unique (#51)
+
 # 1.0.4
 ## Bugfixes
 - backward-compability with Python 3.9

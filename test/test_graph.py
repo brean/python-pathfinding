@@ -17,5 +17,19 @@ def test_graph_dijkstra():
 
     graph = Graph(edges=edges, bi_directional=True)
     finder = DijkstraFinder()
-    path, runs = finder.find_path(graph.node(1), graph.node(5), graph)
+    path, _ = finder.find_path(graph.node(1), graph.node(5), graph)
     assert [n.node_id for n in path] == [1, 3, 6, 5]
+
+
+def test_connected_end():
+    # see https://github.com/brean/python-pathfinding/issues/51
+    edges = [
+        [0, 1, 1],
+        [1, 0, 1],
+        [1, 2, 1],
+        [2, 1, 1],
+    ]
+    graph = Graph(edges=edges, bi_directional=False)
+    finder = DijkstraFinder()
+    path, _ = finder.find_path(graph.node(0), graph.node(2), graph)
+    assert [n.node_id for n in path] == [0, 1, 2]

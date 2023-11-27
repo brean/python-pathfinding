@@ -16,10 +16,20 @@ class Graph:
 
     def edge_node_items(self):
         for edge in self.edges:
-            if isinstance(edge[0], (int, float, str)):
-                edge[0] = GraphNode(node_id=edge[0])
+            node = edge[0]
+            if isinstance(node, (int, float, str)):
+                if node in self.nodes:
+                    edge[0] = self.nodes[node]
+                else:
+                    self.nodes[node] = GraphNode(node_id=node)
+                    edge[0] = self.nodes[node]
+            node = edge[1]
             if isinstance(edge[1], (int, float, str)):
-                edge[1] = GraphNode(node_id=edge[1])
+                if node in self.nodes:
+                    edge[1] = self.nodes[node]
+                else:
+                    self.nodes[node] = GraphNode(node_id=node)
+                    edge[1] = self.nodes[node]
 
     def generate_nodes(self):
         for edge in self.edges:

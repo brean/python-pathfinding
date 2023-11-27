@@ -59,6 +59,9 @@ class GraphNode(Node):
             return o == self.node_id
         return self.node_id == o.node_id
 
+    def __repr__(self):
+        return f'<GraphNode({self.node_id} {hex(id(self))})>'
+
 
 @dataclasses.dataclass
 class GridNode(Node):
@@ -95,3 +98,6 @@ class GridNode(Node):
             self.connections = [other_node]
         else:
             self.connections.append(other_node)
+
+    def __repr__(self):
+        return f'<GridNode({self.x}:{self.y} {hex(id(self))})>'

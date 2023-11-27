@@ -108,9 +108,9 @@ class Finder:
             node.h = node.h or \
                 self.apply_heuristic(node, end) * self.weight
             # f is the estimated total cost from start to goal
+            print(node, 'parent', parent)
             node.f = node.g + node.h
             node.parent = parent
-
             if not node.opened:
                 heapq.heappush(open_list, node)
                 node.opened = open_value

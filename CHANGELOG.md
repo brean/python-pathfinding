@@ -1,3 +1,7 @@
+# 1.0.6
+## Bugfixes
+- removed an unused debug print that lead to performance issues on big maps
+
 # 1.0.5
 ## Bugfixes
 - fixed a bug for graphs where node_ids were not unique (#51)

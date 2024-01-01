@@ -20,7 +20,7 @@ BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 # test scenarios from Pathfinding.JS
 scenarios = os.path.join(BASE_PATH, 'path_test_scenarios.json')
-data = json.load(open(scenarios, 'r'))
+data = json.load(open(scenarios, 'r', encoding='utf-8'))
 finders = [AStarFinder, BestFirst, BiAStarFinder, DijkstraFinder,
            IDAStarFinder, BreadthFirstFinder, MinimumSpanningTree]
 TIME_LIMIT = 10  # give it a 10 second limit.

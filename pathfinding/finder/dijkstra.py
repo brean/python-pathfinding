@@ -19,4 +19,4 @@ class DijkstraFinder(AStarFinder):
         """
         helper function to apply heuristic
         """
-        return 1
+        return 0

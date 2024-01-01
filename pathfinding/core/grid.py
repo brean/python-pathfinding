@@ -104,7 +104,7 @@ class Grid:
         if weighted:
             ng *= node_b.weight
 
-        return node_a.g + ng
+        return ng
 
     def neighbors(
         self, node: GridNode,

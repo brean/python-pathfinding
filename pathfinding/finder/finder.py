@@ -52,6 +52,9 @@ class Finder:
         self.weight = weight
         self.heuristic = heuristic
 
+        self.start_time = 0  # execution time limitation
+        self.runs = 0  # count number of iterations
+
     def apply_heuristic(self, node_a, node_b, heuristic=None):
         """
         helper function to apply heuristic
@@ -93,7 +96,7 @@ class Finder:
         cost and add or remove it from our path
         :param node: the node we like to test
             (the neighbor in A* or jump-node in JumpPointSearch)
-        :param parent: the parent node (the current node we like to test)
+        :param parent: the parent node (of the current node we like to test)
         :param end: the end point to calculate the cost of the path
         :param open_list: the list that keeps track of our current path
         :param open_value: needed if we like to set the open list to something
@@ -101,12 +104,11 @@ class Finder:
 
         '''
         # calculate cost from current node (parent) to the next node (neighbor)
-        ng = graph.calc_cost(parent, node, self.weighted)
+        ng = parent.g + graph.calc_cost(parent, node, self.weighted)
 
         if not node.opened or ng < node.g:
             node.g = ng
-            node.h = node.h or \
-                self.apply_heuristic(node, end) * self.weight
+            node.h = node.h or self.apply_heuristic(node, end)
             # f is the estimated total cost from start to goal
             node.f = node.g + node.h
             node.parent = parent

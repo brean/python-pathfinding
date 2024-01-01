@@ -1,3 +1,7 @@
+# 1.0.7
+## Bugfixes
+- fixed calculation of graph width (see #52)
+
 # 1.0.6
 ## Bugfixes
 - removed an unused debug print that lead to performance issues on big maps

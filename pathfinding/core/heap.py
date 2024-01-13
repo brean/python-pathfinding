@@ -1,11 +1,11 @@
-"""Simple heap with removal."""
+"""Simple heap with ordering and removal."""
 import heapq
 from .graph import Graph
 from .grid import Grid
 from .world import World
 
 class SimpleHeap:
-    """Simple wrapper around open_list that keeps track of removed nodes automatically."""
+    """Simple wrapper around open_list that keeps track of order and removed nodes automatically."""
 
     def __init__(self, node, grid):
         self.grid = grid

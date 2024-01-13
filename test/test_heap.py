@@ -1,6 +1,7 @@
 from pathfinding.core.heap import SimpleHeap
 from pathfinding.core.grid import Grid
 
+
 def test_heap():
     grid = Grid(width=10, height=10)
     start = grid.node(0, 0)

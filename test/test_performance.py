@@ -9,6 +9,7 @@ def _add_block(g: numpy.ndarray, x: int, y: int, padding: int):
         for j in range(y - padding, y + padding):
             g[j][i] = 0
 
+
 def test_a_star():
     """Test performance."""
     # Get a 500 x 500 grid
@@ -22,7 +23,7 @@ def test_a_star():
     end = finder_grid.node(400, 400)
 
     finder = AStarFinder(diagonal_movement=DiagonalMovement.never)
-    path, runs = finder.find_path(start, end, finder_grid)
+    path, _ = finder.find_path(start, end, finder_grid)
 
     assert path[0] == start
     assert path[-1] == end

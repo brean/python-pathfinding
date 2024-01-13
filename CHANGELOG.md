@@ -1,3 +1,7 @@
+# 1.0.8
+## Performance
+- huge performance update by reducing lookup time for smallest entry in heapq. (see #53, thanks to @peterchenadded)
+
 # 1.0.7
 ## Bugfixes
 - fixed calculation of graph width (see #52)

@@ -2,6 +2,7 @@ import time
 from .a_star import AStarFinder
 from .finder import BY_END, BY_START, MAX_RUNS, TIME_LIMIT
 from ..core.diagonal_movement import DiagonalMovement
+from ..core.heap import SimpleHeap
 
 
 class BiAStarFinder(AStarFinder):
@@ -45,12 +46,12 @@ class BiAStarFinder(AStarFinder):
         self.start_time = time.time()  # execution time limitation
         self.runs = 0  # count number of iterations
 
-        start_open_list = [start]
+        start_open_list = SimpleHeap(start, grid)
         start.g = 0
         start.f = 0
         start.opened = BY_START
 
-        end_open_list = [end]
+        end_open_list = SimpleHeap(end, grid)
         end.g = 0
         end.f = 0
         end.opened = BY_END

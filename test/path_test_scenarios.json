@@ -1,5 +1,6 @@
 [
     {
+        "name": "s1",
         "startX": 0,
         "startY": 0,
         "endX": 1,
@@ -10,6 +11,7 @@
         "expectedDiagonalLength": 2
     },
     {
+        "name": "s2",
         "startX": 1,
         "startY": 1,
         "endX": 4,
@@ -24,6 +26,7 @@
         "expectedDiagonalLength": 5
     },
     {
+        "name": "s3",
         "startX": 0,
         "startY": 3,
         "endX": 3,
@@ -38,6 +41,7 @@
         "expectedDiagonalLength": 6
     },
     {
+        "name": "s4",
         "startX": 4,
         "startY": 4,
         "endX": 19,
@@ -66,6 +70,7 @@
         "expectedDiagonalLength": 16
     },
     {
+        "name": "s5",
         "startX": 0,
         "startY": 0,
         "endX": 4,

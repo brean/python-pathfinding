@@ -3,6 +3,7 @@ import time
 from collections import deque, namedtuple
 from ..core import heuristic
 from ..finder.finder import Finder
+from ..core.heap import SimpleHeap
 
 
 class MinimumSpanningTree(Finder):
@@ -31,14 +32,13 @@ class MinimumSpanningTree(Finder):
 
         start.opened = True
 
-        open_list = [start]
+        open_list = SimpleHeap(start, grid)
 
         while len(open_list) > 0:
             self.runs += 1
             self.keep_running()
 
-            node = heapq.nsmallest(1, open_list)[0]
-            open_list.remove(node)
+            node = open_list.pop_node()
             node.closed = True
             yield node
 

@@ -67,6 +67,23 @@ flow:
 
 You can run the tests locally using pytest. Take a look at the `test`-folder
 
+You can follow below steps to setup your virtual environment and run the tests.
+
+```bash
+# Go to repo
+cd python-pathfinding
+
+# Setup virtual env and activate it - Mac/Linux for windows use source venv/Scripts/activate
+python3 -m venv venv
+source venv/bin/activate
+
+# Install test requirements
+pip install -r test/requirements.txt
+
+# Run all the tests
+pytest
+```
+
 ## Contributing
 
 Please use the [issue tracker](https://github.com/brean/python-pathfinding/issues) to submit bug reports and feature requests. Please use merge requests as described [here](/CONTRIBUTING.md) to add/adapt functionality.

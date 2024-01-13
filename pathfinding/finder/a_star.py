@@ -1,4 +1,3 @@
-import heapq  # used for the so colled "open list" that stores known nodes
 from .finder import BY_END, Finder, MAX_RUNS, TIME_LIMIT
 from ..core.diagonal_movement import DiagonalMovement
 from ..core.heuristic import manhattan, octile
@@ -50,8 +49,7 @@ class AStarFinder(Finder):
         :param open_list: stores nodes that will be processed next
         """
         # pop node with minimum 'f' value
-        node = heapq.nsmallest(1, open_list)[0]
-        open_list.remove(node)
+        node = open_list.pop_node()
         node.closed = True
 
         # if reached the end position, construct the path and return it

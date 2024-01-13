@@ -19,7 +19,7 @@ class BreadthFirstFinder(Finder):
             self.diagonalMovement = DiagonalMovement.never
 
     def check_neighbors(self, start, end, grid, open_list):
-        node = open_list.pop(0)
+        node = open_list.pop_node()
         node.closed = True
 
         if node == end:
@@ -30,6 +30,6 @@ class BreadthFirstFinder(Finder):
             if neighbor.closed or neighbor.opened:
                 continue
 
-            open_list.append(neighbor)
+            open_list.push_node(neighbor)
             neighbor.opened = True
             neighbor.parent = node

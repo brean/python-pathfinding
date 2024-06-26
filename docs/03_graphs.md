@@ -5,7 +5,7 @@ The default is to plan a path from one node of a grid to another but you can use
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.graph import Graph
 from pathfinding.core.node import Node
-from pathfinding.finder.a_star import AStarFinder
+from pathfinding.finder.dijkstra import DijkstraFinder
 
 # based on the animation at [Wikipedia about Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#/media/File:Dijkstra_Animation.gif)
 

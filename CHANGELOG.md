@@ -1,3 +1,8 @@
+# 1.0.10
+## Bugfixes
+- allow diagonal crossing movement over a border (see #58)
+- fix import in documentation for graphs
+
 # 1.0.9
 ## Bugifxes
 - update return type annoation (see #55)

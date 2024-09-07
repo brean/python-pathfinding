@@ -82,6 +82,8 @@ class SimpleHeap:
         :param f: The old f value of the node.
         """
         node_id = self._get_node_id(node)
+        if not node_id in self.heap_order:
+            return
         heap_order = self.heap_order[node_id]
         node_tuple = self._get_node_tuple(node, heap_order)
         self.removed_node_tuples.add(node_tuple)

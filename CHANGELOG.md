@@ -1,3 +1,9 @@
+# 1.0.11
+## Bugfixes
+- always call cleanup
+- cleanup worlds
+- return empty on msp
+
 # 1.0.10
 ## Bugfixes
 - allow diagonal crossing movement over a border (see #58)

@@ -10,6 +10,8 @@ class Graph:
         self.edges = edges if edges else []
         self.nodes = nodes if nodes else {}
         self.bi_directional = bi_directional
+        # we will call cleanup automatically if dirty is True
+        self.dirty = False
         self.edge_node_items()
         if not nodes:
             self.generate_nodes()

@@ -46,6 +46,8 @@ class Grid:
         """
         self.width = width
         self.height = height
+        # we will call cleanup automatically if dirty is True
+        self.dirty = False
         self.passable_left_right_border = False
         self.passable_up_down_border = False
         if isinstance(matrix, (tuple, list)) or (

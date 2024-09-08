@@ -1,4 +1,3 @@
-import heapq
 import time
 from collections import deque, namedtuple
 from ..core import heuristic
@@ -49,6 +48,8 @@ class MinimumSpanningTree(Finder):
                         grid, neighbor, node, end, open_list, open_value=True)
 
     def find_path(self, start, end, grid):
+        self.clean_grid(grid)
+
         self.start_time = time.time()  # execution time limitation
         self.runs = 0  # count number of iterations
 
@@ -61,5 +62,4 @@ class MinimumSpanningTree(Finder):
                     step = step.parent
                 path.appendleft(step)
                 return path, self.runs
-        else:
-            return [], self.runs
+        return [], self.runs

@@ -97,6 +97,8 @@ class IDAStarFinder(Finder):
         return min_t
 
     def find_path(self, start, end, grid):
+        self.clean_grid(grid)
+
         self.start_time = time.time()  # execution time limitation
         self.runs = 0  # count number of iterations
 

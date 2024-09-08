@@ -138,6 +138,12 @@ class Finder:
         raise NotImplementedError(
             'Please implement check_neighbors in your finder')
 
+    def clean_grid(self, grid):
+        """clean the map if needed."""
+        if grid.dirty:
+            grid.cleanup()
+        grid.dirty = True
+
     def find_path(self, start, end, grid):
         """
         find a path from start to end node on grid by iterating over
@@ -148,6 +154,8 @@ class Finder:
         (can be a list of grids)
         :return:
         """
+        self.clean_grid(grid)
+
         self.start_time = time.time()  # execution time limitation
         self.runs = 0  # count number of iterations
         start.opened = True

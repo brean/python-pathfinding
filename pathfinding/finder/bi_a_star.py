@@ -43,6 +43,8 @@ class BiAStarFinder(AStarFinder):
         :param grid: grid that stores all possible steps/tiles as 2D-list
         :return:
         """
+        self.clean_grid(grid)
+
         self.start_time = time.time()  # execution time limitation
         self.runs = 0  # count number of iterations
 

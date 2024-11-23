@@ -1,5 +1,6 @@
 import heapq  # used for the so colled "open list" that stores known nodes
 import time  # for time limitation
+from ..core.grid import Grid
 from ..core.diagonal_movement import DiagonalMovement
 from ..core.heap import SimpleHeap
 
@@ -56,15 +57,24 @@ class Finder:
         self.start_time = 0  # execution time limitation
         self.runs = 0  # count number of iterations
 
-    def apply_heuristic(self, node_a, node_b, heuristic=None):
+    def apply_heuristic(self, node_a, node_b, heuristic=None, graph=None):
         """
         helper function to apply heuristic
         """
         if not heuristic:
             heuristic = self.heuristic
-        return heuristic(
-            abs(node_a.x - node_b.x),
-            abs(node_a.y - node_b.y))
+
+        dx = abs(node_a.x - node_b.x)
+        dy = abs(node_a.y - node_b.y)
+
+        if isinstance(graph, Grid):
+            if graph.passable_left_right_border and dx > graph.width / 2:
+                dx = graph.width - dx
+
+            if graph.passable_up_down_border and dy > graph.height / 2:
+                dy = graph.height - dy
+
+        return heuristic(dx, dy)
 
     def find_neighbors(self, grid, node, diagonal_movement=None):
         '''
@@ -110,7 +120,7 @@ class Finder:
         if not node.opened or ng < node.g:
             old_f = node.f
             node.g = ng
-            node.h = node.h or self.apply_heuristic(node, end)
+            node.h = node.h or self.apply_heuristic(node, end, graph=graph)
             # f is the estimated total cost from start to goal
             node.f = node.g + node.h
             node.parent = parent

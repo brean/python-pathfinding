@@ -32,6 +32,6 @@ class BestFirst(AStarFinder):
 
         self.weighted = False
 
-    def apply_heuristic(self, node_a, node_b, heuristic=None):
+    def apply_heuristic(self, node_a, node_b, heuristic=None, graph=None):
         return super(BestFirst, self).apply_heuristic(
-            node_a, node_b, heuristic) * 1000000
+            node_a, node_b, heuristic, graph=graph) * 1000000

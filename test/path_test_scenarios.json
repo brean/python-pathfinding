@@ -85,5 +85,20 @@
         "expectedDiagonalLength": 12,
         "inverse": false,
         "weighted": true
+    },
+    {
+        "name": "s6",
+        "startX": 3,
+        "startY": 2,
+        "endX": 0,
+        "endY": 0,
+        "matrix": [[0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0]],
+        "expectedLength": 5,
+        "expectedDiagonalLength": 3,
+        "passableLeftRightBorder": true
     }
 ]

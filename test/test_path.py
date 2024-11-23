@@ -29,6 +29,10 @@ TIME_LIMIT = 10  # give it a 10 second limit.
 def grid_from_scenario(scenario):
     inverse = scenario['inverse'] if 'inverse' in scenario else True
     grid = Grid(matrix=scenario['matrix'], inverse=inverse)
+    if scenario.get('passableLeftRightBorder'):
+        grid.set_passable_left_right_border()
+    if scenario.get('passableUpDownBorder'):
+        grid.set_passable_up_down_border()
     start = grid.node(scenario['startX'], scenario['startY'])
     end = grid.node(scenario['endX'], scenario['endY'])
     return grid, start, end
@@ -67,7 +71,6 @@ def test_path_diagonal():
             weighted = False
             if 'weighted' in scenario:
                 weighted = scenario['weighted']
-            print(dir(find))
             if weighted and not finder.weighted:
                 continue
 

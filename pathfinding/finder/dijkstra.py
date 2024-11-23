@@ -15,7 +15,7 @@ class DijkstraFinder(AStarFinder):
             time_limit=time_limit,
             max_runs=max_runs)
 
-    def apply_heuristic(self, node_a, node_b, heuristic=None):
+    def apply_heuristic(self, node_a, node_b, heuristic=None, graph=None):
         """
         helper function to apply heuristic
         """

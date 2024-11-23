@@ -47,7 +47,7 @@ class IDAStarFinder(Finder):
 
         self.nodes_visited += 1
 
-        f = g + self.apply_heuristic(node, end) * self.weight
+        f = g + self.apply_heuristic(node, end, graph=grid) * self.weight
 
         # We've searched too deep for this iteration.
         if f > cutoff:
@@ -104,9 +104,9 @@ class IDAStarFinder(Finder):
 
         self.nodes_visited = 0  # for statistics
 
-        # initial search depth, given the typical heuristic contraints,
+        # initial search depth, given the typical heuristic constraints,
         # there should be no cheaper route possible.
-        cutoff = self.apply_heuristic(start, end)
+        cutoff = self.apply_heuristic(start, end, graph=grid)
 
         while True:
             path = []

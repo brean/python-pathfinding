@@ -53,7 +53,7 @@ def test_path():
             if weighted and not finder.weighted:
                 continue
             path, _ = finder.find_path(start, end, grid)
-            print(find.__name__)
+            print(scenario['name'], find.__name__)
             print(grid.grid_str(path=path, start=start, end=end,
                                 show_weight=weighted))
             print('path: {}'.format(path))
@@ -75,7 +75,8 @@ def test_path_diagonal():
                 continue
 
             path, runs = finder.find_path(start, end, grid)
-            print(find.__name__, runs, len(path))
+            print(scenario['name'], find.__name__, runs, len(path))
+            print(grid.grid_str(start=start, end=end))
             print(grid.grid_str(path=path, start=start, end=end,
                                 show_weight=weighted))
             print('path: {}'.format(path))

@@ -77,7 +77,7 @@ class GridNode(Node):
     walkable: bool = True
 
     # used for weighted algorithms
-    weight: float = 1.0
+    weight: float = 0.0
 
     # grid_id is used if we have more than one grid,
     # normally we just count our grids by number

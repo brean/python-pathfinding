@@ -1,3 +1,7 @@
+# 1.0.13
+## Features/Bugfix
+- allow for path finding with float values as cost.
+
 # 1.0.12
 ## Bugfixes
 - fix for passable borders (see #62, merges #63)

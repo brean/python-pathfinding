@@ -25,12 +25,12 @@ def build_nodes(
         for x in range(width):
             # 0, '0', False will be obstacles
             # all other values mark walkable cells.
-            # you can use values bigger then 1 to assign a weight.
+            # you can use values bigger then 0 to assign a weight.
             # If inverse is False it changes
             # (1 and up becomes obstacle and 0 or everything negative marks a
             #  free cells)
-            weight = int(matrix[y][x]) if use_matrix else 1
-            walkable = weight <= 0 if inverse else weight >= 1
+            weight = float(matrix[y][x]) if use_matrix else 1
+            walkable = weight <= 0.0 if inverse else weight > 0
 
             nodes[y].append(GridNode(
                 x=x, y=y, walkable=walkable, weight=weight, grid_id=grid_id))
@@ -121,9 +121,6 @@ class Grid:
         neighbors = []
         north = nw = east = ne = south = se = west = sw = False
 
-        lr = self.passable_left_right_border
-        ud = self.passable_up_down_border
-
         # ↑
         if y == 0 and self.passable_up_down_border:
             north_y = self.height - 1
@@ -143,7 +140,7 @@ class Grid:
         if self.walkable(east_x, y):
             neighbors.append(self.nodes[y][east_x])
             east = True
-        
+
         # ↓
         if y == self.height - 1 and self.passable_up_down_border:
             south_y = 0
@@ -207,7 +204,7 @@ class Grid:
                 ne_y = y - 1
             if self.walkable(ne_x, ne_y):
                 neighbors.append(self.nodes[ne_y][ne_x])
-        
+
         # ↘
         if se:
             if x == self.width - 1 and self.passable_left_right_border:
@@ -273,9 +270,9 @@ class Grid:
         data = ''
         if border:
             data = f'+{"-" * len(self.nodes[0])}+'
-        for y in range(len(self.nodes)):
+        for y, _ in enumerate(self.nodes):
             line = ''
-            for x in range(len(self.nodes[y])):
+            for x, _ in enumerate(self.nodes[y]):
                 node = self.nodes[y][x]
                 if node == start:
                     line += start_chr

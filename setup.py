@@ -2,16 +2,16 @@
 from setuptools import find_packages, setup
 
 
-with open("README.md", "r") as fh:
+with open("README.md", "r", encoding='utf-8') as fh:
     long_description = fh.read()
 
 setup(
     name="pathfinding",
-    description="Pathfinding algorithms (based on Pathfinding.JS)",
+    description="Path finding algorithms (based on Pathfinding.JS)",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/brean/python-pathfinding",
-    version="1.0.12",
+    version="1.0.13",
     license="MIT",
     author="Andreas Bresser",
     packages=find_packages(),

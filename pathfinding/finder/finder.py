@@ -1,4 +1,3 @@
-import heapq  # used for the so colled "open list" that stores known nodes
 import time  # for time limitation
 from ..core.grid import Grid
 from ..core.diagonal_movement import DiagonalMovement
@@ -74,7 +73,14 @@ class Finder:
             if graph.passable_up_down_border and dy > graph.height / 2:
                 dy = graph.height - dy
 
-        return heuristic(dx, dy)
+            nh = heuristic(dx, dy)
+            # in a weighted graph we also need to multiply the calculated
+            # value with the weight of the node
+            if self.weighted:
+                nh *= node_a.weight
+            return nh
+        else:
+            return heuristic(dx, dy)
 
     def find_neighbors(self, grid, node, diagonal_movement=None):
         '''

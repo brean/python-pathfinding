@@ -49,7 +49,7 @@ class Graph:
                 if edge[1] == node]
         return nodes
 
-    def calc_cost(self, node_a, node_b, weighted=False):
+    def calc_cost(self, node_a, node_b, _weighted=False):
         for edge in self.edges:
             if edge[0].node_id == node_a.node_id and \
                     edge[1].node_id == node_b.node_id:

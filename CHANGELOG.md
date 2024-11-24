@@ -1,3 +1,7 @@
+# 1.0.12
+## Bugfixes
+- fix for passable borders (see #62, merges #63)
+
 # 1.0.11
 ## Bugfixes
 - always call cleanup

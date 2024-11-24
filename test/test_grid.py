@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
+import numpy as np
+
 from pathfinding.core.diagonal_movement import DiagonalMovement
 from pathfinding.core.grid import Grid
 from pathfinding.finder.a_star import AStarFinder
-import numpy as np
 
 BORDERLESS_GRID = """
 xxx
@@ -24,9 +24,9 @@ WALKED_GRID = """
 """
 
 SIMPLE_MATRIX = [
-  [1, 1, 1],
-  [1, 0, 1],
-  [1, 1, 1]
+    [1, 1, 1],
+    [1, 0, 1],
+    [1, 1, 1]
 ]
 
 SIMPLE_WALKED = """

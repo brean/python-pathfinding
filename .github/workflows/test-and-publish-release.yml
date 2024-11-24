@@ -1,0 +1,51 @@
+name: Build, test and publish Python 🐍 distributions 📦 to PyPI
+
+on:
+  push:
+    branches:
+      - release
+jobs:
+  build-and-publish:
+    name: Build, test and publish Python 🐍 distributions 📦 to PyPI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      # Setup Python (faster than using Python container)
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install numpy pandas pytest coverage pytest-cov
+
+      - name: Install pathfinding
+        run: |
+          python3 -m pip install .
+
+      - name: Run tests with pytest
+        run: python3 -m coverage run --source pathfinding -m pytest 
+
+      - name: Show basic test coverage report
+        run: python3 -m coverage report
+
+      - name: Install pypa/build
+        run: >-
+          python3 -m pip install build --user
+
+      - name: Build a binary wheel and a source tarball
+        run: python3 -m build
+      
+      - name: Store the distribution packages
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-package-distributions
+          path: dist/
+
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1.8
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}

@@ -1,5 +1,5 @@
 from .a_star import AStarFinder, MAX_RUNS, TIME_LIMIT
-from pathfinding.core.diagonal_movement import DiagonalMovement
+from ..core.diagonal_movement import DiagonalMovement
 
 
 class BestFirst(AStarFinder):
@@ -13,7 +13,7 @@ class BestFirst(AStarFinder):
         """
         find shortest path using BestFirst algorithm
         :param heuristic: heuristic used to calculate distance of 2 points
-            (defaults to manhatten)
+            (defaults to manhattan)
         :param weight: weight for the edges
         :param diagonal_movement: if diagonal movement is allowed
             (see enum in diagonal_movement)
@@ -32,6 +32,6 @@ class BestFirst(AStarFinder):
 
         self.weighted = False
 
-    def apply_heuristic(self, node_a, node_b, heuristic=None):
+    def apply_heuristic(self, node_a, node_b, heuristic=None, graph=None):
         return super(BestFirst, self).apply_heuristic(
-            node_a, node_b, heuristic) * 1000000
+            node_a, node_b, heuristic, graph=graph) * 1000000

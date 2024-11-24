@@ -1,0 +1,33 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-publish:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      # Setup Python (faster than using Python container)
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install numpy pandas pytest coverage pytest-cov
+
+      - name: Install pathfinding
+        run: |
+          python3 -m pip install .
+
+      - name: Run tests with pytest
+        run: python3 -m coverage run --source pathfinding -m pytest 
+
+      - name: Show basic test coverage report
+        run: python3 -m coverage report

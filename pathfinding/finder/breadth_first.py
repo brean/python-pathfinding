@@ -1,6 +1,6 @@
-from .finder import Finder, TIME_LIMIT, MAX_RUNS
-from pathfinding.core.util import backtrace
-from pathfinding.core.diagonal_movement import DiagonalMovement
+from .finder import Finder, MAX_RUNS, TIME_LIMIT
+from ..core.diagonal_movement import DiagonalMovement
+from ..core.util import backtrace
 
 
 class BreadthFirstFinder(Finder):
@@ -19,7 +19,7 @@ class BreadthFirstFinder(Finder):
             self.diagonalMovement = DiagonalMovement.never
 
     def check_neighbors(self, start, end, grid, open_list):
-        node = open_list.pop(0)
+        node = open_list.pop_node()
         node.closed = True
 
         if node == end:
@@ -30,6 +30,6 @@ class BreadthFirstFinder(Finder):
             if neighbor.closed or neighbor.opened:
                 continue
 
-            open_list.append(neighbor)
+            open_list.push_node(neighbor)
             neighbor.opened = True
             neighbor.parent = node

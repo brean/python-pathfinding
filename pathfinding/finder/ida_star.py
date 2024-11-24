@@ -1,8 +1,8 @@
 import time
-from pathfinding.core.heuristic import manhatten, octile
-from pathfinding.core.diagonal_movement import DiagonalMovement
-from pathfinding.core.node import Node
-from .finder import Finder, TIME_LIMIT, MAX_RUNS
+from .finder import Finder, MAX_RUNS, TIME_LIMIT
+from ..core.diagonal_movement import DiagonalMovement
+from ..core.heuristic import manhattan, octile
+from ..core.node import Node
 
 
 class IDAStarFinder(Finder):
@@ -35,7 +35,7 @@ class IDAStarFinder(Finder):
         self.track_recursion = track_recursion
         if not heuristic:
             if diagonal_movement == DiagonalMovement.never:
-                self.heuristic = manhatten
+                self.heuristic = manhattan
             else:
                 # When diagonal movement is allowed the manhattan heuristic is
                 # not admissible it should be octile instead
@@ -47,7 +47,7 @@ class IDAStarFinder(Finder):
 
         self.nodes_visited += 1
 
-        f = g + self.apply_heuristic(node, end) * self.weight
+        f = g + self.apply_heuristic(node, end, graph=grid) * self.weight
 
         # We've searched too deep for this iteration.
         if f > cutoff:
@@ -76,7 +76,7 @@ class IDAStarFinder(Finder):
                 neighbor.retain_count += 1
                 neighbor.tested = True
 
-            t = self.search(neighbor, g + self.calc_cost(node, neighbor),
+            t = self.search(neighbor, g + grid.calc_cost(node, neighbor),
                             cutoff, path, depth + 1, end, grid)
 
             if isinstance(t, Node):
@@ -97,14 +97,16 @@ class IDAStarFinder(Finder):
         return min_t
 
     def find_path(self, start, end, grid):
+        self.clean_grid(grid)
+
         self.start_time = time.time()  # execution time limitation
         self.runs = 0  # count number of iterations
 
         self.nodes_visited = 0  # for statistics
 
-        # initial search depth, given the typical heuristic contraints,
+        # initial search depth, given the typical heuristic constraints,
         # there should be no cheaper route possible.
-        cutoff = self.apply_heuristic(start, end)
+        cutoff = self.apply_heuristic(start, end, graph=grid)
 
         while True:
             path = []
@@ -119,7 +121,10 @@ class IDAStarFinder(Finder):
             # If t is a node, it's also the end node. Route is now
             # populated with a valid path to the end node.
             if isinstance(t, Node):
-                return [(node.x, node.y) for node in path], self.runs
+                return (
+                    [(node.x, node.y, node.grid_id) for node in path],
+                    self.runs
+                )
 
             # Try again, this time with a deeper cut-off. The t score
             # is the closest we got to the end node.

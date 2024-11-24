@@ -1,0 +1,6 @@
+pytest==7.4.4
+snakeviz==2.2.0
+pytest-profiling==1.7.0
+numpy==1.26.3
+pandas==2.1.4
+matplotlib==3.8.2

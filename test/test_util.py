@@ -1,5 +1,5 @@
-from pathfinding.core.util import bresenham, raytrace, smoothen_path
 from pathfinding.core.grid import Grid
+from pathfinding.core.util import bresenham, raytrace, smoothen_path
 
 
 def test_bresenham():

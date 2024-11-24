@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 import math
 from .util import SQRT2
 
 
-def null(dx, dy):
+def null(dx, dy) -> float:
     """
     special heuristic for Dijkstra
     return 0, so node.h will always be calculated as 0,
@@ -13,22 +12,22 @@ def null(dx, dy):
     return 0
 
 
-def manhatten(dx, dy):
-    """manhatten heuristics"""
+def manhattan(dx, dy) -> float:
+    """manhattan heuristics"""
     return dx + dy
 
 
-def euclidean(dx, dy):
+def euclidean(dx, dy) -> float:
     """euclidean distance heuristics"""
     return math.sqrt(dx * dx + dy * dy)
 
 
-def chebyshev(dx, dy):
+def chebyshev(dx, dy) -> float:
     """ Chebyshev distance. """
     return max(dx, dy)
 
 
-def octile(dx, dy):
+def octile(dx, dy) -> float:
     f = SQRT2 - 1
     if dx < dy:
         return f * dx + dy

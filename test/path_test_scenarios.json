@@ -1,5 +1,6 @@
 [
     {
+        "name": "s1",
         "startX": 0,
         "startY": 0,
         "endX": 1,
@@ -10,6 +11,7 @@
         "expectedDiagonalLength": 2
     },
     {
+        "name": "s2",
         "startX": 1,
         "startY": 1,
         "endX": 4,
@@ -24,6 +26,7 @@
         "expectedDiagonalLength": 5
     },
     {
+        "name": "s3",
         "startX": 0,
         "startY": 3,
         "endX": 3,
@@ -38,6 +41,7 @@
         "expectedDiagonalLength": 6
     },
     {
+        "name": "s4",
         "startX": 4,
         "startY": 4,
         "endX": 19,
@@ -66,6 +70,7 @@
         "expectedDiagonalLength": 16
     },
     {
+        "name": "s5",
         "startX": 0,
         "startY": 0,
         "endX": 4,
@@ -80,6 +85,21 @@
         "expectedDiagonalLength": 12,
         "inverse": false,
         "weighted": true
+    },
+    {
+        "name": "s6",
+        "startX": 3,
+        "startY": 2,
+        "endX": 0,
+        "endY": 0,
+        "matrix": [[0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0],
+                  [0, 0, 0, 0, 0]],
+        "expectedLength": 5,
+        "expectedDiagonalLength": 3,
+        "passableLeftRightBorder": true
     },
     {
         "startX": 0,

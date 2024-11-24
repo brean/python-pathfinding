@@ -1,6 +1,6 @@
 from .a_star import AStarFinder, MAX_RUNS, TIME_LIMIT
-from pathfinding.core.diagonal_movement import DiagonalMovement
-from pathfinding.core.heuristic import null
+from ..core.diagonal_movement import DiagonalMovement
+from ..core.heuristic import null
 
 
 class DijkstraFinder(AStarFinder):
@@ -14,3 +14,9 @@ class DijkstraFinder(AStarFinder):
             diagonal_movement=diagonal_movement,
             time_limit=time_limit,
             max_runs=max_runs)
+
+    def apply_heuristic(self, node_a, node_b, heuristic=None, graph=None):
+        """
+        helper function to apply heuristic
+        """
+        return 0

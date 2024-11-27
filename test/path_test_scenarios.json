@@ -119,5 +119,20 @@
         "expectedDiagonalLength": 12,
         "inverse": false,
         "weighted": true
+    },
+    {
+        "name": "s8",
+        "startX": 0,
+        "startY": 0,
+        "endX": 3,
+        "endY": 0,
+        "matrix": [
+          [1, 2, 1, 1],
+          [1, 1, 1, 1]
+        ],
+        "expectedLength": 4,
+        "expectedDiagonalLength": 4,
+        "inverse": false,
+        "weighted": true
     }
 ]

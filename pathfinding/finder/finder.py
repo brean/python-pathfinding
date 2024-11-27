@@ -75,9 +75,9 @@ class Finder:
 
             nh = heuristic(dx, dy)
             # in a weighted graph we also need to multiply the calculated
-            # value with the weight of the node
+            # value with the minimum weight of the graph
             if self.weighted:
-                nh *= node_a.weight
+                nh *= graph.min_weight
             return nh
         else:
             return heuristic(dx, dy)

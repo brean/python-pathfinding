@@ -1,3 +1,7 @@
+# 1.0.14
+## Bugfix
+- fix heuristic in a weighted graph (see #65, merges #66)
+
 # 1.0.13
 ## Features/Bugfix
 - allow for path finding with float values as cost.

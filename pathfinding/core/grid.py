@@ -20,6 +20,7 @@ def build_nodes(
     use_matrix = (isinstance(matrix, (tuple, list))) or \
         (USE_NUMPY and isinstance(matrix, np.ndarray) and matrix.size > 0)
 
+    min_weight = float("inf")
     for y in range(height):
         nodes.append([])
         for x in range(width):
@@ -32,9 +33,13 @@ def build_nodes(
             weight = float(matrix[y][x]) if use_matrix else 1
             walkable = weight <= 0.0 if inverse else weight > 0
 
+            if walkable and weight < min_weight:
+                min_weight = weight
+
             nodes[y].append(GridNode(
                 x=x, y=y, walkable=walkable, weight=weight, grid_id=grid_id))
-    return nodes
+
+    return nodes, min_weight
 
 
 class Grid:
@@ -56,10 +61,11 @@ class Grid:
             self.height = len(matrix)
             self.width = self.width = len(matrix[0]) if self.height > 0 else 0
         if self.width > 0 and self.height > 0:
-            self.nodes = build_nodes(
+            self.nodes, self._min_weight = build_nodes(
                 self.width, self.height, matrix, inverse, grid_id)
         else:
             self.nodes = [[]]
+            self._min_weight = float("inf")
 
     def set_passable_left_right_border(self):
         self.passable_left_right_border = True
@@ -306,3 +312,25 @@ class Grid:
         """
         return f"<{self.__class__.__name__} " \
             f"width={self.width} height={self.height}>"
+
+    @property
+    def min_weight(self) -> float:
+        return self._min_weight
+
+    def update_node(self, x, y, *, weight=None, walkable=None):
+        node = self.node(x, y)
+
+        if weight is None:
+            weight = node.weight
+
+        if walkable is None:
+            walkable = node.walkable
+
+        if walkable:
+            if weight <= 0:
+                raise ValueError("Weight of a walkable node must be positive")
+            if weight < self._min_weight:
+                self._min_weight = weight
+
+        node.weight = weight
+        node.walkable = walkable

@@ -32,6 +32,7 @@ class IDAStarFinder(Finder):
             weighted=False,
             time_limit=time_limit,
             max_runs=max_runs)
+        self.nodes_visited = 0
         self.track_recursion = track_recursion
         if not heuristic:
             if diagonal_movement == DiagonalMovement.never:
@@ -70,8 +71,10 @@ class IDAStarFinder(Finder):
         #    sorted(neighbors, sort_neighbors)
         min_t = float('inf')
         for neighbor in neighbors:
+            neighbor.opened = True
+
             if self.track_recursion:
-                # Retain a copy for visualisation. Due to recursion, this
+                # Retain a copy for visualization. Due to recursion, this
                 # node may be part of other paths too.
                 neighbor.retain_count += 1
                 neighbor.tested = True
@@ -84,12 +87,6 @@ class IDAStarFinder(Finder):
                     path += [None] * (depth - len(path) + 1)
                 path[depth] = node
                 return t
-
-            # Decrement count, then determine whether it's actually closed.
-            if self.track_recursion:
-                neighbor.retain_count -= 1
-                if neighbor.retain_count == 0:
-                    neighbor.tested = False
 
             if t < min_t:
                 min_t = t

@@ -1,6 +1,10 @@
+# 1.0.16
+## Bugfix
+- fix for ida_star: visualize all visited nodes, not just the last one.
+
 # 1.0.15
 ## Bugfix
-- fix for ida_star: return list of nodes instad of x-y-tuples
+- fix for ida_star: return list of nodes instead of x-y-tuples
 
 # 1.0.14
 ## Bugfix

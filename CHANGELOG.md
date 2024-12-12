@@ -1,3 +1,7 @@
+# 1.0.15
+## Bugfix
+- fix for ida_star: return list of nodes instad of x-y-tuples
+
 # 1.0.14
 ## Bugfix
 - fix heuristic in a weighted graph (see #65, merges #66)

@@ -121,10 +121,7 @@ class IDAStarFinder(Finder):
             # If t is a node, it's also the end node. Route is now
             # populated with a valid path to the end node.
             if isinstance(t, Node):
-                return (
-                    [(node.x, node.y, node.grid_id) for node in path],
-                    self.runs
-                )
+                return path, self.runs
 
             # Try again, this time with a deeper cut-off. The t score
             # is the closest we got to the end node.

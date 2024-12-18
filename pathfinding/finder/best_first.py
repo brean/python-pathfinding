@@ -4,7 +4,7 @@ from ..core.diagonal_movement import DiagonalMovement
 
 class BestFirst(AStarFinder):
     """
-    Similar to the default A* algorithm from a_star.
+    Best-First implementation, similar to the default A* algorithm from a_star.
     """
     def __init__(self, heuristic=None, weight=1,
                  diagonal_movement=DiagonalMovement.never,

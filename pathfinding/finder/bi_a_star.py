@@ -7,8 +7,9 @@ from ..core.heap import SimpleHeap
 
 class BiAStarFinder(AStarFinder):
     """
-    Similar to the default A* algorithm from a_star.
+    Run A* from start to end and end to start during path finding loop.
     """
+
     def __init__(self, heuristic=None, weight=1,
                  diagonal_movement=DiagonalMovement.never,
                  time_limit=TIME_LIMIT,

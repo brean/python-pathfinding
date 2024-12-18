@@ -5,12 +5,16 @@ from ..core.util import backtrace, bi_backtrace
 
 
 class AStarFinder(Finder):
+    """
+    Find shortest path using A* algorithm
+    """
+
     def __init__(self, heuristic=None, weight=1,
                  diagonal_movement=DiagonalMovement.never,
                  time_limit=TIME_LIMIT,
                  max_runs=MAX_RUNS):
         """
-        find shortest path using A* algorithm
+        Find shortest path using A* algorithm
         :param heuristic: heuristic used to calculate distance of 2 points
             (defaults to manhattan)
         :param weight: weight for the edges
@@ -40,7 +44,7 @@ class AStarFinder(Finder):
     def check_neighbors(self, start, end, graph, open_list,
                         open_value=True, backtrace_by=None):
         """
-        find next path segment based on given node
+        Find next path segment based on given node
         (or return path if we found the end)
 
         :param start: start node

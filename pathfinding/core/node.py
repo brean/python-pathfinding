@@ -1,8 +1,18 @@
+from __future__ import annotations
 import dataclasses
 
 
 @dataclasses.dataclass
 class Node:
+    h: float = 0.0
+    g: float = 0.0
+    f: float = 0.0
+    opened: int = 0
+    closed: bool = False
+    parent: Node = None
+    retain_count: int = 0
+    tested: bool = False
+
     def __post_init__(self):
         # values used in the finder
         self.cleanup()
@@ -94,6 +104,9 @@ class GridNode(Node):
             yield self.grid_id
 
     def connect(self, other_node):
+        """
+        Connect two nodes with each other.
+        """
         if not self.connections:
             self.connections = [other_node]
         else:

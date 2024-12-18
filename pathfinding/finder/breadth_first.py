@@ -4,6 +4,9 @@ from ..core.util import backtrace
 
 
 class BreadthFirstFinder(Finder):
+    """
+    Breadth-first algorithm, similar to Dijkstra or A* but without cost.
+    """
     def __init__(self, heuristic=None, weight=1,
                  diagonal_movement=DiagonalMovement.never,
                  time_limit=TIME_LIMIT,
@@ -15,8 +18,6 @@ class BreadthFirstFinder(Finder):
             diagonal_movement=diagonal_movement,
             time_limit=time_limit,
             max_runs=max_runs)
-        if not diagonal_movement:
-            self.diagonalMovement = DiagonalMovement.never
 
     def check_neighbors(self, start, end, grid, open_list):
         node = open_list.pop_node()

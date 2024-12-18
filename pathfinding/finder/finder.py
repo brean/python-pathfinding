@@ -15,11 +15,17 @@ BY_END = 2
 
 
 class ExecutionTimeException(Exception):
+    """
+    Exception that gets thrown when a certain time has been exceeded.
+    """
     def __init__(self, message):
         super(ExecutionTimeException, self).__init__(message)
 
 
 class ExecutionRunsException(Exception):
+    """
+    Exception that gets thrown when the number of max. runs has been reached.
+    """
     def __init__(self, message):
         super(ExecutionRunsException, self).__init__(message)
 
@@ -31,7 +37,7 @@ class Finder:
                  time_limit=TIME_LIMIT,
                  max_runs=MAX_RUNS):
         """
-        find shortest path
+        Find shortest path
         :param heuristic: heuristic used to calculate distance of 2 points
             (defaults to manhattan)
         :param weight: weight for the edges
@@ -58,7 +64,7 @@ class Finder:
 
     def apply_heuristic(self, node_a, node_b, heuristic=None, graph=None):
         """
-        helper function to apply heuristic
+        Helper function to apply heuristic
         """
         if not heuristic:
             heuristic = self.heuristic
@@ -84,7 +90,7 @@ class Finder:
 
     def find_neighbors(self, grid, node, diagonal_movement=None):
         '''
-        find neighbor, same for Djikstra, A*, Bi-A*, IDA*
+        Find neighbor, same for Djikstra, A*, Bi-A*, IDA*
         '''
         if not diagonal_movement:
             diagonal_movement = self.diagonal_movement
@@ -92,7 +98,8 @@ class Finder:
 
     def keep_running(self):
         """
-        check, if we run into time or iteration constrains.
+        Check, if we run into time or iteration constrains.
+
         :returns: True if we keep running and False if we run into a constraint
         """
         if self.runs >= self.max_runs:
@@ -109,7 +116,7 @@ class Finder:
     def process_node(
             self, graph, node, parent, end, open_list, open_value=True):
         '''
-        we check if the given node is part of the path by calculating its
+        We check if the given node is part of the path by calculating its
         cost and add or remove it from our path
         :param node: the node we like to test
             (the neighbor in A* or jump-node in JumpPointSearch)
@@ -143,7 +150,7 @@ class Finder:
     def check_neighbors(self, start, end, graph, open_list,
                         open_value=True, backtrace_by=None):
         """
-        find next path segment based on given node
+        Find next path segment based on given node
         (or return path if we found the end)
 
         :param start: start node
@@ -155,14 +162,14 @@ class Finder:
             'Please implement check_neighbors in your finder')
 
     def clean_grid(self, grid):
-        """clean the map if needed."""
+        """Clean the map if needed."""
         if grid.dirty:
             grid.cleanup()
         grid.dirty = True
 
     def find_path(self, start, end, grid):
         """
-        find a path from start to end node on grid by iterating over
+        Find a path from start to end node on grid by iterating over
         all neighbors of a node (see check_neighbors)
         :param start: start node
         :param end: end node
@@ -191,7 +198,7 @@ class Finder:
 
     def __repr__(self):
         """
-        return a human readable representation
+        Return a human readable representation
         """
         return f"<{self.__class__.__name__}" \
             f"diagonal_movement={self.diagonal_movement} >"

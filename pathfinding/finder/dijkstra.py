@@ -4,6 +4,10 @@ from ..core.heuristic import null
 
 
 class DijkstraFinder(AStarFinder):
+    """
+    Find shortest path using the best-first Dijkstra path finding algorithm.
+    """
+
     def __init__(self, weight=1,
                  diagonal_movement=DiagonalMovement.never,
                  time_limit=TIME_LIMIT,
@@ -17,6 +21,8 @@ class DijkstraFinder(AStarFinder):
 
     def apply_heuristic(self, node_a, node_b, heuristic=None, graph=None):
         """
-        helper function to apply heuristic
+        Helper function to apply heuristic
+        
+        returns 0 as Dijkstra is not using any heuristic (but A* is).
         """
         return 0

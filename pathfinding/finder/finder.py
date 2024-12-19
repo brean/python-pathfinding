@@ -31,11 +31,11 @@ class ExecutionRunsException(Exception):
 
 
 class Finder:
-    def __init__(self, heuristic=None, weight=1,
-                 diagonal_movement=DiagonalMovement.never,
-                 weighted=True,
-                 time_limit=TIME_LIMIT,
-                 max_runs=MAX_RUNS):
+    def __init__(self, heuristic=None, weight: int = 1,
+                 diagonal_movement: int = DiagonalMovement.never,
+                 weighted: bool = True,
+                 time_limit: float = TIME_LIMIT,
+                 max_runs: int = MAX_RUNS):
         """
         Find shortest path
         :param heuristic: heuristic used to calculate distance of 2 points

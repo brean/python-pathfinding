@@ -31,7 +31,13 @@ see [pathfinding on pypi](https://pypi.org/project/pathfinding/)
 
 ## Usage examples
 
-For usage examples with detailed descriptions take a look at the [docs](docs/) folder, also take a look at the [test/](test/) folder for more examples, e.g. how to use pandas
+For usage examples with detailed descriptions take a look at the [docs](docs/) folder, also take a look at the [test/](test/) folder for more examples, e.g. how to use pandas.
+
+*image_pathfinding.py* in the `examples/`-folder provides an example how to load an image with a start and goal point. You can all it with an input and output file like this:
+```
+cd examples/
+python3 image_pathfinding.py -i map.png -o foo.png
+```
 
 ## Rerun the algorithm
 

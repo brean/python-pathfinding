@@ -24,7 +24,7 @@ It should look something like this:
 ![](snakeviz_shot.png)
 which looks quite healthy, as it would be expected most of the time was spend on the A-Star finder, where processing the node inside the finder.py took 0.757 seconds and getting the neighbors 0.573 seconds. The rest inside pathfinding was spend on heap management. However these are also points where we could optimize most if we find a faster way to lookup nodes or use additional cache.
 
-Note that process_node was called 349984 times, even if the out put in the terminal says `iterations: 176692 path length: 999`. This is because with 'iterations' we count how often we run the whole loop to processed a node including all its neighbors, while we have to run process_node for every neighbor.
+Note that process_node was called 349984 times, although the output in the terminal says `iterations: 176692 path length: 999`. This is because with 'iterations' we count how often we run the whole loop to processed a node including all its neighbors, while we have to run process_node for every neighbor.
 
 ## Memory
 TODO

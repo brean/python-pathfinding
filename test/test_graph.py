@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from pathfinding.core.graph import Graph
 from pathfinding.finder.dijkstra import DijkstraFinder
 
@@ -33,3 +35,19 @@ def test_connected_end():
     finder = DijkstraFinder()
     path, _ = finder.find_path(graph.node(0), graph.node(2), graph)
     assert [n.node_id for n in path] == [0, 1, 2]
+
+
+def test_graph_cleanup():
+    graph = Graph(edges=[[0, 1, 1], [1, 0, 1]], bi_directional=False)
+    assert not graph.dirty
+
+    finder = DijkstraFinder()
+    path, _ = finder.find_path(graph.node(0), graph.node(1), graph)
+    assert [n.node_id for n in path] == [0, 1]
+
+    assert graph.dirty
+
+    with patch.object(graph, "cleanup", wraps=graph.cleanup) as mock_cleanup:
+        path, _ = finder.find_path(graph.node(1), graph.node(0), graph)
+        assert [n.node_id for n in path] == [1, 0]
+        mock_cleanup.assert_called_once()

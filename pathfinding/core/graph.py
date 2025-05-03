@@ -62,3 +62,7 @@ class Graph:
 
     def node(self, node_id):
         return self.nodes[node_id]
+
+    def cleanup(self):
+        for node in self.nodes.values():
+            node.cleanup()

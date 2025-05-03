@@ -1,3 +1,11 @@
+# 1.0.17
+## Bugfix
+- fix for Graph: Error when running pathfinding multiple times in graph. (see #67)
+
+## General
+- updated documentation for benchmarking
+- add more type definitions
+
 # 1.0.16
 ## Bugfix
 - fix for ida_star: visualize all visited nodes, not just the last one.

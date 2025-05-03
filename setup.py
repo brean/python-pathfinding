@@ -11,7 +11,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/brean/python-pathfinding",
-    version="1.0.16",
+    version="1.0.17",
     license="MIT",
     author="Andreas Bresser",
     packages=find_packages(),

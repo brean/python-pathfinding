@@ -69,6 +69,21 @@ flow:
       process_node  # calculate new cost for neighboring node
 ```
 
+Because most algorithms are very similar we use inerhitance to reduce the code, however this makes it a bit harder to understand as you need to jump between the finder implementation and the finder base class, this diagram visualizes the function calls between the AStarFinder and the Finder classes as an example, this flexible aproach allows you to use inheritance to take control of processing the data and extending the algorithm. Note that this is not a classic UML sequence diagram, we just use it for visualation, feel free to suggest a nicer diagram/explaination as new issues.
+```mermaid
+sequenceDiagram
+  User ->> AStarFinder: find_path(start, end, grid)
+  AStarFinder ->> Finder: cleanup() [inheritance]
+  Finder ->> Grid: cleanup()
+  Grid ->> Grid: dirty = True
+  Finder ->> AStarFinder: check_neighbors(start, end, grid, open_list) <br />[from find_path]
+  AStarFinder ->> Finder: find_neighbors(graph, node) <br />[from check_neighgors]
+  Finder ->> Grid: neighbors(node, ...)
+  AStarFinder ->> Finder: process_node(graph, neighbor, node, end, open_list, open_value)<br />[from check_neighbors]
+  Finder ->> Finder: apply_heuristic(self, node_a, node_b, ...)
+  AStarFinder ->> User: return path, self.runs<br />[from find_path]
+```
+
 ## Testing
 
 You can run the tests locally using pytest. Take a look at the `test`-folder

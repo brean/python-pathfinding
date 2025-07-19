@@ -1,0 +1,24 @@
+package:
+  name: pathfinding
+  version: 1.0.17
+
+source:
+  path: ./
+
+build:
+  number: 0
+  script: python setup.py install
+
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - python
+    - numpy
+    - pandas
+
+about:
+  home: https://github.com/brean/python-pathfinding
+  license: MIT
+  summary: "Pathfinding algorithms for python 3."

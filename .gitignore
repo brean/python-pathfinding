@@ -65,5 +65,5 @@ target/
 # python virtual env
 venv/
 
-examples/out.png
-examples/*.perf
+examples/*/out.png
+examples/*/*.perf

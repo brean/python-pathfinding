@@ -35,11 +35,13 @@ def pixel_walkable(pixel, x, y):
     return any([p > 50 for p in pixel])  # darker pixel are not walkable
 
 
-def main(filename_map: str = MAP_FILE, filename_out: str = OUT_FILE):
+def main(filename_map: str = MAP_FILE, filename_out: str = OUT_FILE, diagonal_movement: bool = False):
     nodes = []
     if not Path(filename_map).exists():
         print(f'File {filename_map} does not exist.')
         return
+
+    print('Parsing map..')
     with Image.open(filename_map) as im:
         width, height = im.size
         for y in range(height):
@@ -56,11 +58,14 @@ def main(filename_map: str = MAP_FILE, filename_out: str = OUT_FILE):
         end = grid.node(*_goal)
         start = grid.node(*_start)
 
-        finder = AStarFinder(diagonal_movement=DiagonalMovement.never)
+        print('Finding optimal path..')
+        finder = AStarFinder(diagonal_movement=DiagonalMovement.always if diagonal_movement else DiagonalMovement.never)
         path, runs = finder.find_path(start, end, grid)
 
         # print(grid.grid_str(path=path, end=end, start=start))
-        print('iterations:', runs, 'path length:', len(path))
+        print(f'iterations: {runs:_} path length: {len(path):_}')
+
+        print('Saving image..')
         out = im.copy()
         for p in path[1:-1]:
             out.putpixel((p.x, p.y), (255, 165, 0))
@@ -79,5 +84,9 @@ if __name__ == '__main__':
         '-o', '--filename_out',
         help='output file',
         default=OUT_FILE)
+    parser.add_argument(
+        '-d', '--diagonal-movement',
+        help='allow for diagonal movement',
+        action='store_true')
 
     main(**vars(parser.parse_args()))

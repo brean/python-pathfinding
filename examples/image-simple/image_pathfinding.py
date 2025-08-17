@@ -35,7 +35,7 @@ def pixel_walkable(pixel, x, y):
     return any([p > 50 for p in pixel])  # darker pixel are not walkable
 
 
-def main(filename_map: str = MAP_FILE, filename_out: str = OUT_FILE):
+def main(filename_map: str = MAP_FILE, filename_out: str = OUT_FILE, diagonal_movement: bool = False):
     nodes = []
     if not Path(filename_map).exists():
         print(f'File {filename_map} does not exist.')
@@ -59,7 +59,7 @@ def main(filename_map: str = MAP_FILE, filename_out: str = OUT_FILE):
         start = grid.node(*_start)
 
         print('Finding optimal path..')
-        finder = AStarFinder(diagonal_movement=DiagonalMovement.never)
+        finder = AStarFinder(diagonal_movement=DiagonalMovement.always if diagonal_movement else DiagonalMovement.never)
         path, runs = finder.find_path(start, end, grid)
 
         # print(grid.grid_str(path=path, end=end, start=start))
@@ -84,5 +84,9 @@ if __name__ == '__main__':
         '-o', '--filename_out',
         help='output file',
         default=OUT_FILE)
+    parser.add_argument(
+        '-d', '--diagonal-movement',
+        help='allow for diagonal movement',
+        action='store_true')
 
     main(**vars(parser.parse_args()))

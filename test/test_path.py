@@ -12,6 +12,7 @@ from pathfinding.finder.finder import ExecutionRunsException
 from pathfinding.finder.finder import ExecutionTimeException
 from pathfinding.finder.ida_star import IDAStarFinder
 from pathfinding.finder.msp import MinimumSpanningTree
+from pathfinding.finder.bi_breadth_first import BiBreadthFirstFinder
 
 import pytest
 
@@ -21,8 +22,8 @@ BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 # test scenarios from Pathfinding.JS
 scenarios = os.path.join(BASE_PATH, 'path_test_scenarios.json')
 data = json.load(open(scenarios, 'r', encoding='utf-8'))
-finders = [AStarFinder, BestFirst, BiAStarFinder, DijkstraFinder,
-           IDAStarFinder, BreadthFirstFinder, MinimumSpanningTree]
+finders = [AStarFinder, BestFirst, BiAStarFinder, BiBreadthFirstFinder,
+           DijkstraFinder, IDAStarFinder, BreadthFirstFinder, MinimumSpanningTree]
 TIME_LIMIT = 10  # give it a 10 second limit.
 
 

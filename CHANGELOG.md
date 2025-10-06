@@ -1,3 +1,7 @@
+# 1.0.18
+## Feature
+- added Bi-directional BFS (by @PraneethJain)
+
 # 1.0.17
 ## Bugfix
 - fix for Graph: Error when running pathfinding multiple times in graph. (see #67)

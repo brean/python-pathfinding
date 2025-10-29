@@ -4,7 +4,7 @@ from .node import GraphNode
 
 class Graph:
     def __init__(
-            self, edges: List[Set] = None, nodes: Dict[int, GraphNode] = None,
+            self, edges: List[List] = None, nodes: Dict[int, GraphNode] = None,
             bi_directional: bool = False):
         # edges defined by node-from, node-to and its cost
         self.edges = edges if edges else []

@@ -12,7 +12,7 @@ class World:
         self.dirty = False
 
     def cleanup(self):
-        for grid in self.grids:
+        for grid in self.grids.values():
             grid.cleanup()
 
     def neighbors(

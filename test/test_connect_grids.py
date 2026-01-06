@@ -25,6 +25,22 @@ PATH = [
     (0, 0, 1)
 ]
 
+PATH2 = [
+    # test same path a second time
+    (0, 0, 1),
+    (1, 0, 1),
+    (2, 0, 1),
+    (2, 1, 1),
+    (2, 2, 1),
+    (2, 2, 0),
+    (1, 2, 0),
+    (0, 2, 0),
+    (0, 1, 0),
+    (0, 0, 0),
+    (1, 0, 0),
+    (2, 0, 0)
+    # this ensures that world cleanup is working properly
+]
 
 def test_connect():
     level0 = [
@@ -52,4 +68,6 @@ def test_connect():
 
     finder = AStarFinder()
     path, _ = finder.find_path(grid0.node(2, 0), grid1.node(0, 0), world)
+    path2, _ = finder.find_path(grid1.node(0, 0), grid0.node(2, 0), world)
     assert [tuple(p) for p in path] == PATH
+    assert [tuple(p) for p in path2] == PATH2

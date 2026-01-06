@@ -1,3 +1,7 @@
+# 1.0.19
+## Bugfix
+ - Fix cleanup for World (by @magicguy38)
+
 # 1.0.18
 ## Feature
 - added Bi-directional BFS (by @PraneethJain)

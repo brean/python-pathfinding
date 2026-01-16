@@ -1,10 +1,14 @@
+# 1.0.20
+## Feature
+ - include_non_walkables on grid neighbors (by @happygts see #79)
+
 # 1.0.19
 ## Bugfix
- - Fix cleanup for World (by @magicguy38)
+ - Fix cleanup for World (by @magicguy38 see #77, #78)
 
 # 1.0.18
 ## Feature
-- added Bi-directional BFS (by @PraneethJain)
+- added Bi-directional BFS (by @PraneethJain see #74)
 
 # 1.0.17
 ## Bugfix

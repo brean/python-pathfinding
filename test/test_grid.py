@@ -81,5 +81,17 @@ def test_numpy():
     assert grid.grid_str(path, start, end) == SIMPLE_WALKED[1:-1]
 
 
+def test_include_non_walkables():
+    matrix = np.array([
+        [0, 0, 1],
+        [1, 1, 1],
+        [1, 1, 1]
+    ])
+    grid = Grid(matrix=matrix)
+    start = grid.node(0, 0)
+    neighbors = grid.neighbors(start, include_non_walkables=True)
+    assert len(neighbors) == 2  # 1 walkable + 1 non-walkable
+
+
 if __name__ == '__main__':
     test_str()

@@ -117,7 +117,7 @@ class Grid:
     def neighbors(
         self, node: GridNode,
         diagonal_movement: DiagonalMovement = DiagonalMovement.never,
-        include_non_walkable: bool = False
+        include_non_walkables: bool = False
     ) -> List[GridNode]:
         """
         get all neighbors of one node
@@ -134,7 +134,7 @@ class Grid:
         else:
             north_y = y - 1
 
-        if self.walkable(x, north_y) or include_non_walkable and self.inside(x, north_y):
+        if self.walkable(x, north_y) or include_non_walkables and self.inside(x, north_y):
             neighbors.append(self.nodes[north_y][x])
             north = True
 
@@ -144,7 +144,7 @@ class Grid:
         else:
             east_x = x + 1
 
-        if self.walkable(east_x, y) or include_non_walkable and self.inside(east_x, y):
+        if self.walkable(east_x, y) or include_non_walkables and self.inside(east_x, y):
             neighbors.append(self.nodes[y][east_x])
             east = True
 
@@ -153,7 +153,7 @@ class Grid:
             south_y = 0
         else:
             south_y = y + 1
-        if self.walkable(x, south_y) or include_non_walkable and self.inside(x, south_y):
+        if self.walkable(x, south_y) or include_non_walkables and self.inside(x, south_y):
             neighbors.append(self.nodes[south_y][x])
             south = True
 
@@ -162,7 +162,7 @@ class Grid:
             west_x = self.width - 1
         else:
             west_x = x - 1
-        if self.walkable(west_x, y) or include_non_walkable and self.inside(west_x, y):
+        if self.walkable(west_x, y) or include_non_walkables and self.inside(west_x, y):
             neighbors.append(self.nodes[y][west_x])
             west = True
 
@@ -196,7 +196,7 @@ class Grid:
                 nw_y = self.height - 1
             else:
                 nw_y = y - 1
-            if self.walkable(nw_x, nw_y) or include_non_walkable and self.inside(nw_x, nw_y):
+            if self.walkable(nw_x, nw_y) or include_non_walkables and self.inside(nw_x, nw_y):
                 neighbors.append(self.nodes[nw_y][nw_x])
 
         # ↗
@@ -209,7 +209,7 @@ class Grid:
                 ne_y = self.height - 1
             else:
                 ne_y = y - 1
-            if self.walkable(ne_x, ne_y) or include_non_walkable and self.inside(ne_x, ne_y):
+            if self.walkable(ne_x, ne_y) or include_non_walkables and self.inside(ne_x, ne_y):
                 neighbors.append(self.nodes[ne_y][ne_x])
 
         # ↘
@@ -222,7 +222,7 @@ class Grid:
                 se_y = 0
             else:
                 se_y = y + 1
-            if self.walkable(se_x, se_y) or include_non_walkable and self.inside(se_x, se_y):
+            if self.walkable(se_x, se_y) or include_non_walkables and self.inside(se_x, se_y):
                 neighbors.append(self.nodes[se_y][se_x])
 
         # ↙
@@ -235,7 +235,7 @@ class Grid:
                 sw_y = 0
             else:
                 sw_y = y + 1
-            if self.walkable(sw_x, sw_y) or include_non_walkable and self.inside(sw_x, sw_y):
+            if self.walkable(sw_x, sw_y) or include_non_walkables and self.inside(sw_x, sw_y):
                 neighbors.append(self.nodes[sw_y][sw_x])
 
         return neighbors

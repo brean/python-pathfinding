@@ -1,3 +1,10 @@
+# 1.0.21
+## Bugfixes
+ - Multiple fixes by @peterchenadded:
+   - Remove remove_node on SimpleHeap (which has memory leak as it gets bigger and bigger and never gets smaller)
+   - Bugfix for pytest
+   - Added test for what happens when we pop an item who's f is greater than it's current
+
 # 1.0.20
 ## Feature
  - include_non_walkables on grid neighbors (by @happygts see #79)

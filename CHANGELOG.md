@@ -1,3 +1,7 @@
+# 1.0.22
+## Bugfixes
+ - Handle empty open list returning None from pop_node() (by @SAY-5 )
+
 # 1.0.21
 ## Bugfixes
  - Multiple fixes by @peterchenadded:

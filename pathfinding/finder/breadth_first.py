@@ -21,6 +21,9 @@ class BreadthFirstFinder(Finder):
 
     def check_neighbors(self, start, end, grid, open_list):
         node = open_list.pop_node()
+        if node is None:
+            # open list only held stale entries; nothing left to expand
+            return None
         node.closed = True
 
         if node == end:

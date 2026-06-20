@@ -54,6 +54,9 @@ class AStarFinder(Finder):
         """
         # pop node with minimum 'f' value
         node = open_list.pop_node()
+        if node is None:
+            # open list only held stale entries; nothing left to expand
+            return None
         node.closed = True
 
         # if reached the end position, construct the path and return it

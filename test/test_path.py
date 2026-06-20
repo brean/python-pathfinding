@@ -87,6 +87,27 @@ def test_path_diagonal():
             assert len(path) == scenario['expectedDiagonalLength']
 
 
+def test_unreachable_only_when_no_obstacle():
+    # when the end is unreachable the open list can drain to only stale
+    # entries, so pop_node() returns None; the finder should report an empty
+    # path instead of crashing (issue #83)
+    matrix = [
+        [0, 0, 0, 0, 0, 1, 1],
+        [0, 1, 1, 1, 0, 1, 1],
+        [0, 1, 1, 1, 0, 1, 1],
+        [0, 1, 1, 1, 0, 1, 1],
+        [0, 1, 1, 1, 0, 1, 1],
+        [0, 0, 0, 0, 0, 1, 1],
+    ]
+    grid = Grid(matrix=matrix)
+    start = grid.node(1, 2)
+    end = grid.node(6, 3)
+    finder = AStarFinder(
+        diagonal_movement=DiagonalMovement.only_when_no_obstacle)
+    path, _ = finder.find_path(start, end, grid)
+    assert path == []
+
+
 def test_max_runs():
     grid, start, end = grid_from_scenario(data[1])
     for find in finders:

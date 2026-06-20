@@ -38,6 +38,9 @@ class MinimumSpanningTree(Finder):
             self.keep_running()
 
             node = open_list.pop_node()
+            if node is None:
+                # open list only held stale entries; nothing left to expand
+                break
             node.closed = True
             yield node
 

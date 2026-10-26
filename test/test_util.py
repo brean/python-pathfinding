@@ -59,7 +59,8 @@ def test_raytrace_axis_aligned_and_stationary(end, expected):
     assert raytrace([3, 3], end) == expected
 
 
-def test_smoothen_path():
+@pytest.mark.parametrize('use_raytrace', [False, True])
+def test_smoothen_path(use_raytrace):
     matrix = [
         [1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1],
@@ -71,7 +72,7 @@ def test_smoothen_path():
     path = [
         [0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [2, 3], [3, 3], [3, 4], [4, 4]
     ]
-    smooth_path = [
-        [0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [2, 3], [3, 3], [4, 4]
+    # The grid is empty, so the intermediate waypoints are unnecessary.
+    assert smoothen_path(grid, path, use_raytrace=use_raytrace) == [
+        [0, 0], [4, 4]
     ]
-    assert smoothen_path(grid, path) == smooth_path

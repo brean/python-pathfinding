@@ -46,8 +46,8 @@ def raytrace(coords_a: Coords, coords_b: Coords) -> List[Coords]:
     t = 0
     grid_pos = [x0, y0]
     t_for_one = \
-        abs(1.0 / dx) if dx > 0 else 10000, \
-        abs(1.0 / dy) if dy > 0 else 10000
+        abs(1.0 / dx) if dx != 0 else math.inf, \
+        abs(1.0 / dy) if dy != 0 else math.inf
 
     frac_start = (x0 + .5) - x0, (y0 + .5) - y0
     t_for_next_border = [

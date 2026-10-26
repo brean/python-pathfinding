@@ -1,3 +1,8 @@
+# 1.0.23
+## Bugfixes
+ - Trace grid cells in negative directions (see #86, by @civilwarinfrance )
+ - Preserve flat coordinates when expanding paths (see #87 by @civilwarinfrance )
+
 # 1.0.22
 ## Bugfixes
  - Handle empty open list returning None from pop_node() (by @SAY-5 )

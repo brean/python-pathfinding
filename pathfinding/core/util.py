@@ -107,8 +107,8 @@ def expand_path(path: List[Coords]) -> List[Coords]:
     if len(path) < 2:
         return expanded
     for i in range(len(path) - 1):
-        expanded += bresenham(path[i], path[i + 1])
-    expanded += [path[:-1]]
+        expanded += bresenham(path[i], path[i + 1])[:-1]
+    expanded.append(list(path[-1]))
     return expanded
 
 

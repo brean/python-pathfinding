@@ -1,3 +1,7 @@
+# 1.0.24
+## Bugfixes
+ - Handle identical endpoints in bidirectional searches (see #90, by @civilwarinfrance )
+
 # 1.0.23
 ## Bugfixes
  - Trace grid cells in negative directions (see #86, by @civilwarinfrance )

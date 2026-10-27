@@ -21,6 +21,12 @@ class MinimumSpanningTree(Finder):
         return list(self.itertree(grid, start))
 
     def itertree(self, grid, start):
+        self.clean_grid(grid)
+
+        self.start_time = time.time()  # execution time limitation
+        self.runs = 0  # count number of iterations
+        start.g = 0
+        start.f = 0
 
         # Finder.process_node requires an end node, which we don't have.
         # The following value tricks the call to Finder.apply_heuristic.
@@ -51,11 +57,6 @@ class MinimumSpanningTree(Finder):
                         grid, neighbor, node, end, open_list, open_value=True)
 
     def find_path(self, start, end, grid):
-        self.clean_grid(grid)
-
-        self.start_time = time.time()  # execution time limitation
-        self.runs = 0  # count number of iterations
-
         for node in self.itertree(grid, start):
             if node == end:
                 path = deque()

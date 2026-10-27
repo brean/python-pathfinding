@@ -54,10 +54,8 @@ class IDAStarFinder(Finder):
         if f > cutoff:
             return f
 
+        path.append(node)
         if node == end:
-            if len(path) < depth:
-                path += [None] * (depth - len(path) + 1)
-            path[depth] = node
             return node
 
         neighbors = self.find_neighbors(grid, node)
@@ -71,6 +69,10 @@ class IDAStarFinder(Finder):
         #    sorted(neighbors, sort_neighbors)
         min_t = float('inf')
         for neighbor in neighbors:
+            # Revisit nodes on other branches, but never an ancestor of this
+            # branch. Cycles cannot improve a path with positive edge costs.
+            if any(neighbor is ancestor for ancestor in path):
+                continue
             neighbor.opened = True
 
             if self.track_recursion:
@@ -83,14 +85,12 @@ class IDAStarFinder(Finder):
                             cutoff, path, depth + 1, end, grid)
 
             if isinstance(t, Node):
-                if len(path) < depth:
-                    path += [None] * (depth - len(path) + 1)
-                path[depth] = node
                 return t
 
             if t < min_t:
                 min_t = t
 
+        path.pop()
         return min_t
 
     def find_path(self, start, end, grid):
@@ -119,6 +119,10 @@ class IDAStarFinder(Finder):
             # populated with a valid path to the end node.
             if isinstance(t, Node):
                 return path, self.runs
+
+            if t == float('inf'):
+                # No branch exceeded the cutoff: all simple paths are spent.
+                break
 
             # Try again, this time with a deeper cut-off. The t score
             # is the closest we got to the end node.

@@ -64,6 +64,9 @@ class BiBreadthFirstFinder(Finder):
         self.start_time = time.time()
         self.runs = 0
 
+        if start == end:
+            return [start], self.runs
+
         start_queue = deque([start])
         start.opened = BY_START
         start.parent = None

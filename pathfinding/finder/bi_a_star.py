@@ -49,6 +49,9 @@ class BiAStarFinder(AStarFinder):
         self.start_time = time.time()  # execution time limitation
         self.runs = 0  # count number of iterations
 
+        if start == end:
+            return [start], self.runs
+
         start_open_list = SimpleHeap(start, grid)
         start.g = 0
         start.f = 0

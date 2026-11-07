@@ -111,14 +111,18 @@ class IDAStarFinder(Finder):
             # search till cut-off depth:
             t = self.search(start, 0, cutoff, path, 0, end, grid)
 
-            if isinstance(t, bool) and not t:
-                # only when an error occured we return "False"
-                break
-
             # If t is a node, it's also the end node. Route is now
             # populated with a valid path to the end node.
             if isinstance(t, Node):
                 return path, self.runs
+
+            # t is the smallest f-value that exceeded the cutoff anywhere in
+            # the search, or +inf if every reachable node turned out to be a
+            # genuine dead end (no neighbors left to try) without any of
+            # them exceeding the cutoff: the whole reachable area has been
+            # searched and the goal is not in it, so no path exists.
+            if t == float('inf'):
+                break
 
             # Try again, this time with a deeper cut-off. The t score
             # is the closest we got to the end node.

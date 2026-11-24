@@ -112,5 +112,12 @@ class GridNode(Node):
         else:
             self.connections.append(other_node)
 
+    def __eq__(self, other):
+        if self is other:
+            return True
+        if not isinstance(other, GridNode):
+            return False
+        return self.x == other.x and self.y == other.y and self.grid_id == other.grid_id
+
     def __repr__(self):
         return f'<GridNode({self.x}:{self.y} {hex(id(self))})>'

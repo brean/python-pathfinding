@@ -83,7 +83,7 @@ class Finder:
             # in a weighted graph we also need to multiply the calculated
             # value with the minimum weight of the graph
             if self.weighted:
-                nh *= graph.min_weight
+                nh *= graph._min_weight
             return nh
         else:
             return heuristic(dx, dy)
@@ -108,10 +108,11 @@ class Finder:
                 'finding the destination'.format(
                     self.__class__.__name__, self.max_runs))
 
-        if time.time() - self.start_time >= self.time_limit:
-            raise ExecutionTimeException(
-                '{} took longer than {} seconds, aborting!'.format(
-                    self.__class__.__name__, self.time_limit))
+        if self.time_limit <= 0 or (self.time_limit < float('inf') and (self.runs & 63 == 0)):
+            if time.time() - self.start_time >= self.time_limit:
+                raise ExecutionTimeException(
+                    '{} took longer than {} seconds, aborting!'.format(
+                        self.__class__.__name__, self.time_limit))
 
     def process_node(
             self, graph, node, parent, end, open_list, open_value=True):

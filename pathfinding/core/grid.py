@@ -125,46 +125,61 @@ class Grid:
         """
         x = node.x
         y = node.y
+        nodes = self.nodes
         neighbors = []
         north = nw = east = ne = south = se = west = sw = False
+        width = self.width
+        height = self.height
+        passable_lr = self.passable_left_right_border
+        passable_ud = self.passable_up_down_border
 
         # ↑
-        if y == 0 and self.passable_up_down_border:
-            north_y = self.height - 1
-        else:
-            north_y = y - 1
-
-        if self.walkable(x, north_y) or include_non_walkables and self.inside(x, north_y):
-            neighbors.append(self.nodes[north_y][x])
-            north = True
+        if y > 0:
+            n = nodes[y - 1][x]
+            if n.walkable or include_non_walkables:
+                neighbors.append(n)
+                north = True
+        elif passable_ud:
+            n = nodes[height - 1][x]
+            if n.walkable or include_non_walkables:
+                neighbors.append(n)
+                north = True
 
         # →
-        if x == self.width - 1 and self.passable_left_right_border:
-            east_x = 0
-        else:
-            east_x = x + 1
-
-        if self.walkable(east_x, y) or include_non_walkables and self.inside(east_x, y):
-            neighbors.append(self.nodes[y][east_x])
-            east = True
+        if x + 1 < width:
+            n = nodes[y][x + 1]
+            if n.walkable or include_non_walkables:
+                neighbors.append(n)
+                east = True
+        elif passable_lr:
+            n = nodes[y][0]
+            if n.walkable or include_non_walkables:
+                neighbors.append(n)
+                east = True
 
         # ↓
-        if y == self.height - 1 and self.passable_up_down_border:
-            south_y = 0
-        else:
-            south_y = y + 1
-        if self.walkable(x, south_y) or include_non_walkables and self.inside(x, south_y):
-            neighbors.append(self.nodes[south_y][x])
-            south = True
+        if y + 1 < height:
+            n = nodes[y + 1][x]
+            if n.walkable or include_non_walkables:
+                neighbors.append(n)
+                south = True
+        elif passable_ud:
+            n = nodes[0][x]
+            if n.walkable or include_non_walkables:
+                neighbors.append(n)
+                south = True
 
         # ←
-        if x == 0 and self.passable_left_right_border:
-            west_x = self.width - 1
-        else:
-            west_x = x - 1
-        if self.walkable(west_x, y) or include_non_walkables and self.inside(west_x, y):
-            neighbors.append(self.nodes[y][west_x])
-            west = True
+        if x > 0:
+            n = nodes[y][x - 1]
+            if n.walkable or include_non_walkables:
+                neighbors.append(n)
+                west = True
+        elif passable_lr:
+            n = nodes[y][width - 1]
+            if n.walkable or include_non_walkables:
+                neighbors.append(n)
+                west = True
 
         # check for connections to other grids
         if node.connections:
@@ -188,55 +203,39 @@ class Grid:
 
         # ↖
         if nw:
-            if x == 0 and self.passable_left_right_border:
-                nw_x = self.width - 1
-            else:
-                nw_x = x - 1
-            if y == 0 and self.passable_up_down_border:
-                nw_y = self.height - 1
-            else:
-                nw_y = y - 1
-            if self.walkable(nw_x, nw_y) or include_non_walkables and self.inside(nw_x, nw_y):
-                neighbors.append(self.nodes[nw_y][nw_x])
+            nw_x = width - 1 if (x == 0 and passable_lr) else x - 1
+            nw_y = height - 1 if (y == 0 and passable_ud) else y - 1
+            if 0 <= nw_x < width and 0 <= nw_y < height:
+                n = nodes[nw_y][nw_x]
+                if n.walkable or include_non_walkables:
+                    neighbors.append(n)
 
         # ↗
         if ne:
-            if x == self.width - 1 and self.passable_left_right_border:
-                ne_x = 0
-            else:
-                ne_x = x + 1
-            if y == 0 and self.passable_up_down_border:
-                ne_y = self.height - 1
-            else:
-                ne_y = y - 1
-            if self.walkable(ne_x, ne_y) or include_non_walkables and self.inside(ne_x, ne_y):
-                neighbors.append(self.nodes[ne_y][ne_x])
+            ne_x = 0 if (x == width - 1 and passable_lr) else x + 1
+            ne_y = height - 1 if (y == 0 and passable_ud) else y - 1
+            if 0 <= ne_x < width and 0 <= ne_y < height:
+                n = nodes[ne_y][ne_x]
+                if n.walkable or include_non_walkables:
+                    neighbors.append(n)
 
         # ↘
         if se:
-            if x == self.width - 1 and self.passable_left_right_border:
-                se_x = 0
-            else:
-                se_x = x + 1
-            if y == self.height - 1 and self.passable_up_down_border:
-                se_y = 0
-            else:
-                se_y = y + 1
-            if self.walkable(se_x, se_y) or include_non_walkables and self.inside(se_x, se_y):
-                neighbors.append(self.nodes[se_y][se_x])
+            se_x = 0 if (x == width - 1 and passable_lr) else x + 1
+            se_y = 0 if (y == height - 1 and passable_ud) else y + 1
+            if 0 <= se_x < width and 0 <= se_y < height:
+                n = nodes[se_y][se_x]
+                if n.walkable or include_non_walkables:
+                    neighbors.append(n)
 
         # ↙
         if sw:
-            if x == 0 and self.passable_left_right_border:
-                sw_x = self.width - 1
-            else:
-                sw_x = x - 1
-            if y == self.height - 1 and self.passable_up_down_border:
-                sw_y = 0
-            else:
-                sw_y = y + 1
-            if self.walkable(sw_x, sw_y) or include_non_walkables and self.inside(sw_x, sw_y):
-                neighbors.append(self.nodes[sw_y][sw_x])
+            sw_x = width - 1 if (x == 0 and passable_lr) else x - 1
+            sw_y = 0 if (y == height - 1 and passable_ud) else y + 1
+            if 0 <= sw_x < width and 0 <= sw_y < height:
+                n = nodes[sw_y][sw_x]
+                if n.walkable or include_non_walkables:
+                    neighbors.append(n)
 
         return neighbors
 

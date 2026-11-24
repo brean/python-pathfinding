@@ -16,42 +16,25 @@ class SimpleHeap:
         self.number_pushed = 0
 
     def _get_node_tuple(self, node, heap_order):
-        if isinstance(self.grid, Graph):
-            return (node.f, heap_order, node.node_id)
-        elif isinstance(self.grid, Grid):
-            return (node.f, heap_order, node.x, node.y)
-        elif isinstance(self.grid, World):
-            return (node.f, heap_order, node.x, node.y, node.grid_id)
-        else:
-            assert False, "unsupported heap node node=%s" % node
+        return (node.f, heap_order, node)
 
     def _get_node_id(self, node):
-        if isinstance(self.grid, Graph):
+        if hasattr(node, 'node_id'):
             return node.node_id
-        elif isinstance(self.grid, Grid):
-            return (node.x, node.y)
-        elif isinstance(self.grid, World):
+        elif hasattr(node, 'grid_id') and node.grid_id is not None:
             return (node.x, node.y, node.grid_id)
+        return (node.x, node.y)
 
     def pop_node(self) -> Optional[Node]:
         """Pops node off the heap. i.e. returns the one with the lowest f."""
-        while self.open_list:
-            node_tuple = heapq.heappop(self.open_list)
-
-            if isinstance(self.grid, Graph):
-                node = self.grid.node(node_tuple[2])
-            elif isinstance(self.grid, Grid):
-                node = self.grid.node(node_tuple[2], node_tuple[3])
-            elif isinstance(self.grid, World):
-                node = self.grid.grids[
-                    node_tuple[4]].node(node_tuple[2], node_tuple[3])
-            
+        open_list = self.open_list
+        while open_list:
+            node_tuple = heapq.heappop(open_list)
+            node = node_tuple[2]
             # node already updated with lower f, ignore
-            f = node_tuple[0]
-            if f > node.f:
+            if node_tuple[0] > node.f:
                 continue
-            else:
-                return node
+            return node
 
         return None
 
@@ -61,11 +44,10 @@ class SimpleHeap:
 
         :param node: The node to push.
         """
-        self.number_pushed = self.number_pushed + 1
-        node_tuple = self._get_node_tuple(node, self.number_pushed)
-
-        heapq.heappush(self.open_list, node_tuple)
+        self.number_pushed += 1
+        heapq.heappush(self.open_list, (node.f, self.number_pushed, node))
 
     def __len__(self):
         """Returns the length of the open_list."""
         return len(self.open_list)
+

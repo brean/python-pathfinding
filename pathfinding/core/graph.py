@@ -7,7 +7,8 @@ class Graph:
             self, edges: List[List] = None, nodes: Dict[int, GraphNode] = None,
             bi_directional: bool = False):
         # edges defined by node-from, node-to and its cost
-        self.edges = edges if edges else []
+        # Endpoint IDs are replaced with nodes in edge_node_items().
+        self.edges = [list(edge) for edge in edges] if edges is not None else []
         self.nodes = nodes if nodes else {}
         self.bi_directional = bi_directional
         # we will call cleanup automatically if dirty is True

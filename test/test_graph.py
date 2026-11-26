@@ -51,3 +51,14 @@ def test_graph_cleanup():
         path, _ = finder.find_path(graph.node(1), graph.node(0), graph)
         assert [n.node_id for n in path] == [1, 0]
         mock_cleanup.assert_called_once()
+
+
+def test_graphs_from_same_edges_have_independent_search_state():
+    edges = [['S', 'M', 2], ['M', 'G', 3]]
+    first = Graph(edges=edges)
+    second = Graph(edges=edges)
+
+    for graph in (first, second):
+        path, _ = DijkstraFinder().find_path(
+            graph.node('S'), graph.node('G'), graph)
+        assert [node.node_id for node in path] == ['S', 'M', 'G']
